@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 17:51:50 by danrodri          #+#    #+#             */
-/*   Updated: 2020/02/03 21:20:26 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/02/11 20:11:16 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ t_obj *new_obj(char *line)
 		i++;
 	obj->id = ft_substr(line, 0, i);
 	obj->content = ft_split(line + i, ' ');
-	printf("-----check what's saving-----\n");
-	printf("%s\n", obj->id);
-	while (obj->content[i2])
-		{
-			printf("%s\n", obj->content[i2]);
-			i2++;
-		}
 	obj->next = NULL;
 	return (obj);
 }
@@ -60,16 +53,18 @@ t_obj *scene_reader(char *scene)
 	alst = NULL;
 	fd = open(scene, O_RDONLY);
 	if (fd > 0)
-		{
 			while (get_next_line(fd, &line) == 1)
 				{
 					if (*line)
 						add_obj_to_lst(new_obj(line), &alst);
 					free(line);
 				}
-		}
 	//comprobar si existen los objetos imprescindibles
+	if (!(check_required_objs(alst)))
+		return (NULL);
 	//comprobar informacion correcta de todos los objetos
+	if (!(check_input_errors(alst)))
+		return (NULL);
 	close(fd);
-	return (NULL);
+	return (alst);
 }	
