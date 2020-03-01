@@ -1,82 +1,58 @@
-#include "../includes/minirt.h"
-
-int key_hook(int keycode, void *param)
-{
-	(void)param;
-	printf("keycode: (%d)\n", keycode);
-	return (0);
-}
+#include "minirt.h"
 
 static void display_error()
 {
-	printf("lol\n");
+	printf("error displayed\n");
 }
 
-static void *open_window(t_obj *lst, void *mlx_ptr)
+static int ft_isprintable(char c)
 {
-	void *win_ptr;
-	int x_size;
-	int y_size;
-
-	while (ft_strncmp(lst->id, "R", 1))
-		lst = lst->next;
-	x_size = ft_atoi(lst->content[0]);
-	y_size = ft_atoi(lst->content[1]);
-	return (win_ptr = mlx_new_window(mlx_ptr, x_size, y_size, "test"));
-}
-
-int mouse_hook(int button, int x, int y, void *param)
-{
-	(void)button;
-	(void)x;
-	(void)y;
-	void **ptrs;
-	void *win;
-	void *mlx;
-
-	ptrs = param;
-	mlx = ptrs[0];
-	win = ptrs[1];
-	printf("esto que\n");
-	mlx_destroy_window(mlx, win);
+	if (c >= 32 && c <= 126)
+		return (c);
 	return (0);
 }
 
-static void test_events(void *mlx_ptr, void *win_ptr)
+static bool valid_ext(char *scene_name)
 {
 	int i;
-	void **ptrs;
 
-	ptrs = malloc(sizeof(void *) * 2);
-	ptrs[0] = mlx_ptr;
-	ptrs[1] = win_ptr;
-	mlx_key_hook(win_ptr, &key_hook, ptrs);
-	mlx_mouse_hook(win_ptr, &mouse_hook, ptrs);
-	i = mlx_loop(mlx_ptr);
-	printf("(%i)\n", i);
+	i = 0;
+	while (ft_isprintable(scene_name[i]) && scene_name[i] != '.')
+		i++;
+	if (!(i && ft_strncmp(scene_name + i, ".rt", ft_strlen(scene_name + i))))
+		return (false);
+	return (true);
+}
+
+static void build_data(t_data *data, t_r *res)
+{
+	data->mlx_ptr = mlx_init();
+	data->img_ptr = mlx_new_image(data->mlx_ptr, data->res_x, data->res_y);
+	data->res_x = res->res_x;
+	data->res_y = res->res_y;
 }
 
 int main(int argc, char **argv)
 {
-	void *mlx_ptr;
-	void *win_ptr;
-	t_obj *obj_lst;
-	//lectura del .rt
-	//comprobación de errores
-	//...
-	if (argc != 2)
+	t_lst obj_lst;
+	t_data data;
+
+	if (!(argc == 2 || (argc == 3 && valid_ext(argv[2]))))
 	{
-		printf(":-(\n");
+		display_error();
 		return (0);
 	}
-	printf("test\n");
-	if (!(obj_lst = scene_reader(argv[1])))
+	init_lst(&obj_lst);
+	if (!(scene_parser(argv[1], &obj_lst)))
 		{
 			display_error();
 			return (0);
 		}
-	mlx_ptr = mlx_init();
-	win_ptr = open_window(obj_lst, mlx_ptr);
-	test_events(mlx_ptr, win_ptr);
-	//test para abrir ventana
+	build_data(&data, obj_lst.res);
+	get_scene(&data, &obj_lst);
+	if (argc == 3)
+		save_scene_to_bmp(&data);
+	if (argc == 2)
+		put_scene_to_window(&data);
+	return (0);
 }

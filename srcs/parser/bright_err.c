@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bright_error.c                                     :+:      :+:    :+:   */
+/*   bright_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 19:03:10 by danrodri          #+#    #+#             */
-/*   Updated: 2020/02/11 18:42:08 by danrodri         ###   ########.fr       */
+/*   Created: 2020/03/01 15:56:39 by danrodri          #+#    #+#             */
+/*   Updated: 2020/03/01 16:02:52 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minirt.h"
+#include "minirt.h"
 
-int bright_error(char *bright)
+bool bright_err(char *bright)
 {
 	int i;
 
@@ -20,18 +20,18 @@ int bright_error(char *bright)
 	while (bright[i] && i < 3)
 		{
 			if (i == 0 && !(bright[i] == '0' || bright[i] == '1'))
-				return (0);
+				return (false);
 			if (i == 1 && (bright[i] != '.'))
 				break;
 			if (i == 2 && bright[0] == '0' && !(bright[i] >= '0' && bright[i] <= '9'))
-				return (0);
+				return (false);
 			if (i == 2 && bright[0] == '1' && !(bright[i] == '0'))
-				return (0);
+				return (false);
 			i++;
 		}
 	if (!(i == 1 || i == 3))
-		return (0);
+		return (false);
 	if (i == 1)
 		i++;
-	return ((!bright[i]) ? 1 : 0);
+	return ((!bright[i]) ? true : false);
 }

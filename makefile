@@ -6,49 +6,50 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/31 19:15:09 by danrodri          #+#    #+#              #
-#    Updated: 2020/02/11 21:04:35 by danrodri         ###   ########.fr        #
+#    Updated: 2020/03/01 20:47:40 by danrodri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY:			all clean fclean re bonus		
+.PHONY:			all clean fclean re bonus
 
 SRCS			= prototipo.c \
-			  	scene_reader.c
+			  	scene_parser.c \
+
+SRCS_PARSER		= build_amb.c \
+				bright_err.c \
+				build_cam.c \
+				colors_err.c \
+				coords_err.c \
+				build_cy.c \
+				build_pl.c \
+				build_l.c \
+				prop_err.c \
+				build_res.c \
+				build_sp.c \
+				build_sq.c \
+				build_tr.c \
+				vector_err.c \
+				obj_builder_utils.c
 
 SRCS_DIR		= srcs/
 
-SRCS_ERRORS		= amb_error.c \
-				bright_error.c \
-				camera_error.c \
-				colors_error.c \
-				coord_error.c \
-				cylinder_error.c \
-				plane_error.c \
-				light_error.c \
-				prop_error.c \
-				res_error.c \
-				sphere_error.c \
-				square_error.c \
-				triangle_error.c \
-				vector_error.c \
-				check_input_errors.c \
-				check_required_objs.c
-
-SRCS_ERRORS_DIR		= $(SRCS_DIR)errors/
+SRCS_PARSER_DIR		= $(SRCS_DIR)parser/
 
 OBJS			= $(patsubst %.c, $(OBJS_DIR)%.o, $(SRCS))
 
-OBJS_ERROR		= $(patsubst %.c, $(OBJS_DIR)%.o, $(SRCS_ERRORS))
+OBJS_ERROR		= $(patsubst %.c, $(OBJS_DIR)%.o, $(SRCS_PARSER))
 
 OBJS_DIR		= objs/
 
+INC_DIR			= includes/
+
 NAME			= miniRT
 
-GCC				= gcc -Wall -Werror -Wextra
+GCC			= gcc -Wall -Werror -Wextra
 
-LIB				= ./libft/libft.a -lmlx -framework OpenGL -framework AppKit -lz
+LIB			= ./libft/libft.a -lmlx -framework OpenGL -framework AppKit -lz
 
-RM				= rm -f
+RM			= rm -f
 
 RMDIR			= rm -rf
 
@@ -59,12 +60,12 @@ $(NAME):		$(OBJS) $(OBJS_ERROR)
 				@$(GCC) -o $(NAME) $(OBJS) $(OBJS_ERROR) $(LIB)
 
 $(OBJS_DIR)%.o: 	$(SRCS_DIR)%.c
-				@$(GCC) -c $<
+				@$(GCC) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
-$(OBJS_DIR)%.o:		$(SRCS_ERRORS_DIR)%.c
-				@$(GCC) -c $<
+$(OBJS_DIR)%.o:		$(SRCS_PARSER_DIR)%.c
+				$(GCC) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   coord_error.c                                      :+:      :+:    :+:   */
+/*   coords_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 17:21:31 by danrodri          #+#    #+#             */
-/*   Updated: 2020/02/11 18:46:13 by danrodri         ###   ########.fr       */
+/*   Created: 2020/03/01 17:13:06 by danrodri          #+#    #+#             */
+/*   Updated: 2020/03/01 17:14:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minirt.h"
+#include "minirt.h"
 
 static int check_one_coord(char *coords, int last)
 {
@@ -36,7 +36,7 @@ static int check_one_coord(char *coords, int last)
 	return (((!coords[i + j] && last) || (coords[i + j] == ',' && !last)) ? i + j : 0);
 }
 
-int coords_error(char *coords)
+bool coords_err(char *coords)
 {
 	int i;
 	int count;
@@ -44,15 +44,15 @@ int coords_error(char *coords)
 	i = 0;
 	count = 0;
 	if (!(count = check_one_coord(coords + i, 0)))
-		return (0);
+		return (false);
 	i += count + 1;
 	if (!(count = check_one_coord(coords + i, 0)))
-		return (0);
+		return (false);
 	i += count + 1;
 	if (!(count = check_one_coord(coords + i, 1)))
-		return (0);
+		return (false);
 	i += count;
 	if (coords[i])
-		return (0);
-	return (1);
+		return (false);
+	return (true);
 }

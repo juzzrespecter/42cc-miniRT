@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_error.c                                     :+:      :+:    :+:   */
+/*   vector_err.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 17:49:23 by danrodri          #+#    #+#             */
-/*   Updated: 2020/02/11 18:39:32 by danrodri         ###   ########.fr       */
+/*   Created: 2020/03/01 16:00:57 by danrodri          #+#    #+#             */
+/*   Updated: 2020/03/01 16:57:54 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minirt.h"
+#include "minirt.h"
 
 static int norm_coord_error(char *coords, int last)
 {
@@ -34,7 +34,7 @@ static int norm_coord_error(char *coords, int last)
 	return (((coords[i] == ',' && !last) || (!coords[i] && last)) ? i : 0);
 }
 
-int vector_error(char *vector)
+bool vector_err(char *vector)
 {
 	int i;
 	int count;
@@ -42,13 +42,13 @@ int vector_error(char *vector)
 	i = 0;
 	count = 0;
 	if (!(count = norm_coord_error(vector + i, 0)))
-		return (0);
+		return (false);
 	i += count + 1;
 	if (!(count = norm_coord_error(vector + i, 0)))
-		return (0);
+		return (false);
 	i += count + 1;
 	if (!(count = norm_coord_error(vector + i, 1)))
-		return (0);
+		return (false);
 	i += count;
-	return (1);
+	return (true);
 }

@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prop_error.c                                       :+:      :+:    :+:   */
+/*   lst_funcs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/10 19:14:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/02/11 20:04:35 by danrodri         ###   ########.fr       */
+/*   Created: 2020/02/29 20:10:10 by danrodri          #+#    #+#             */
+/*   Updated: 2020/02/29 20:25:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minirt.h"
+#include "minirt.h"
 
-int prop_error(char *prop)
+void init_lst(t_lst *obj_lst)
+{
+	obj_lst->r = NULL;
+	obj_lst->a = NULL;
+	obj_lst->c_lst = NULL;
+	obj_lst->sp_lst = NULL;
+	obj_lst->sq_lst = NULL;
+	obj_lst->pl_lst = NULL;
+	obj_lst->cy_lst = NULL;
+	obj_lst->tr_lst = NULL;
+}
+
+void destroy_lst(t_lst *obj_lst)
 {
 	int i;
-	int j;
 
-	i = 0;
-	j = 0;
-	while (ft_isdigit(prop[i]))
-		i++;
-	if (!i || !(prop[i] == '.'))
-		return (0);
-	if (!prop[i])
-		return (1);
-	i++;
-	while (ft_isdigit(prop[i + j]))
-		j++;
-	if (!j)
-		return (0);
-	return (!(prop[i + j]) ? 1 : 0);
+	if (obj_lst->r)
+		{
+			free(obj_lst->r);
+			obj_lst->r = NULL;
+		}
 }
