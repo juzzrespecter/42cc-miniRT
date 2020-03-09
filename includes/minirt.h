@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 20:13:39 by danrodri          #+#    #+#             */
-/*   Updated: 2020/03/01 17:35:33 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:24:32 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
+#define ROUND_ERR 1e-6
 
 typedef struct s_data
 {
 	void *mlx_ptr;
 	void *win_ptr;
 	void *img_ptr;
-	char *img;
 	int res_x;
 	int res_y;
 }				t_data;
@@ -117,7 +117,25 @@ typedef struct s_lst
 	t_tr *tr_lst;
 } t_lst;
 
+typedef struct s_3dvec
+{
+	float orig[3];
+	float dir[3];
+} t_3dvec;
+
+typedef struct s_point
+{
+	float *p_coord;
+	unsigned int color;
+	struct s_point *next;
+} t_point;
+
+
+
 bool scene_parser(char *scene, t_lst *obj_lst);
+char *pixel_loop(t_data *data, t_lst *obj_lst);
+t_point *search_for_collision(t_lst *obj_lst, float *pixel, float *cam_orig);
+unsigned int rgb_conv(unsigned char *rgb_color);
 
 bool colors_err(char *colors);
 bool bright_err(char *bright);
@@ -142,6 +160,12 @@ float bright_str_to_f(char *br_str);
 void coord_str_to_f(char *coord_str, float *coord);
 void color_str_to_i(char *color_str, unsigned char *color);
 float str_to_f(char *f_str);
+float dot_dist(float *p1, float *p2);
 
+t_point *sp_loop(t_sp *sp, t_3dvec *ray, t_point *a_point);
+t_point *cy_loop(t_cy *cy, t_3dvec *ray, t_point *a_point);
+t_point *tr_loop(t_tr *tr, t_3dvec *ray, t_point *a_point);
+t_point *pl_loop(t_pl *pl, t_3dvec *ray, t_point *a_point);
+t_point *sq_loop(t_sq *sq, t_3dvec *ray, t_point *a_point);
 
 # endif

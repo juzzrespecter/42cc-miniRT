@@ -36,8 +36,9 @@ int main(int argc, char **argv)
 {
 	t_lst obj_lst;
 	t_data data;
+	char *img;
 
-	if (!(argc == 2 || (argc == 3 && valid_ext(argv[2]))))
+	if (!(argc == 2 || (argc == 3 && !ft_strncmp(argv[2], "--save", ft_strlen(argv[2]) ) && valid_ext(argv[1]))))
 	{
 		display_error();
 		return (0);
@@ -49,8 +50,12 @@ int main(int argc, char **argv)
 			return (0);
 		}
 	build_data(&data, obj_lst.res);
-	get_scene(&data, &obj_lst);
-	if (argc == 3)
+	if (!(img = get_scene(&data, &obj_lst)))
+		{
+			display_error();
+			return (0);
+		}
+	if (argc == 3 )
 		save_scene_to_bmp(&data);
 	if (argc == 2)
 		put_scene_to_window(&data);
