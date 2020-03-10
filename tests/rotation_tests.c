@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 19:10:55 by danrodri          #+#    #+#             */
-/*   Updated: 2020/03/08 19:39:50 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:31:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,56 +43,22 @@ float get_angle(float vec1_1, float vec1_2, float vec2_1, float vec2_2)
 	return (angle);
 }
 
-t_vec3d *transformar_rayo(t_vec3d *r, t_vec3d *vo_vec)
+float  *world_to_view_matrix(t_vec3d *r, t_vec3d *v_lookat)
 {
-	float n[3];
-	float vec_angle[3];
-	float *vo;
-	float x, y, z;
+	float **matrix;
+	float v_tmp[3] = {0.0, 1.0, 0.0};
+	float v_up[3];
+	float v_right[3];
+
+	matrix = malloc((sizeof(float *) * 3) + (sizeof(float) * 9));
 
 
-	n[0] = 0;
-	n[1] = 0;
-	n[2] = -1;
 
-	vo = vo_vec->dir;
+	matrix[0][0] = v_lookat->dir[0];
+	matrix[0][1] = v_lookat->dir[1];
+	matrix[0][2] = v_lookat->dir[2];
 
-	vec_angle[0] = get_angle(r->dir[1], r->dir[2], n[1], n[2]);
-	vec_angle[1] = get_angle(r->dir[0], r->dir[2], n[0], n[2]);
-	vec_angle[2] = get_angle(r->dir[0], r->dir[1], n[0], n[1]);
-
-
-	printf("init: x(%f) y(%f) z(%f)\n", vo[0], vo[1], vo[2]);
-
-																// x rot
-	y = vo[1];
-	z = vo[2];
-	vo[1] = y * cos(-vec_angle[0]) - z * sin(-vec_angle[0]);
-	vo[2] = y * sin(-vec_angle[0]) + z * cos(-vec_angle[0]);
-
-	printf("rot x: x(%f) y(%f) z(%f)\n", vo[0], vo[1], vo[2]);
-
-																// y rot
-	x = vo[0];
-	z = vo[2];
-	vo[0] = x * cos(-vec_angle[1]) + z * sin(-vec_angle[1]);
-	vo[2] = x * -sin(-vec_angle[1]) + z * cos(-vec_angle[1]);
-
-	printf("rot y: x(%f) y(%f) z(%f)\n", vo[0], vo[1], vo[2]);
-
-																// z rot
-	x = vo[0];
-	y = vo[1];
-	vo[0] = x * cos(-vec_angle[2]) - z * sin(-vec_angle[2]);
-	vo[1] = x * sin(-vec_angle[2]) - z * cos(-vec_angle[2]);
-
-	printf("rot z: x(%f) y(%f) z(%f)\n", vo[0], vo[1], vo[2]);
-
-
-	r->dir[0] = vo[0];
-	r->dir[1] = vo[1];
-	r->dir[2] = vo[2];
-	return (r);
+	matrix[1][0] = v_
 }
 
 int main()
