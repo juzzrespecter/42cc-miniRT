@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:01:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 17:45:56 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 18:57:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ bool c_error_check(char **scene_line)
 	coord = scene_line[1];
 	vector = scene_line[2];
 	fov = scene_line[3];
+	printf("estado del tema: coord (%d), vector (%d), fov (%d)\n", coord_check(coord), vector_check(vector), fov_check(fov));
 	return (coord_check(coord) && vector_check(vector) \
-					&& fov_check(fov) ? true : false);
+										 && fov_check(fov) ? true : false);
 }

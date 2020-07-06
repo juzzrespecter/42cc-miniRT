@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:43:34 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 16:47:07 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:15:49 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool tr_error_check(char **scene_line)
 	second_coord = scene_line[2];
 	third_coord = scene_line[3];
 	color = scene_line[4];
+	printf("estado del tema: coord (%d), coord (%d), coord (%d), color (%d)\n", coord_check(first_coord), coord_check(second_coord), coord_check(third_coord), color_check(color));
 	return (coord_check(first_coord) && coord_check(second_coord) \
-					&& coord_check(third_coord)  && color_check(color) ? true : false);
+										 && coord_check(third_coord)  && color_check(color) ? true : false);
 }

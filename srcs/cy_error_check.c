@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:41:05 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 16:43:14 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:14:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ bool cy_error_check(char **scene_line)
 	d = scene_line[3];
 	h = scene_line[4];
 	color = scene_line[5];
+	printf("estado del tema: coord (%d), vector (%d), dim (%d), dim (%d), color (%d)\n", coord_check(coord), vector_check(vector), dim_check(d), dim_check(h), color_check(color));
 	return (coord_check(coord) && vector_check(vector) && dim_check(d)	\
-					&& dim_check(h) && color_check(color) ? true : false);
+										 && dim_check(h) && color_check(color) ? true : false);
 }

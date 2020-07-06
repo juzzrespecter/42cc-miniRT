@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:34:27 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 16:40:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:19:43 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ bool pl_error_check(char **scene_line)
 	coord = scene_line[1];
 	vector = scene_line[2];
 	color = scene_line[3];
+		printf("PLANE: estado del tema: coord (%d), vector (%d), color (%d)\n", coord_check(coord), vector_check(vector), color_check(color));
 	return (coord_check(coord) && vector_check(vector) \
-					&& color_check(color) ? true : false);
+										 && color_check(color) ? true : false);
 }

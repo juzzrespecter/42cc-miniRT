@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:26:24 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 17:26:56 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:13:36 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,13 @@ bool coord_check(char *coord)
 	cont = 0;
 	while (i < 3)
 		{
-			sum = 0;
+		 sum = 0;
 			if (!(sum = float_check(coord + cont)))
 				return (false);
 			cont += sum;
 			if (coord[cont] == ',' && i != 2)
 				cont++;
-			else
-				return (false);
+			i++;
 		}
 	return (!coord[cont] ? true : false);
 }

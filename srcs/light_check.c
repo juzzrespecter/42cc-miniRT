@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:24:51 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 17:37:23 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:26:44 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ bool light_check(char *light)
 		i++;
 	if (light[i] == '.' && i == 1)
 		i++;
-	if (ft_isdigit(light[i]) && i == 2)
+	if (light[0] == '0' && ft_isdigit(light[i]) && i == 2)
 		i++;
-	if (i == 1 && !light[i])
-		return (true);
-	if (i == 3 && light[0] != '1' && !light[i])
+	if (light[0] == '1' && light[i] == '0' && i == 2)
+		i++;
+	if ((i == 1 || i == 3) && !light[i])
 		return (true);
 	return (false);
 }

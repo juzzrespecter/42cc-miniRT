@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:58:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:40:53 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/06 19:39:07 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ bool check_syntax_scene(char *scene_file)
 			else
 				printf(":)\n");
 		}
-	return (true);
+		return (true);
 }
