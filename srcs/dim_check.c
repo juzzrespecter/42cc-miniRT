@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   dim_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 19:14:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:03:59 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/06 16:30:25 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/06 17:41:53 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minirt.h"
 
-size_t	ft_strlen(const char *s)
+bool dim_check(char *dim)
 {
-	size_t len;
+	int cont;
 
-	len = 0;
-	while (*s)
-	{
-		len++;
-		s++;
-	}
-	return (len);
+	cont = 0;
+	if (!ft_isdigit(dim[cont]))
+		return (false);
+	while (ft_isdigit(dim[cont]))
+		cont++;
+	if (dim[cont] == '.')
+		{
+		 cont++;
+		 if (!ft_isdigit(dim[cont]))
+			 return (false);
+		 while (ft_isdigit(dim[cont]))
+		 cont++;
+		}
+	return (!dim[cont] ? true : false);
 }

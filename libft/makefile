@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 15:49:46 by danrodri          #+#    #+#              #
-#    Updated: 2020/07/02 19:13:18 by danrodri         ###   ########.fr        #
+#    Updated: 2020/07/06 18:02:01 by danrodri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,13 +71,12 @@ RM		= rm -f
 
 CFLAGS		= -Wall -Werror -Wextra
 
+all:		$(NAME)
+
 $(NAME):	$(OBJS)
 		@ar rc $(NAME) $(OBJS)
 
-all:		$(NAME)
-
-bonus:
-		@cc $(CFLAGS) -c $(SRCS) $(SRCS_BONUS)
+bonus:		$(OBJS) $(OBJS_BONUS)
 		@ar rc $(NAME) $(OBJS) $(OBJS_BONUS)
 
 clean:

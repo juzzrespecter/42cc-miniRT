@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   check_scene_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 19:14:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:03:59 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/06 16:24:24 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/06 16:24:43 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minirt.h"
 
-size_t	ft_strlen(const char *s)
+bool check_scene_array(char **scene_line, int n_lines)
 {
-	size_t len;
+	int i;
 
-	len = 0;
-	while (*s)
-	{
-		len++;
-		s++;
-	}
-	return (len);
+	i = 0;
+	while (scene_line[i])
+		i++;
+	return (i == n_lines ? true : false);
 }

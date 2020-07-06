@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   a_error_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 19:14:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:03:59 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/06 15:48:54 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/06 16:27:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minirt.h"
 
-size_t	ft_strlen(const char *s)
+bool a_error_check(char **scene_line)
 {
-	size_t len;
+	char *light;
+	char *color;
 
-	len = 0;
-	while (*s)
-	{
-		len++;
-		s++;
-	}
-	return (len);
+	if (!check_scene_array(scene_line, 3))
+		return (false);
+	light = scene_line[1];
+	color = scene_line[2];
+	return (light_check(light) && color_check(color) ? true : false);
 }

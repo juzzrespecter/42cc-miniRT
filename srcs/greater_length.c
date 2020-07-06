@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   greater_length.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 19:14:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:03:59 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/06 16:23:44 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/06 16:24:14 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minirt.h"
 
-size_t	ft_strlen(const char *s)
+int greater_length(char *s1, char *s2)
 {
-	size_t len;
+	int s1_len;
+	int s2_len;
 
-	len = 0;
-	while (*s)
-	{
-		len++;
-		s++;
-	}
-	return (len);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	return (s1_len > s2_len ? s1_len : s2_len);
 }
