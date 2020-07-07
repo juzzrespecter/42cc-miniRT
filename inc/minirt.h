@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 16:47:24 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/07 20:14:11 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_res
 typedef struct s_amb
 {
 	float light;
-	unsigned char color;
+	unsigned char color[3];
 } t_amb;
 
 typedef struct s_cam
@@ -43,7 +43,7 @@ typedef struct s_light
 {
 	float coord[3];
 	float light;
-	unsigned char color;
+	unsigned char color[3];
 	struct s_light *next;
 } t_light;
 
@@ -51,7 +51,7 @@ typedef struct s_sp
 {
 	float coord[3];
 	float d;
-	unsigned char color;
+	unsigned char color[3];
 	struct s_sp *next;
 } t_sp;
 
@@ -59,7 +59,7 @@ typedef struct s_pl
 {
 	float coord[3];
 	float vector[3];
-	unsigned char color;
+	unsigned char color[3];
 	struct s_pl *next;
 } t_pl;
 
@@ -68,7 +68,7 @@ typedef struct s_sq
 	float coord[3];
 	float vector[3];
 	float side;
-	unsigned char color;
+	unsigned char color[3];
 	struct s_sq *next;
 } t_sq;
 
@@ -78,7 +78,7 @@ typedef struct s_cy
 	float vector[3];
 	float d;
 	float h;
-	unsigned char color;
+	unsigned char color[3];
 	struct s_cy *next;
 } t_cy;
 
@@ -87,7 +87,7 @@ typedef struct s_tr
 	float first_coord[3];
 	float second_coord[3];
 	float third_coord[3];
-	unsigned char color;
+	unsigned char color[3];
 	struct s_tr *next;
 } t_tr;
 
@@ -104,7 +104,9 @@ typedef struct s_objlst
 	t_tr *tr;
 } t_objlst;
 
-bool check_syntax_scene(char *scene_file);
+t_objlst *check_syntax_scene(char *scene_file);
+void setup_obj_lst(t_objlst *obj_lst);
+void delete_obj_lst(t_objlst *obj_lst);
 int greater_length(char *s1, char *s2);
 bool check_scene_array(char **scene_line, int n_lines);
 bool res_error_check(char **scene_line);
@@ -113,14 +115,17 @@ bool color_check(char *color);
 bool coord_check(char *coord);
 bool vector_check(char *vector);
 bool dim_check(char *dim);
-bool res_error_check(char **scene_line);
-bool a_error_check(char **scene_line);
-bool c_error_check(char **scene_line);
-bool l_error_check(char **scene_line);
-bool sp_error_check(char **scene_line);
-bool pl_error_check(char **scene_line);
-bool sq_error_check(char **scene_line);
-bool cy_error_check(char **scene_line);
-bool tr_error_check(char **scene_line);
+float char_to_float(char *array);
+void array_char_to_float(float coord[3], char *array);
+void char_to_color(unsigned char color[3], char *array);
+bool res_build_obj(char **scene_line, t_objlst *obj_lst);
+bool a_build_obj(char **scene_line, t_objlst *obj_lst);
+bool l_build_obj(char **scene_line, t_objlst *obj_lst);
+bool c_build_obj(char **scene_line, t_objlst *obj_lst);
+bool sp_build_obj(char **scene_line, t_objlst *obj_lst);
+bool pl_build_obj(char **scene_line, t_objlst *obj_lst);
+bool sq_build_obj(char **scene_line, t_objlst *obj_lst);
+bool cy_build_obj(char **scene_line, t_objlst *obj_lst);
+bool tr_build_obj(char **scene_line, t_objlst *obj_lst);
 
 #endif

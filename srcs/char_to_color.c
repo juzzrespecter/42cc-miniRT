@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   res_error_check.c                                  :+:      :+:    :+:   */
+/*   char_to_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/06 15:30:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:40:20 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/07 18:24:47 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/07 18:28:14 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-bool res_error_check(char **scene_line)
+void char_to_color(unsigned char color[3], char *array)
 {
-	int x_res;
-	int y_res;
+	int count;
+	int i;
 
-	if (!check_scene_array(scene_line, 3))
-			return (false);
-	x_res = ft_atoi(scene_line[1]);
-	y_res = ft_atoi(scene_line[2]);
-	return ((x_res > 0 && y_res > 0) ? true : false);
+	count = 0;
+	i = 0;
+	while (i < 3)
+		{
+			color[i] = ft_atoi(array + count);
+			while (ft_isdigit(array[count]))
+				count++;
+			if (array[count] == ',')
+				count++;
+			i++;
+		}
 }
