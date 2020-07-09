@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/08 17:26:18 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 19:46:55 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <math.h>
+#include <mlx.h>
+
+typedef struct s_data
+{
+	void *mlx_ptr;
+	void *img_ptr;
+} t_data;
 
 typedef struct s_res
 {

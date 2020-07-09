@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/02 18:41:24 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 20:06:25 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,20 @@ static bool check_valid_args(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
+	t_objlst *obj_lst;
+	t_data data;
+
 	if (!check_valid_args(argc, argv))
 		{
 			printf("error al introducir los argumentos.\n");
 			exit(1);
 		}
-	if (!check_syntax_scene(argv[1]))
+	if (!(obj_lst = check_syntax_scene(argv[1])))
 		{
 			printf("error al leer la escena.\n");
 			exit(1);
 		}
+	data.mlx_ptr = mlx_init();
+	data.img_ptr = mlx_new_image(data.mlx_ptr, obj_lst->res->x_res, obj_lst->res->y_res);
+
 }

@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_obj_lst.c                                    :+:      :+:    :+:   */
+/*   draw_image.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 17:04:51 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 19:02:01 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/09 19:59:54 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-void setup_obj_lst(t_objlst *obj_lst)
+char *draw_image(t_objlst *obj_lst, t_data data)
 {
-	obj_lst->res = NULL;
-	obj_lst->amb = NULL;
-	obj_lst->cam = NULL;
-	obj_lst->light = NULL;
-	obj_lst->sp = NULL;
-	obj_lst->pl = NULL;
-	obj_lst->sq = NULL;
-	obj_lst->cy = NULL;
-	obj_lst->tr = NULL;
+	char *img;
+	int bits_per_pixel;
+	int size_line;
+	int endian;
+
+	//
+	img = mlx_get_data_addr(data.img_ptr, &bits_per_pixel, &size_line, &endian);
 }
