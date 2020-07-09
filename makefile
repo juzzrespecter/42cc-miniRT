@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/07/07 20:14:58 by danrodri         ###   ########.fr        #
+#    Updated: 2020/07/08 18:51:00 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -67,3 +67,7 @@ clean:
 fclean:		clean
 		@rm $(NAME)
 		@make fclean -C libft
+
+debug:
+		@make -C libft
+		$(GCC) -g -o $(NAME) $(addprefix $(SRCSDIR), $(SRCS)) $(LIB) $(MLXLIB)

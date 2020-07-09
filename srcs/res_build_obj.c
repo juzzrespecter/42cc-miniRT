@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 16:57:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 17:40:17 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:04:59 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool res_build_obj(char **scene_line, t_objlst *obj_lst)
 	y_res = ft_atoi(scene_line[2]);
 	if (!(x_res > 0 && y_res > 0))
 		return (false);
-	if (!(res = malloc(sizeof(t_res *))))
+	if (!(res = malloc(sizeof(t_res))))
 		return (false);
 	res->x_res = x_res;
 	res->y_res = y_res;

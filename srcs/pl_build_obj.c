@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 19:19:46 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 19:38:05 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:06:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static void add_pl_to_back(t_pl **apl, t_pl *pl)
+static void add_pl_to_back(t_objlst *obj_lst, t_pl *pl)
 {
 	t_pl *pl_aux;
 
-	pl_aux = *apl;
+	pl_aux = obj_lst->pl;
 	if (!pl_aux)
-		*apl = pl;
+		obj_lst->pl = pl;
 	else
 		{
 			while (pl_aux->next)
@@ -41,12 +41,12 @@ bool pl_build_obj(char **scene_line, t_objlst *obj_lst)
 	color = scene_line[3];
 	if (!(coord_check(coord) && vector_check(vector) && color_check(color)))
 		return (false);
-	if (!(pl = malloc(sizeof(t_pl *))))
+	if (!(pl = malloc(sizeof(t_pl))))
 		return (false);
 	array_char_to_float(pl->coord, coord);
 	array_char_to_float(pl->vector, vector);
 	char_to_color(pl->color, color);
 	pl->next = NULL;
-	add_pl_to_back(&obj_lst->pl, pl);
+	add_pl_to_back(obj_lst, pl);
 	return (true);
 }

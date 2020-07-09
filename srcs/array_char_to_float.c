@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 17:45:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 20:24:18 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/08 19:15:21 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ float char_to_float(char *array)
 	if (array[count + neg] == '.')
 		{
 			count++;
-			dec = ft_atoi(array + count + neg);
-			num = ((intgr * digit_count(dec)) + dec) / digit_count(dec);
+			if ((dec = ft_atoi(array + count + neg)))
+				num = ((intgr * pow(10, digit_count(dec))) + dec) / pow(10, digit_count(dec));
 		}
 	return (neg ? num * -1 : num);
 }
 
-void array_char_to_float(float coord[3], char *array)
+void array_char_to_float(float *coord, char *array)
 {
 	int i;
 	int count;

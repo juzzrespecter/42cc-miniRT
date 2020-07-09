@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:58:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 20:27:22 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:04:55 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static bool check_elem_list(char **scene_line, t_objlst *obj_lst)
 
 t_objlst *check_syntax_scene(char *scene_file)
 {
-	//comprobar si el fichero abre
 	//comprobar la informacion del fichero
 	//comprobar casos concretos (resolucion y ambiente no duplican...)
 	//comprobar si hay camara en la escena!!
@@ -55,20 +54,26 @@ t_objlst *check_syntax_scene(char *scene_file)
 			printf("error al abrir el fichero.\n");
 			return (NULL);
 		}
-	if (!(obj_lst = malloc(sizeof(t_objlst *))))
+	if (!(obj_lst = malloc(sizeof(t_objlst))))
 		return (NULL);
 	setup_obj_lst(obj_lst);
+	printf("\t\tcam check (%p)\n", obj_lst->cam);
 	while ((get_next_line(fd, &line)) == 1)
 		{
-			if (!(scene_line = ft_split(line, ' ')))
-				return (NULL);
-			printf("mirando (%s)\n", scene_line[0]);
-			if (!check_elem_list(scene_line, obj_lst))
+		if (*line)
 				{
-					printf("error en la escena.\n");
-					//delete_obj_lst(obj_lst);
-					return (NULL);
+					if (!(scene_line = ft_split(line, ' ')))
+						return (NULL);
+					printf("mirando (%s)\n", scene_line[0]);
+					if (!check_elem_list(scene_line, obj_lst))
+						{
+							printf("error en la escena.\n");
+							//delete_obj_lst(obj_lst);
+							return (NULL);
+						}
+					free(scene_line);
 				}
+			free(line);
 		}
 		return (obj_lst);
 }

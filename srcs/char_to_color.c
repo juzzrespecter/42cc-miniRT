@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 18:24:47 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 18:28:14 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/08 16:39:46 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-void char_to_color(unsigned char color[3], char *array)
+void char_to_color(unsigned char *color, char *array)
 {
 	int count;
 	int i;

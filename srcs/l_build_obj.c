@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 17:12:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 19:07:26 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:05:59 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static void add_light_to_back(t_light **alight, t_light *light)
+static void add_light_to_back(t_objlst *obj_lst, t_light *light)
 {
 	t_light *light_aux;
 
-	light_aux = *alight;
+	light_aux = obj_lst->light;
 	if (!light_aux)
-		*alight = light;
+		obj_lst->light = light;
 	else
 		{
 			while (light_aux->next)
@@ -41,12 +41,12 @@ bool l_build_obj(char **scene_line, t_objlst *obj_lst)
 	color = scene_line[3];
 	if (!(coord_check(coord) && light_check(bright) &&  color_check(color)))
 			return (false);
-	if (!(light = malloc(sizeof(t_light *))))
+	if (!(light = malloc(sizeof(t_light))))
 		return (false);
 	array_char_to_float(light->coord, coord);
 	light->light = char_to_float(bright);
 	char_to_color(light->color, color);
 	light->next = NULL;
-	add_light_to_back(&obj_lst->light, light);
+	add_light_to_back(obj_lst, light);
 	return (true);
 }

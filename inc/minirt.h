@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 20:14:11 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/08 17:26:18 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <math.h>
 
 typedef struct s_res
 {
@@ -116,8 +117,8 @@ bool coord_check(char *coord);
 bool vector_check(char *vector);
 bool dim_check(char *dim);
 float char_to_float(char *array);
-void array_char_to_float(float coord[3], char *array);
-void char_to_color(unsigned char color[3], char *array);
+void array_char_to_float(float *coord, char *array);
+void char_to_color(unsigned char *color, char *array);
 bool res_build_obj(char **scene_line, t_objlst *obj_lst);
 bool a_build_obj(char **scene_line, t_objlst *obj_lst);
 bool l_build_obj(char **scene_line, t_objlst *obj_lst);

@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 19:58:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 20:09:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:07:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static void add_tr_to_back(t_tr **atr, t_tr *tr)
+static void add_tr_to_back(t_objlst *obj_lst, t_tr *tr)
 {
 	t_tr *tr_aux;
 
-	tr_aux = *atr;
+	tr_aux = obj_lst->tr;
 	if (!tr_aux)
-		*atr = tr;
+		obj_lst->tr = tr;
 	else
 		{
 			while (tr_aux->next)
@@ -44,13 +44,13 @@ bool tr_build_obj(char **scene_line, t_objlst *obj_lst)
 	if (!(coord_check(first_coord) && coord_check(second_coord) \
 				 && coord_check(third_coord)  && color_check(color)))
 		return (false);
-	if (!(tr = malloc(sizeof(t_tr *))))
+	if (!(tr = malloc(sizeof(t_tr))))
 		return (false);
 	array_char_to_float(tr->first_coord, first_coord);
 	array_char_to_float(tr->second_coord, second_coord);
 	array_char_to_float(tr->third_coord, third_coord);
 	char_to_color(tr->color, color);
 	tr->next = NULL;
-	add_tr_to_back(&obj_lst->tr, tr);
+	add_tr_to_back(obj_lst, tr);
 	return (true);
 }

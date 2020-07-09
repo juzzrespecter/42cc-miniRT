@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 19:02:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/07 20:31:24 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:05:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,13 @@ static bool fov_check(char *fov)
 	return (!fov[i] ? true : false);
 }
 
-static void add_cam_to_back(t_cam **acam, t_cam *cam)
+static void add_cam_to_back(t_objlst *obj_lst, t_cam *cam)
 {
 	t_cam *cam_aux;
 
-	printf("check\n");
-	cam_aux = *acam;
+	cam_aux = obj_lst->cam;
 	if (!cam_aux)
-		{
-			printf("para confirmar, ");
-			*acam = cam;
-			printf("el tema revienta aqui.\n");
-		}
+		obj_lst->cam = cam;
 	else
 		{
 			while (cam_aux->next)
@@ -62,12 +57,12 @@ bool c_build_obj(char **scene_line, t_objlst *obj_lst)
 	fov = scene_line[3];
 	if (!(coord_check(coord) && vector_check(vector) && fov_check(fov)))
 		return (false);
-	if (!(cam = malloc(sizeof(t_cam *))))
+	if (!(cam = malloc(sizeof(t_cam))))
 		return (false);
 	array_char_to_float(cam->coord, coord);
 	array_char_to_float(cam->vector, vector);
 	cam->fov = ft_atoi(fov);
 	cam->next = NULL;
-	add_cam_to_back(&obj_lst->cam, cam);
+	add_cam_to_back(obj_lst, cam);
 	return (true);
 }
