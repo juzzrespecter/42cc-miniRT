@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 19:46:55 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:37:16 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ typedef struct s_data
 {
 	void *mlx_ptr;
 	void *img_ptr;
+	int x_res;
+	int y_res;
+	int bits_per_pixel;
+	int size_line;
+	int endian;
 } t_data;
 
 typedef struct s_res
@@ -135,5 +140,6 @@ bool pl_build_obj(char **scene_line, t_objlst *obj_lst);
 bool sq_build_obj(char **scene_line, t_objlst *obj_lst);
 bool cy_build_obj(char **scene_line, t_objlst *obj_lst);
 bool tr_build_obj(char **scene_line, t_objlst *obj_lst);
+char *draw_image(t_objlst *obj_lst, t_data data, char *img);
 
 #endif

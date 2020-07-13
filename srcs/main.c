@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 20:06:25 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/13 16:38:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int main(int argc, char **argv)
 {
 	t_objlst *obj_lst;
 	t_data data;
+	char *img;
 
 	if (!check_valid_args(argc, argv))
 		{
@@ -50,5 +51,13 @@ int main(int argc, char **argv)
 		}
 	data.mlx_ptr = mlx_init();
 	data.img_ptr = mlx_new_image(data.mlx_ptr, obj_lst->res->x_res, obj_lst->res->y_res);
-
+	data.x_res = obj_lst->res->x_res;
+	data.y_res = obj_lst->res->y_res;
+	if (!(img = mlx_get_data_addr(data.img_ptr, &data.bits_per_pixel, &data.size_line, &data.endian)))
+		{
+			printf("error al crear la imagen.\n");
+			delete_obj_lst(obj_lst);
+			exit(1);
+		}
+	img = draw_image(obj_lst, data, img);
 }
