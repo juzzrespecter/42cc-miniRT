@@ -6,13 +6,14 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/13 16:37:16 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/14 18:48:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 #define MINIRT_H
 #include "../libft/libft.h"
+#include "vector.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -116,6 +117,13 @@ typedef struct s_objlst
 	t_cy *cy;
 	t_tr *tr;
 } t_objlst;
+
+typedef struct s_point
+{
+	float coord[3];
+	unsigned int color;
+	struct s_point *next;
+} t_point;
 
 t_objlst *check_syntax_scene(char *scene_file);
 void setup_obj_lst(t_objlst *obj_lst);

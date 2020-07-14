@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/07/13 19:34:26 by danrodri         ###   ########.fr        #
+#    Updated: 2020/07/14 19:27:49 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -35,7 +35,10 @@ SRCS		= main.c \
 			cy_build_obj.c \
 			tr_build_obj.c \
 			draw_image.c \
-			search_for_collision.c
+			search_for_collision.c \
+			vector_operations.c \
+			obj_loops.c \
+			sp_collision.c
 
 NAME		= miniRT
 

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/13 19:44:06 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/14 19:49:40 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,20 @@
 //transformaciones: escala, traslacion, rotacion
 //mirar cuaterniones para evitar el 'gimbal lock'
 
+//matrices: model matrix (modeltoworld), view matrix (worldtoview)
+
 #ifndef VECTOR_H
 #define VECTOR_H
 
 typedef struct s_3dvec
 {
-	float orig[3];
-	float dir[3];
+	float orig[4];
+	float dir[4];
 } t_3dvec;
+
+float length(t_3dvec v);
+float dot(t_3dvec v1, t_3dvec v2);
+t_3dvec cross(t_3dvec v1, t_3dvec v2);
+t_3dvec m_v_prod(t_3dvec v, float matrix[4][4]);
 
 #endif

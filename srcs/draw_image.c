@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/13 19:42:05 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/14 19:43:01 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 
 char *draw_image(t_objlst *obj_lst, t_data data, char *img)
 {
+	t_point *point;
+	t_3dvec ray;
 	int x;
 	int y;
 	int i;
@@ -43,11 +45,23 @@ char *draw_image(t_objlst *obj_lst, t_data data, char *img)
 	x = 0;
 	y = 0;
 	i = 0;
+	point = NULL;
 	while (data.x_res < x)
 		{
 			while (data.y_res < y)
 				{
 					i = (x * (data.bits_per_pixel / 8) + (y * data.size_line));
+					// coordenadas del rayo en VIEW SPACE
+					//pixel - x coord
+					ray.dir[0] = ;
+					//pixel - y coord
+					ray.dir[1] = ;
+					//pixel - z coord
+					ray.dir[2] = -1;
+					if (!(point = search_for_collision(obj_lst, point, ray)))
+						return (NULL);
+					point = choose_point(point);
+					*(unsigned int *)(img + i) = get_pixel_color(obj_lst->light, point);
 				}
 		}
 	return (img);
