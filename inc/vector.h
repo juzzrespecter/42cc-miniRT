@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/14 19:49:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/15 19:46:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 //mirar cuaterniones para evitar el 'gimbal lock'
 
 //matrices: model matrix (modeltoworld), view matrix (worldtoview)
+//lookat -> camtoworld matrix -> view matrix
+//escalar -> rotar -> transladar
+
+//column vectors??
+
 
 #ifndef VECTOR_H
 #define VECTOR_H
@@ -27,9 +32,11 @@ typedef struct s_3dvec
 	float dir[4];
 } t_3dvec;
 
-float length(t_3dvec v);
-float dot(t_3dvec v1, t_3dvec v2);
-t_3dvec cross(t_3dvec v1, t_3dvec v2);
-t_3dvec m_v_prod(t_3dvec v, float matrix[4][4]);
+float length(float v[4]);
+float dot(float v1[4], float v2[4]);
+void cross(float v1[4], float v2[4], float cross[4]);
+void m_v_prod(float v[4], float matrix[4][4], float v_prod[4]);
+void matrix_prod(float m1[4][4], float m2[4][4], float m_res[4][4]);
+void view_transform(float normal[3], float eye[3], float view_m[4][4]);
 
 #endif
