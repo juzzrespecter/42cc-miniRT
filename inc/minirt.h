@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/15 16:18:18 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/16 19:48:22 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define MINIRT_H
 #include "../libft/libft.h"
 #include "vector.h"
-#include <stdbool.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -118,13 +117,6 @@ typedef struct s_objlst
 	t_tr *tr;
 } t_objlst;
 
-typedef struct s_point
-{
-	float coord[3];
-	unsigned int color;
-	bool found_p;
-} t_point;
-
 t_objlst *check_syntax_scene(char *scene_file);
 void setup_obj_lst(t_objlst *obj_lst);
 void delete_obj_lst(t_objlst *obj_lst);
@@ -149,12 +141,12 @@ bool sq_build_obj(char **scene_line, t_objlst *obj_lst);
 bool cy_build_obj(char **scene_line, t_objlst *obj_lst);
 bool tr_build_obj(char **scene_line, t_objlst *obj_lst);
 char *draw_image(t_objlst *obj_lst, t_data data, char *img);
-t_point search_for_collision(t_objlst *obj_lst, t_3dvec ray);
-void sp_loop(t_sp *sp, t_point *point, t_cam *cam, t_3dvec ray);
-void pl_loop(t_pl *pl, t_point *point, t_cam *cam, t_3dvec ray);
-void sq_loop(t_sq *sq, t_point *point, t_cam *cam, t_3dvec ray);
-void cy_loop(t_cy *cy, t_point *point, t_cam *cam, t_3dvec ray);
-void tr_loop(t_tr *tr, t_point *point, t_cam *cam, t_3dvec ray);
-void sp_collision(t_sp *sp, t_point *point, t_cam *cam, t_3dvec ray);
+void search_for_collision(t_objlst *obj_lst, t_3dvec *ray);
+void sp_loop(t_sp *sp, t_cam *cam, t_3dvec ray);
+void pl_loop(t_pl *pl, t_cam *cam, t_3dvec ray);
+void sq_loop(t_sq *sq, t_cam *cam, t_3dvec ray);
+void cy_loop(t_cy *cy, t_cam *cam, t_3dvec ray);
+void tr_loop(t_tr *tr, t_cam *cam, t_3dvec ray);
+void sp_collision(t_sp *sp,  t_cam *cam, t_3dvec ray);
 
 #endif

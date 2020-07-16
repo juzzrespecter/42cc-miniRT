@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 17:54:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/15 20:16:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/16 19:34:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-static void linear_trnsfm(float normal[3], float r[4][4])
+static void linear_transform(float normal[3], float r[4][4])
 {
 	float temp_up[3];
 	float right[4];
@@ -41,7 +41,7 @@ static void linear_trnsfm(float normal[3], float r[4][4])
 	r[3][3] = 1;
 }
 
-static void translation_trnsfm(float eye[3], float t[4][4])
+static void translation_transform(float eye[3], float t[4][4])
 {
 	int i;
 	int j;
@@ -69,7 +69,12 @@ void view_transform(float normal[3], float eye[3], float view_m[4][4])
 	float r[4][4];
 	float t[4][4];
 
-	linear_trnsfm(normal, r);
-	translation_trnsfm(eye, t);
+	linear_transform(normal, r);
+	translation_transform(eye, t);
 	matrix_prod(r, t, view_m);
+}
+
+void cam_to_world_transform(float ctow_m[4][4], t_cam *cam)
+{
+
 }
