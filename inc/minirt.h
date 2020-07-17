@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/16 19:48:22 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/17 18:12:02 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ void pl_loop(t_pl *pl, t_cam *cam, t_3dvec ray);
 void sq_loop(t_sq *sq, t_cam *cam, t_3dvec ray);
 void cy_loop(t_cy *cy, t_cam *cam, t_3dvec ray);
 void tr_loop(t_tr *tr, t_cam *cam, t_3dvec ray);
-void sp_collision(t_sp *sp,  t_cam *cam, t_3dvec ray);
+void sp_collision(t_sp *sp,  t_cam *cam, t_3dvec *ray);
 
 #endif
