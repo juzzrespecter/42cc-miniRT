@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/16 19:42:55 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/20 19:57:01 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 #include <stdbool.h>
+#include <math.h>
 
 typedef struct s_3dvec
 {
@@ -41,6 +42,8 @@ float dot(float *v1, float *v2);
 void cross(float *v1, float *v2, float *cross);
 void m_v_prod(float v[4], float matrix[4][4], float v_prod[4]);
 void matrix_prod(float m1[4][4], float m2[4][4], float m_res[4][4]);
+void set_id_matrix(float matrix[4][4]);
 void wtov_transform(float normal[3], float eye[3], float wtov_m[4][4]);
+void otow_transform(float *ov_obj, float *ov_world, float *c_world, float otow_m[4][4]);
 
 #endif
