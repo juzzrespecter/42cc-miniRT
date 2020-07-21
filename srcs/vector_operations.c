@@ -6,12 +6,14 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 17:32:49 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/16 19:43:42 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/21 19:46:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/vector.h"
 #include "../inc/minirt.h"
+
+//revisar lal multiplicacion entre matrices y vectores
 
 float length(float *v)
 {
@@ -47,5 +49,19 @@ void m_v_prod(float *v, float matrix[4][4], float *v_prod)
 				}
 			i++;
 			j = 0;
+		}
+}
+
+void normalize(float *v)
+{
+	int i;
+	float mod;
+
+	i = 0;
+	mod = length(v);
+	while (i < 3)
+		{
+			v[i] /= mod;
+			i++;
 		}
 }

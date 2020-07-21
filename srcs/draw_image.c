@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/16 19:25:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/21 18:08:53 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,48 @@
 //hay que transformarlo con m_cam_to_world en coordenadas de espacio mundo
 //point (o algun identificador de colision) en la estructura rayo??
 
-void cam_to_world_transform(float ctow_m[4][4], t_cam *cam)
-{
-
-}
-
 static t_3dvec *build_ray(float x, float y, t_cam *cam)
 {
 	float ctow_m[4][4];
+	float dir_screen[3];
 	t_3dvec *ray;
-	int z;
 
 	if (!(ray = malloc(sizeof(t_3dvec))))
 		return (NULL);
 	ray->found_col = false;
-	z = -1;
-	cam_to_world_transform(ctow_m, cam);
+	ctow_transform(cam->vector, cam->vector, ctow_m);
+	dir_screen[0] = x;
+	dir_screen[1] = y;
+	dir_screen[2] = -1;
+	normalize(dir_screen);
+	m_v_prod(dir_screen, ctow_m, ray->dir);
+	normalize(ray->dir);
+	ray->orig[0] = cam->coord[0];
+	ray->orig[1] = cam->coord[1];
+	ray->orig[2] = cam->coord[2];
 	return (ray);
 }
 
 static float x_pixel(t_data data, int x, int fov)
 {
 	float x_pixel;
+	float NDC_pixel;
+	float ratio;
+
+	ratio = data.x_res / data.y_res;
+	NDC_pixel = (x + 0.5) / data.x_res;
+	x_pixel = (2 * NDC_pixel - 1)  * ratio * tan(fov / 2);
+	return (x_pixel);
 }
 
 static float y_pixel(t_data data, int y, int fov)
 {
 	float y_pixel;
+	float NDC_pixel;
+
+	NDC_pixel = (y + 0.5) / data.y_res;
+	y_pixel = (1 - 2 * NDC_pixel) * tan(fov / 2);
+	return (y_pixel);
 }
 
 char *draw_image(t_objlst *obj_lst, t_data data, char *img)
@@ -87,6 +102,7 @@ char *draw_image(t_objlst *obj_lst, t_data data, char *img)
 					ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), obj_lst->cam);
 					search_for_collision(obj_lst, ray);
 					*(unsigned int *)(img + i) = get_pixel_color(obj_lst->light, &ray);
+					free(ray);
 				}
 		}
 	return (img);

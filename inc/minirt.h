@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/20 19:43:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/21 17:44:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,11 @@ bool cy_build_obj(char **scene_line, t_objlst *obj_lst);
 bool tr_build_obj(char **scene_line, t_objlst *obj_lst);
 char *draw_image(t_objlst *obj_lst, t_data data, char *img);
 void search_for_collision(t_objlst *obj_lst, t_3dvec *ray);
-void sp_loop(t_sp *sp, t_cam *cam, t_3dvec ray);
-void pl_loop(t_pl *pl, t_cam *cam, t_3dvec ray);
-void sq_loop(t_sq *sq, t_cam *cam, t_3dvec ray);
-void cy_loop(t_cy *cy, t_cam *cam, t_3dvec ray);
-void tr_loop(t_tr *tr, t_cam *cam, t_3dvec ray);
+void sp_loop(t_sp *sp, t_cam *cam, t_3dvec *ray);
+void pl_loop(t_pl *pl, t_cam *cam, t_3dvec *ray);
+void sq_loop(t_sq *sq, t_cam *cam, t_3dvec *ray);
+void cy_loop(t_cy *cy, t_cam *cam, t_3dvec *ray);
+void tr_loop(t_tr *tr, t_cam *cam, t_3dvec *ray);
 void sp_collision(t_sp *sp,  t_cam *cam, t_3dvec *ray);
 
 #endif
