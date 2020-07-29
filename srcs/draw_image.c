@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/21 18:08:53 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/29 17:27:04 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,18 @@
 
 static t_3dvec *build_ray(float x, float y, t_cam *cam)
 {
-	float ctow_m[4][4];
 	float dir_screen[3];
 	t_3dvec *ray;
 
 	if (!(ray = malloc(sizeof(t_3dvec))))
 		return (NULL);
-	ray->found_col = false;
-	ctow_transform(cam->vector, cam->vector, ctow_m);
+	ray->point_found = false;
 	dir_screen[0] = x;
 	dir_screen[1] = y;
 	dir_screen[2] = -1;
-	normalize(dir_screen);
-	m_v_prod(dir_screen, ctow_m, ray->dir);
-	normalize(ray->dir);
+	norm(dir_screen);
+	vmprod(dir_screen, cam->c2w_m, ray->dir);
+	norm(ray->dir);
 	ray->orig[0] = cam->coord[0];
 	ray->orig[1] = cam->coord[1];
 	ray->orig[2] = cam->coord[2];
@@ -100,8 +98,8 @@ char *draw_image(t_objlst *obj_lst, t_data data, char *img)
 				{
 					i = (x * (data.bits_per_pixel / 8) + (y * data.size_line));
 					ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), obj_lst->cam);
-					search_for_collision(obj_lst, ray);
-					*(unsigned int *)(img + i) = get_pixel_color(obj_lst->light, &ray);
+					search_for_collision(obj_lst, ray); //collision loop
+					*(unsigned int *)(img + i) = get_pixel_color(obj_lst, ray); //light loop
 					free(ray);
 				}
 		}

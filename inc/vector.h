@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/21 18:02:26 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/29 19:23:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,21 @@ typedef struct s_3dvec
 {
 	float orig[4];
 	float dir[4];
-	float coord_col[3];
-	unsigned int color_col;
-	bool found_col;
+	float point_coord[3];
+	float normal_vector[3];
+	unsigned char point_color[3];
+	bool point_found;
 } t_3dvec;
 
 float length(float *v);
 float dot(float *v1, float *v2);
 void cross(float *v1, float *v2, float *cross);
-void m_v_prod(float v[4], float matrix[4][4], float v_prod[4]);
-void normalize(float *v);
-void matrix_prod(float m1[4][4], float m2[4][4], float m_res[4][4]);
+void norm(float *v);
+void vmprod(float v[4], float matrix[4][4], float v_prod[4]);
+void mprod(float m1[4][4], float m2[4][4], float m_res[4][4]);
 void set_id_matrix(float matrix[4][4]);
-void wtov_transform(float normal[3], float eye[3], float wtov_m[4][4]);
-void ctow_transform(float *forward, float *eye, float ctow_m[4][4]);
-void otow_transform(float *ov_obj, float *ov_world, float *c_world, float otow_m[4][4]);
+void cam2world_matrix(float *forward, float *eye, float c2w_m[4][4]);
+void obj2world_matrix(float *orig, float *obj_or, float *world_or, float o2w_m[4][4]);
+void translate(float *point, float *move);
 
 #endif

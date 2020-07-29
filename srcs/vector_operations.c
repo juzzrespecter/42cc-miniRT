@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 17:32:49 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/21 19:46:09 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/29 17:47:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,7 @@ void cross(float *v1, float *v2, float *cross)
 	cross[3] = 1;
 }
 
-void m_v_prod(float *v, float matrix[4][4], float *v_prod)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < 4)
-		{
-			while (j < 4)
-				{
-					v_prod[i] += v[j] * matrix[i][j];
-					j++;
-				}
-			i++;
-			j = 0;
-		}
-}
-
-void normalize(float *v)
+void norm(float *v)
 {
 	int i;
 	float mod;

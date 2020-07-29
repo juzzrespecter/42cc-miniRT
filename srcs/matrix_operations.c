@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 17:44:07 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/20 19:57:18 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/29 17:45:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void m_res_fill(float m[4][4], float m_res[4][4])
 		}
 }
 
-void matrix_prod(float m1[4][4], float m2[4][4], float m_res[4][4])
+void mprod(float m1[4][4], float m2[4][4], float m_res[4][4])
 {
 	float m_aux[4][4];
 	int i;
@@ -65,6 +65,37 @@ void set_id_matrix(float matrix[4][4])
 			while (j < 4)
 				{
 					matrix[i][j] = 1 * (i == j);
+					j++;
+				}
+			i++;
+			j = 0;
+		}
+}
+
+void translate(float *point, float *move)
+{
+	int i;
+
+	i = 0;
+	while (i < 3)
+		{
+			point[i] += move[i];
+			i++;
+		}
+}
+
+void vmprod(float *v, float matrix[4][4], float *v_prod)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (i < 4)
+		{
+			while (j < 4)
+				{
+					v_prod[i] += v[j] * matrix[i][j];
 					j++;
 				}
 			i++;

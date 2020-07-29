@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_for_collision.c                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/13 17:05:40 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 19:16:08 by danrodri         ###   ########.fr       */
+/*   Created: 2020/07/29 19:55:53 by danrodri          #+#    #+#             */
+/*   Updated: 2020/07/29 19:56:17 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
-
-void search_for_collision(t_objlst *obj_lst, t_3dvec *ray)
+double ft_max(double a, double b)
 {
-	if (obj_lst->sp)
-		sp_loop(obj_lst->sp, ray);
-	if (obj_lst->pl)
-		pl_loop(obj_lst->pl, ray);
-	if (obj_lst->sq)
-		sq_loop(obj_lst->sq, ray);
-	if (obj_lst->cy)
-		cy_loop(obj_lst->cy, ray);
-	if (obj_lst->tr)
-		tr_loop(obj_lst->tr, ray);
+	return ((a > b) ? a : b);
+}
+
+double ft_min(double a, double b)
+{
+	return ((a < b) ? a : b);
 }
