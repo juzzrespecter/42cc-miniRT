@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/13 16:38:09 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/30 19:36:59 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ static bool check_valid_args(int argc, char **argv)
 	if (argc == 3 && check_scene_name(argv[1]) && !ft_strncmp(argv[2], "--save", 7))
 		return (true);
 	return (false);
+}
+
+static void img_to_window(t_data *data)
+{
+	void *win_ptr = mlx_new_window(data->mlx_ptr, data->x_res, data->y_res, "test");
+	printf("en windows mgmt!\n");
+	mlx_put_image_to_window(data->mlx_ptr, win_ptr, data->img_ptr, 0, 0);
+	mlx_loop(data->mlx_ptr);
 }
 
 int main(int argc, char **argv)
@@ -60,4 +68,5 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 	img = draw_image(obj_lst, data, img);
+	img_to_window(&data);
 }

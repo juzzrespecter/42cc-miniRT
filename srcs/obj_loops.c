@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 19:32:52 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 19:01:17 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/30 16:48:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ t_3dvec *pl_loop(t_pl *pl, t_3dvec *ray)
 	pl_aux = pl;
 	while (pl_aux)
 		{
-			pl_collision(pl_aux, *ray);
+			//pl_collision(pl_aux, *ray);
 			pl_aux = pl_aux->next;
 		}
+	return (ray);
 }
 
 t_3dvec *sq_loop(t_sq *sq, t_3dvec *ray)
@@ -44,31 +45,34 @@ t_3dvec *sq_loop(t_sq *sq, t_3dvec *ray)
 	sq_aux = sq;
 	while (sq_aux)
 		{
-			sq_collision(sq_aux, cam, *ray);
+			//sq_collision(sq_aux, *ray);
 			sq_aux = sq_aux->next;
 		}
+	return (ray);
 }
 
-t_3dvec *cy_loop(t_cy *cy, t_cam *cam, t_3dvec *ray)
+t_3dvec *cy_loop(t_cy *cy, t_3dvec *ray)
 {
 	t_cy *cy_aux;
 
 	cy_aux = cy;
 	while (cy_aux)
 		{
-			cy_collision(cy_aux, cam, *ray);
+			//cy_collision(cy_aux, cam, *ray);
 			cy_aux = cy_aux->next;
 		}
+	return (ray);
 }
 
-t_3dvec *tr_loop(t_tr *tr, t_cam *cam, t_3dvec *ray)
+t_3dvec *tr_loop(t_tr *tr, t_3dvec *ray)
 {
 	t_tr *tr_aux;
 
 	tr_aux = tr;
 	while (tr_aux)
 		{
-			tr_collision(tr_aux, cam, *ray);
+			//tr_collision(tr_aux, cam, *ray);
 			tr_aux = tr_aux->next;
 		}
+	return (ray);
 }

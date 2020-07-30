@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 19:56:30 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/30 16:39:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,6 @@ double ft_max(double a, double b);
 double ft_min(double a, double b);
 void found_point(float *p_coord, unsigned char *p_color, float *obj_c, t_3dvec *ray);
 t_3dvec *sp_collision(t_sp *sp, t_3dvec *ray);
+unsigned int get_pixel_color(t_objlst *obj_lst, t_3dvec *ray);
 
 #endif

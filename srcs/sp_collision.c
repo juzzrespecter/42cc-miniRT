@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 19:07:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 19:27:19 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/30 19:21:43 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_3dvec *sp_collision(t_sp *sp, t_3dvec *ray)
 		}
 	if ((t = dot(oc_v, ray->dir)) < 0 )
 		return (NULL);
-	if ((d = sqrt(dot(oc_v, oc_v) + pow(t, 2))) > sp->d / 2)
+	if ((d = sqrt(dot(oc_v, oc_v) - pow(t, 2))) > sp->d / 2)
 		return (NULL);
 	if (d < sp->d / 2)
 		t = choose_t(t, sp->d / 2, d);

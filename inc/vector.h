@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 19:23:41 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/30 16:38:46 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void vmprod(float v[4], float matrix[4][4], float v_prod[4]);
 void mprod(float m1[4][4], float m2[4][4], float m_res[4][4]);
 void set_id_matrix(float matrix[4][4]);
 void cam2world_matrix(float *forward, float *eye, float c2w_m[4][4]);
-void obj2world_matrix(float *orig, float *obj_or, float *world_or, float o2w_m[4][4]);
+void obj2world_matrix(float *obj_or, float *world_or, float o2w_m[4][4]);
 void translate(float *point, float *move);
 
 #endif

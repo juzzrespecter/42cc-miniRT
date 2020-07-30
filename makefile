@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/07/15 19:39:27 by danrodri         ###   ########.fr        #
+#    Updated: 2020/07/30 16:50:09 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -38,9 +38,12 @@ SRCS		= main.c \
 			search_for_collision.c \
 			vector_operations.c \
 			matrix_operations.c \
-			camera_transform.c \
 			obj_loops.c \
 			sp_collision.c \
+			cam2world_matrix.c \
+			found_point.c \
+			get_pixel_color.c \
+			utils.c
 
 NAME		= miniRT
 

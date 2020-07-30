@@ -6,11 +6,23 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:09:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 16:18:29 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/07/30 18:43:45 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/vector.h"
+
+static void vinv (float *forward)
+{
+	int i;
+
+	i = 0;
+	while (i < 3)
+		{
+			forward [i] *= -1;
+			i++;
+		}
+}
 
 void cam2world_matrix(float *forward, float *eye, float c2w_m[4][4])
 {
@@ -22,6 +34,7 @@ void cam2world_matrix(float *forward, float *eye, float c2w_m[4][4])
 	tmp[1] = 1;
 	tmp[2] = 0;
 	tmp[3] = 1;
+	vinv(forward);
 	cross(forward, tmp, right);
 	norm(right);
 	cross(forward, right, up);
