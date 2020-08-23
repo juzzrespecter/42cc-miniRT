@@ -26,13 +26,17 @@ static void quat2matrix(float *quat, float m[4][4])
 	m[2][2] = 1 - 2 * (pow(quat[1], 2) + pow(quat[2], 2));
 }
 
-void obj2world_matrix(float *obj_or, float *world_or, float o2w_m[4][4])
+void obj2world_matrix(float *world_or, float o2w_m[4][4])
 {
 	float quaternion[4];
 	float rot_axis[4];
 	float rot_angle;
+        float obj_or[4];
 
-	norm(obj_or);
+        obj_or[0] = 0;
+        obj_or[1] = 0;
+        obj_or[2] = 1;
+        obj_or[3] = 1;
 	norm(world_or);
 	cross(obj_or, world_or, rot_axis);
 	norm(rot_axis);

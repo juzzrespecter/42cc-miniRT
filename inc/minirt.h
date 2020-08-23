@@ -150,6 +150,8 @@ t_3dvec *tr_loop(t_tr *tr, t_3dvec *ray);
 double ft_max(double a, double b);
 double ft_min(double a, double b);
 void found_point(float *p_coord, unsigned char *p_color, float *obj_c, t_3dvec *ray);
+void get_point(float *point_coord, float t, t_3dvec *ray);
+bool find_point_in_a_plane(float *normal, t_3dvec *ray, float d, float *point);
 t_3dvec *sp_collision(t_sp *sp, t_3dvec *ray);
 unsigned int get_pixel_color(t_objlst *obj_lst, t_3dvec *ray);
 
