@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   res_build_obj.c                                    :+:      :+:    :+:   */
+/*   build_amb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 16:57:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 18:04:59 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:00:52 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 17:28:28 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
-bool res_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_amb(char **scene_line, t_objlst *obj_lst)
 {
-	t_res *res;
-	int x_res;
-	int y_res;
+	char *light;
+	char *color;
+	t_amb *amb;
 
-	if (!check_scene_array(scene_line, 3) || obj_lst->res)
-			return (false);
-	x_res = ft_atoi(scene_line[1]);
-	y_res = ft_atoi(scene_line[2]);
-	if (!(x_res > 0 && y_res > 0))
+	if (!check_scene_array(scene_line, 3) || obj_lst->amb)
 		return (false);
-	if (!(res = malloc(sizeof(t_res))))
+	light = scene_line[1];
+	color = scene_line[2];
+	if (!(light_check(light) && color_check(color)))
 		return (false);
-	res->x_res = x_res;
-	res->y_res = y_res;
-	obj_lst->res = res;
+	if (!(amb = malloc(sizeof(t_amb))))
+		return (false);
+	amb->bright = char_to_float(light);
+	char_to_color(amb->color, color);
+	obj_lst->amb = amb;
 	return (true);
 }

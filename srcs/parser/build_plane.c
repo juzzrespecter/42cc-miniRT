@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pl_build_obj.c                                     :+:      :+:    :+:   */
+/*   build_plane.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 19:19:46 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 18:06:09 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:04:38 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 18:15:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static void add_pl_to_back(t_objlst *obj_lst, t_pl *pl)
 {
@@ -27,7 +27,7 @@ static void add_pl_to_back(t_objlst *obj_lst, t_pl *pl)
 		}
 }
 
-bool pl_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_plane(char **scene_line, t_objlst *obj_lst)
 {
 	char *coord;
 	char *vector;
@@ -44,7 +44,7 @@ bool pl_build_obj(char **scene_line, t_objlst *obj_lst)
 	if (!(pl = malloc(sizeof(t_pl))))
 		return (false);
 	array_char_to_float(pl->coord, coord);
-	array_char_to_float(pl->vector, vector);
+	array_char_to_float(pl->normal, vector);
 	char_to_color(pl->color, color);
 	pl->next = NULL;
 	add_pl_to_back(obj_lst, pl);

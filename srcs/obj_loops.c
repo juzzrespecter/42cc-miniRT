@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 19:32:52 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/30 16:48:42 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/24 17:13:21 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_3dvec *sp_loop(t_sp *sp, t_3dvec *ray)
 	sp_aux = sp;
 	while (sp_aux)
 		{
-			sp_collision(sp_aux, ray);
+			collision_sphere(sp_aux, ray);
 			sp_aux = sp_aux->next;
 		}
 	return (ray);

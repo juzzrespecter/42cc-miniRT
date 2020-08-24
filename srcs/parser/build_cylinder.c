@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cy_build_obj.c                                     :+:      :+:    :+:   */
+/*   build_cylinder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 19:43:10 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 19:02:30 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:03:10 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 18:12:51 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static void add_cy_to_back(t_objlst *obj_lst, t_cy *cy)
 {
@@ -27,7 +27,7 @@ static void add_cy_to_back(t_objlst *obj_lst, t_cy *cy)
 		}
 }
 
-bool cy_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_cylinder(char **scene_line, t_objlst *obj_lst)
 {
 	t_cy *cy;
 
@@ -39,8 +39,8 @@ bool cy_build_obj(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(cy = malloc(sizeof(t_cy))))
 		return (false);
-	array_char_to_float(cy->coord, scene_line[1]);
-	array_char_to_float(cy->vector, scene_line[2]);
+	array_char_to_float(cy->center, scene_line[1]);
+	array_char_to_float(cy->normal, scene_line[2]);
 	cy->d = char_to_float(scene_line[3]);
 	cy->h = char_to_float(scene_line[4]);
 	char_to_color(cy->color, scene_line[5]);

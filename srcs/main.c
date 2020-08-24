@@ -6,11 +6,11 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/30 19:36:59 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/24 17:05:53 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static bool check_scene_name(char *scene)
 {
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 			printf("error al introducir los argumentos.\n");
 			exit(1);
 		}
-	if (!(obj_lst = check_syntax_scene(argv[1])))
+	if (!(obj_lst = scene_parser(argv[1])))
 		{
 			printf("error al leer la escena.\n");
 			exit(1);

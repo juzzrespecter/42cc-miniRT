@@ -6,11 +6,11 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/07 17:45:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/08 19:15:21 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/24 18:13:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static int digit_count(int n)
 {

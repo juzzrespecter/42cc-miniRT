@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   c_build_obj.c                                      :+:      :+:    :+:   */
+/*   build_cam.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 19:02:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 16:12:53 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:01:33 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 17:54:12 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static bool fov_check(char *fov)
 {
@@ -43,7 +43,7 @@ static void add_cam_to_back(t_objlst *obj_lst, t_cam *cam)
 		}
 }
 
-bool c_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_cam(char **scene_line, t_objlst *obj_lst)
 {
 	char *coord;
 	char *vector;
@@ -60,9 +60,9 @@ bool c_build_obj(char **scene_line, t_objlst *obj_lst)
 	if (!(cam = malloc(sizeof(t_cam))))
 		return (false);
 	array_char_to_float(cam->coord, coord);
-	array_char_to_float(cam->vector, vector);
+	array_char_to_float(cam->normal, vector);
 	cam->fov = ft_atoi(fov);
-	cam2world_matrix(cam->vector, cam->coord, cam->c2w_m);
+	cam2world_matrix(cam->normal, cam->coord, cam->m_c2w);
 	cam->next = NULL;
 	add_cam_to_back(obj_lst, cam);
 	return (true);

@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:25:45 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:59:16 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/24 16:47:36 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
-bool color_check(char *color)
+bool error_check_color(char *color)
 {
 	int color_int;
 	int i;

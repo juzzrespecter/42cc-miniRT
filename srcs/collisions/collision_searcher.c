@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search_for_collision.c                             :+:      :+:    :+:   */
+/*   collision_searcher.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/13 17:05:40 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 19:16:08 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:19:33 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 16:19:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
-void search_for_collision(t_objlst *obj_lst, t_3dvec *ray)
+void collision_searcher(t_objlst *obj_lst, t_3dvec *ray)
 {
 	if (obj_lst->sp)
 		sp_loop(obj_lst->sp, ray);

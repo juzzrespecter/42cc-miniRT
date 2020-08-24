@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tr_build_obj.c                                     :+:      :+:    :+:   */
+/*   build_triangle.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 19:58:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 18:07:13 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:06:26 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 18:18:35 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static void add_tr_to_back(t_objlst *obj_lst, t_tr *tr)
 {
@@ -27,28 +27,28 @@ static void add_tr_to_back(t_objlst *obj_lst, t_tr *tr)
 		}
 }
 
-bool tr_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_triangle(char **scene_line, t_objlst *obj_lst)
 {
-	char *first_coord;
-	char *second_coord;
-	char *third_coord;
+	char *first_point;
+	char *second_point;
+	char *third_point;
 	char *color;
 	t_tr *tr;
 
 	if (!check_scene_array(scene_line, 5))
 		return (false);
-	first_coord = scene_line[1];
-	second_coord = scene_line[2];
-	third_coord = scene_line[3];
+	first_point = scene_line[1];
+	second_point = scene_line[2];
+	third_point = scene_line[3];
 	color = scene_line[4];
-	if (!(coord_check(first_coord) && coord_check(second_coord) \
-				 && coord_check(third_coord)  && color_check(color)))
+	if (!(coord_check(first_point) && coord_check(second_point) \
+				 && coord_check(third_point)  && color_check(color)))
 		return (false);
 	if (!(tr = malloc(sizeof(t_tr))))
 		return (false);
-	array_char_to_float(tr->first_coord, first_coord);
-	array_char_to_float(tr->second_coord, second_coord);
-	array_char_to_float(tr->third_coord, third_coord);
+	array_char_to_float(tr->first_point, first_point);
+	array_char_to_float(tr->second_point, second_point);
+	array_char_to_float(tr->third_point, third_point);
 	char_to_color(tr->color, color);
 	tr->next = NULL;
 	add_tr_to_back(obj_lst, tr);

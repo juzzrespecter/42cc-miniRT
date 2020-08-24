@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   l_build_obj.c                                      :+:      :+:    :+:   */
+/*   build_light.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 17:12:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 19:03:46 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:04:07 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 18:13:12 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static void add_light_to_back(t_objlst *obj_lst, t_light *light)
 {
@@ -27,7 +27,7 @@ static void add_light_to_back(t_objlst *obj_lst, t_light *light)
 		}
 }
 
-bool l_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_light(char **scene_line, t_objlst *obj_lst)
 {
 	char *coord;
 	char *bright;
@@ -44,7 +44,7 @@ bool l_build_obj(char **scene_line, t_objlst *obj_lst)
 	if (!(light = malloc(sizeof(t_light))))
 		return (false);
 	array_char_to_float(light->coord, coord);
-	light->light = char_to_float(bright);
+	light->bright = char_to_float(bright);
 	char_to_color(light->color, color);
 	light->next = NULL;
 	add_light_to_back(obj_lst, light);

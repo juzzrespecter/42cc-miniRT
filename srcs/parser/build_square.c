@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sq_build_obj.c                                     :+:      :+:    :+:   */
+/*   build_square.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 19:33:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 18:06:30 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 16:06:09 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 18:16:54 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static void add_sq_to_back(t_objlst *obj_lst, t_sq *sq)
 {
@@ -27,7 +27,7 @@ static void add_sq_to_back(t_objlst *obj_lst, t_sq *sq)
 		}
 }
 
-bool sq_build_obj(char **scene_line, t_objlst *obj_lst)
+bool build_square(char **scene_line, t_objlst *obj_lst)
 {
 	char *coord;
 	char *vector;
@@ -46,8 +46,8 @@ bool sq_build_obj(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(sq = malloc(sizeof(t_sq))))
 		return (false);
-	array_char_to_float(sq->coord, coord);
-	array_char_to_float(sq->vector, vector);
+	array_char_to_float(sq->center, coord);
+	array_char_to_float(sq->normal, vector);
 	sq->side = char_to_float(side);
 	char_to_color(sq->color, color);
 	sq->next = NULL;

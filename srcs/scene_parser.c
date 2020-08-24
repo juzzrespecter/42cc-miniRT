@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_syntax_scene.c                               :+:      :+:    :+:   */
+/*   scene_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/02 17:58:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 19:11:31 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/24 17:04:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static bool check_elem_list(char **scene_line, t_objlst *obj_lst)
 {
@@ -18,29 +18,28 @@ static bool check_elem_list(char **scene_line, t_objlst *obj_lst)
 
 	id = scene_line[0];
 	if (!ft_strncmp(id, "R", greater_length(id, "R")))
-			return (res_build_obj(scene_line, obj_lst));
+			return (build_res(scene_line, obj_lst));
 	if (!ft_strncmp(id, "A", greater_length(id, "A")))
-		return (a_build_obj(scene_line, obj_lst));
+		return (build_amb(scene_line, obj_lst));
 	if (!ft_strncmp(id, "c", greater_length(id, "c")))
-		return (c_build_obj(scene_line, obj_lst));
+		return (build_cam(scene_line, obj_lst));
 	if (!ft_strncmp(id, "l", greater_length(id, "l")))
-		return (l_build_obj(scene_line, obj_lst));
+		return (build_light(scene_line, obj_lst));
 	if (!ft_strncmp(id, "sp", greater_length(id, "sp")))
-		return (sp_build_obj(scene_line, obj_lst));
+		return (build_sphere(scene_line, obj_lst));
 	if (!ft_strncmp(id, "pl", greater_length(id, "pl")))
-		return (pl_build_obj(scene_line, obj_lst));
+		return (build_plane(scene_line, obj_lst));
 	if (!ft_strncmp(id, "sq", greater_length(id, "sq")))
-		return (sq_build_obj(scene_line, obj_lst));
+		return (build_square(scene_line, obj_lst));
 	if (!ft_strncmp(id, "cy", greater_length(id, "cy")))
-		return (cy_build_obj(scene_line, obj_lst));
+		return (build_cylinder(scene_line, obj_lst));
 	if (!ft_strncmp(id, "tr", greater_length(id, "tr")))
-		return (tr_build_obj(scene_line, obj_lst));
+		return (build_triangle(scene_line, obj_lst));
 	return (false);
 }
 
-t_objlst *check_syntax_scene(char *scene_file)
+t_objlst *scene_parser(char *scene_file)
 {
-	//comprobar si hay camara en la escena!!
 	int fd;
 	char *line;
 	char **scene_line;
