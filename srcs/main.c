@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 17:05:53 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/26 20:17:04 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,35 @@ static bool check_valid_args(int argc, char **argv)
 
 static void img_to_window(t_data *data)
 {
-	void *win_ptr = mlx_new_window(data->mlx_ptr, data->x_res, data->y_res, "test");
+	void *win_ptr = mlx_new_window(data->mlx_ptr, data->res_x, data->res_y, "test");
 	printf("en windows mgmt!\n");
 	mlx_put_image_to_window(data->mlx_ptr, win_ptr, data->img_ptr, 0, 0);
 	mlx_loop(data->mlx_ptr);
 }
 
+static bool get_image_data(t_data *img_data, int res_x, int res_y)
+{
+	int bpp;
+	int sl;
+	int endian;
+
+	img_data->mlx_ptr = mlx_init();
+	img_data->res_x = res_x;
+	img_data->res_y = res_y;
+	img_data->img_ptr = mlx_new_image(img_data->mlx_ptr, res_x, res_y);
+	img_data->img = mlx_get_data_addr(img_data->img_ptr, &bpp, &sl, &endian);
+	if (!img_data->img)
+			return (false);
+	img_data->bits_per_pixel = bpp;
+	img_data->size_line = sl;
+	img_data->endian = endian;
+	return (true);
+}
+
 int main(int argc, char **argv)
 {
 	t_objlst *obj_lst;
-	t_data data;
-	char *img;
+	t_data img_data;
 
 	if (!check_valid_args(argc, argv))
 		{
@@ -57,16 +75,12 @@ int main(int argc, char **argv)
 			printf("error al leer la escena.\n");
 			exit(1);
 		}
-	data.mlx_ptr = mlx_init();
-	data.img_ptr = mlx_new_image(data.mlx_ptr, obj_lst->res->x_res, obj_lst->res->y_res);
-	data.x_res = obj_lst->res->x_res;
-	data.y_res = obj_lst->res->y_res;
-	if (!(img = mlx_get_data_addr(data.img_ptr, &data.bits_per_pixel, &data.size_line, &data.endian)))
+	if (!(get_image_data(&img_data, obj_lst->res->res_x, obj_lst->res->res_y)))
 		{
 			printf("error al crear la imagen.\n");
 			delete_obj_lst(obj_lst);
 			exit(1);
 		}
-	img = draw_image(obj_lst, data, img);
-	img_to_window(&data);
+	img_data.img = draw_image(obj_lst, &img_data);
+	img_to_window(&img_data);
 }

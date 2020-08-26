@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:15:29 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/25 19:32:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/26 20:14:31 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,51 +31,52 @@ static void transform_axis(float *origin_point, float *axis, float *world_or)
 	normalize(axis);
 }
 
-static void (float *ray_dir, float *axis_dir)
+static float choose_nearest_t(float a, float b, float eq_sqrt)
 {
-	float dir_rest[3];
-	float dir_prod;
+	float t1;
+	float t2;
 
-	dir_prod = dot(ray_dir, axis_dir);
-	dir_res[0] = ray_dir[0] - (dir_prod * axis_dir[0]);
-	dir_res[1] = ray_dir[1] - (dir_prod * axis_dir[1]);
-	dir_res[2] = ray_dir[2] - (dir_prod * axis_dir[2]);
-	return (dot(dir_rest, dir_rest));
+	t1 = (-b + sqrt(eq_sqrt)) / (2 * a);
+	t2 = (-b - sqrt(eq_sqrt)) / (2 * a);
+	return (t1 < t2 ? t1 : t2);
 }
 
-static bool foo(float *ray_dir, float *axis_dir, t_cy *cy, float *point)
+static bool collision_cy_inf(t_3dvec *ray, t_cy *cy, float *axis, float *t)
 {
-	float axis[4];
-	float or_vector[3]
-	float dir_res [3];
-	float orig_res [3];
+	float a;
+	float b;
+	float c;
 	float eq_sqrt;
 
-	transform_matrix(cy->coord, axis, cy->normal);
-	or_vector[0] = ray->orig[0] - cy->coord[0];
-	or_vector[1] = ray->orig[1] - cy->coord[1];
-	or_vector[2] = ray->orig[2] - cy->coord[2];
-
+	a = a_calc (ray->dir, axis);
+	b = b_calc (ray->dir, axis, ray->orig, cy->coord);
+	c = c_calc (axis, ray->orig, cy->coord, cy->d / 2);
+	eq_sqrt = pow (b, 2) - 4 * a * c;
 	if (eq_sqrt < 0)
 		return (false);
 	if (!eq_sqrt)
-		{
-			//una colision
-		}
+		&t = -b / (2 * a);
 	else
-		{
-			//dos colisiones
-		}
+		&t = choose_nearest_t(a, b, eq_sqrt);
+	return (true);
 }
 
 t_3dvec *collision_cylinder(t_cy *cy, t_3dvec *ray)
 {
 	float point[3];
-	//colision con el cilindro (infinito)
-	//	no hay colision -> fin de la funcion
-	//  hay una colision (una t)
-	//  hay dos colisiones (dos t)
+	float infinite_cy_t;
+	float axis[4];
+	float normal[3];
 
-	//comprobar los limites del cilindro (las tapas)
-	return (ray);
+	transform_axis(cy->coord, axis, cy->normal);
+	if((collision_cy_inf(ray, cy, axis, &infinite_cy_t)) == false)
+		return (NULL);
+	if ((collision_cy_cap(void)))
+		return (...);
+	//buscar las colisiones entre los planos que forman los limites del
+	//cilindro, que forman una cota. Para aaceptar la colision, esta ha de
+	//estar dentro de la cota, si no estuviera, comprobar si la colision
+	//en los planos se situa dentro de los circulos que forman la base y
+	//y el techo del cilindro. Si lo son, se acepta la colision; si no,
+	//se descarta.
 }

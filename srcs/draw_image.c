@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 17:55:08 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/26 19:59:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,29 @@ static t_3dvec *build_ray(float x, float y, t_cam *cam)
 	return (ray);
 }
 
-static float x_pixel(t_data data, int x, int fov)
+static float x_pixel(t_data *data, int x, int fov)
 {
 	float x_pixel;
 	float NDC_pixel;
 	float ratio;
 
-	ratio = data.x_res / data.y_res;
-	NDC_pixel = (x + 0.5) / data.x_res;
+	ratio = data->res_x / data->res_y;
+	NDC_pixel = (x + 0.5) / data->res_x;
 	x_pixel = (2 * NDC_pixel - 1)  * ratio * tan((fov / 2)  * M_PI / 180);
 	return (x_pixel);
 }
 
-static float y_pixel(t_data data, int y, int fov)
+static float y_pixel(t_data *data, int y, int fov)
 {
 	float y_pixel;
 	float NDC_pixel;
 
-	NDC_pixel = (y + 0.5) / data.y_res;
+	NDC_pixel = (y + 0.5) / data->res_y;
 	y_pixel = (1 - 2 * NDC_pixel) * tan((fov / 2) * M_PI / 180);
 	return (y_pixel);
 }
 
-char *draw_image(t_objlst *obj_lst, t_data data, char *img)
+char *draw_image(t_objlst *obj_lst, t_data *data)
 {
 	t_3dvec *ray;
 	int fov;
@@ -68,22 +68,22 @@ char *draw_image(t_objlst *obj_lst, t_data data, char *img)
 	y = 0;
 	i = 0;
 	fov = obj_lst->cam->fov;
-	while (data.y_res > y)
+	while (data->res_y > y)
 		{
-			while (data.x_res > x)
+			while (data->res_x > x)
 				{
-					i = (x * (data.bits_per_pixel / 8) + (y * data.size_line));
+					i = (x * (data->bits_per_pixel / 8) + (y * data->size_line));
 					ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), obj_lst->cam);
 					collision_searcher(obj_lst, ray);
 					if (ray->point_found)
-						*(unsigned int *)(img + i) = get_pixel_color(obj_lst, ray);
+						*(unsigned int *)(data->img + i) = get_pixel_color(obj_lst, ray);
 					else
-						*(unsigned int *)(img + i) = 0;
+						*(unsigned int *)(data->img + i) = 0;
 					free(ray);
 					x++;
 				}
 			x = 0;
 			y++;
 		}
-	return (img);
+	return (data->img);
 }

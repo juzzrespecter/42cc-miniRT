@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 17:32:49 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/25 17:24:13 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/26 18:41:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,18 @@
 float length(float *v)
 {
 	return ((sqrt(pow(v[0], 2) + pow(v[1], 2) + pow(v[2], 2))));
+}
+
+void res(float *v1, float *v2, float *vres)
+{
+	int count;
+
+	count = 0;
+	while (count < 3)
+		{
+			vres[count] = v1[count] - v2[count];
+			count++;
+		}
 }
 
 float dot(float *v1, float *v2)
@@ -35,14 +47,14 @@ void cross(float *v1, float *v2, float *cross)
 
 void normalize(float *v)
 {
-	int i;
+	int count;
 	float mod;
 
-	i = 0;
+	count = 0;
 	mod = length(v);
-	while (i < 3)
+	while (count < 3)
 		{
-			v[i] /= mod;
-			i++;
+			v[count] /= mod;
+			count++;
 		}
 }

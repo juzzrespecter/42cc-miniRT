@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/25 17:12:03 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/26 20:29:17 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ typedef struct s_data
 {
 	void *mlx_ptr;
 	void *img_ptr;
-	int x_res;
-	int y_res;
+	char *img;
+	int res_x;
+	int res_y;
 	int bits_per_pixel;
 	int size_line;
 	int endian;
@@ -33,8 +34,8 @@ typedef struct s_data
 
 typedef struct s_res
 {
-	int x_res;
-	int y_res;
+	int res_x;
+	int res_y;
 } t_res;
 
 typedef struct s_amb
@@ -141,7 +142,7 @@ bool build_cam(char **scene_line, t_objlst *obj_lst);
 bool build_plane(char **scene_line, t_objlst *obj_lst);
 bool build_square(char **scene_line, t_objlst *obj_lst);
 bool build_triangle(char **scene_line, t_objlst *obj_lst);
-char *draw_image(t_objlst *obj_lst, t_data data, char *img);
+char *draw_image(t_objlst *obj_lst, t_data *data);
 void collision_searcher(t_objlst *obj_lst, t_3dvec *ray);
 t_3dvec *sp_loop(t_sp *sp, t_3dvec *ray);
 t_3dvec *pl_loop(t_pl *pl, t_3dvec *ray);
@@ -156,5 +157,6 @@ t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray);
 t_3dvec *collision_plane(t_pl *pl, t_3dvec *ray);
 t_3dvec *collision_square(t_sq *sq, t_3dvec *ray);
 unsigned int get_pixel_color(t_objlst *obj_lst, t_3dvec *ray);
+void *image_save_bmp(t_data *img_data);
 
 #endif

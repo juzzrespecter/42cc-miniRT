@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/08/25 19:52:23 by danrodri         ###   ########.fr        #
+#    Updated: 2020/08/26 20:28:49 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -32,7 +32,8 @@ SRCS		= main.c \
 			cam2world_matrix.c \
 			obj2world_matrix.c \
 			get_pixel_color.c \
-			utils.c
+			utils.c \
+			image_save_bmp.c
 
 PARSER_SRCS	= build_amb.c \
 			build_cam.c \

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 17:30:00 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/26 18:41:21 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_3dvec
 
 float length(float *v);
 float dot(float *v1, float *v2);
+void res(float *v1, float *v2, float *vres);
 void cross(float *v1, float *v2, float *cross);
 void normalize(float *v);
 void vmprod(float v[4], float matrix[4][4], float v_prod[4]);
