@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:40:39 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 16:23:44 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/25 19:46:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void point_found(float *p_coord, float *n_vec, unsigned char *p_color, t_3dvec *
 	int count;
 
 	count = 0;
-	if (!ray->point_found || (length(p_coord) - length(ray->point_coord)) < 0)
+	if (!ray->point_found || (length(p_coord) - length(ray->point)) < 0)
 		{
 			ray->point_found = true;
 	while (count < 3)
 		{
-		 ray->point_color[count] = p_color[count];
-		 ray->point_coord[count] = p_coord[count];
-		 ray->normal_vector[count] = n_vec[count];
+		 ray->color[count] = p_color[count];
+		 ray->point[count] = p_coord[count];
+		 ray->normal[count] = n_vec[count];
 		 count++;
 		 }
 		}

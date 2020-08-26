@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/28 19:47:25 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/30 16:38:51 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/25 19:51:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,15 @@ static void quat2matrix(float *quat, float m[4][4])
 	m[2][2] = 1 - 2 * (pow(quat[1], 2) + pow(quat[2], 2));
 }
 
-void obj2world_matrix(float *world_or, float o2w_m[4][4])
+void obj2world_matrix(float *obj_or, float *world_or, float o2w_m[4][4])
 {
 	float quaternion[4];
 	float rot_axis[4];
 	float rot_angle;
-        float obj_or[4];
 
-        obj_or[0] = 0;
-        obj_or[1] = 0;
-        obj_or[2] = 1;
-        obj_or[3] = 1;
-	norm(world_or);
+	normalize(world_or);
 	cross(obj_or, world_or, rot_axis);
-	norm(rot_axis);
+	normalize(rot_axis);
 	rot_angle = acos(dot(obj_or, world_or)) / 2;
 	quaternion[0] = cos(rot_angle);
 	quaternion[1] = sin(rot_angle) * rot_axis[0];

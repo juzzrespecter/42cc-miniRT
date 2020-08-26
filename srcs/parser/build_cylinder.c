@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:03:10 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:12:51 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/25 19:49:28 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ bool build_cylinder(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(cy = malloc(sizeof(t_cy))))
 		return (false);
-	array_char_to_float(cy->center, scene_line[1]);
+	array_char_to_float(cy->coord, scene_line[1]);
 	array_char_to_float(cy->normal, scene_line[2]);
 	cy->d = char_to_float(scene_line[3]);
 	cy->h = char_to_float(scene_line[4]);

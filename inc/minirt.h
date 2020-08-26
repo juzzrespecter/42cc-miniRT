@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:05:42 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/25 17:12:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_sq
 
 typedef struct s_cy
 {
-	float center[3];
+	float coord[3];
 	float normal[3];
 	float d;
 	float h;

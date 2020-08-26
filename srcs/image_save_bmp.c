@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collision_plane.c                                  :+:      :+:    :+:   */
+/*   image_save_bmp.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/24 16:18:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/25 19:38:35 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/25 19:34:19 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/25 19:54:01 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "minirt"
 
-t_3dvec *collision_plane(t_pl *pl, t_3dvec *ray)
+void *image_save_bmp(char *img_ptr)
 {
-	float point[3];
-	float d;
+	int fd;
+	char *bmp_header;
 
-	d = dot(pl->normal, pl->coord);
-	if (!(point_in_plane(pl->normal, ray, d, point)))
-		return (NULL);
-	point_found(point, pl->normal, pl->color, ray);
-	return (ray);
+	fd = open("scene.bmp", O_CREAT | O_WRONLY);
+
 }

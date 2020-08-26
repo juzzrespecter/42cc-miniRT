@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/08/24 17:27:53 by danrodri         ###   ########.fr        #
+#    Updated: 2020/08/25 19:52:23 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -30,6 +30,7 @@ SRCS		= main.c \
 			matrix_operations.c \
 			obj_loops.c \
 			cam2world_matrix.c \
+			obj2world_matrix.c \
 			get_pixel_color.c \
 			utils.c
 
@@ -43,8 +44,7 @@ PARSER_SRCS	= build_amb.c \
 			build_square.c \
 			build_triangle.c
 
-COL_SRCS	= collision_cylinder.c \
-			collision_plane.c \
+COL_SRCS	= collision_plane.c \
 			collision_searcher.c \
 			collision_sphere.c \
 			collision_square.c \
@@ -80,7 +80,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS) $(PARSER_OBJS) $(COL_OBJS)
 		@make -C libft
-		@$(GCC) -o $(NAME) $(OBJS) $(LIB) $(MLXLIB)
+		@$(GCC) -o $(NAME) $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(LIB) $(MLXLIB)
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 		@$(GCC) -c $< -I $(INCDIR)

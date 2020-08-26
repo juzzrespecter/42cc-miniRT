@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 17:32:49 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 17:47:23 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/25 17:24:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void cross(float *v1, float *v2, float *cross)
 	cross[3] = 1;
 }
 
-void norm(float *v)
+void normalize(float *v)
 {
 	int i;
 	float mod;
