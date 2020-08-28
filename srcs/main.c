@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/26 20:17:04 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/28 19:02:22 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,28 @@ static bool check_valid_args(int argc, char **argv)
 	return (false);
 }
 
+static int esc(int keycode, t_data *data)
+{
+	//esc == 53
+ if (keycode == 53)
+	 {
+		 printf("chapando la cosa...\n");
+		 mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		 exit(1);
+	 }
+ return (1);
+ }
+
 static void img_to_window(t_data *data)
 {
 	void *win_ptr = mlx_new_window(data->mlx_ptr, data->res_x, data->res_y, "test");
 	printf("en windows mgmt!\n");
+	data->win_ptr = win_ptr;
 	mlx_put_image_to_window(data->mlx_ptr, win_ptr, data->img_ptr, 0, 0);
+	mlx_key_hook(win_ptr, &esc, data);
+	mlx_mouse_hook()
 	mlx_loop(data->mlx_ptr);
-}
+	}
 
 static bool get_image_data(t_data *img_data, int res_x, int res_y)
 {
@@ -75,12 +90,12 @@ int main(int argc, char **argv)
 			printf("error al leer la escena.\n");
 			exit(1);
 		}
-	if (!(get_image_data(&img_data, obj_lst->res->res_x, obj_lst->res->res_y)))
+		if (!(get_image_data(&img_data, obj_lst->res->res_x, obj_lst->res->res_y)))
 		{
 			printf("error al crear la imagen.\n");
 			delete_obj_lst(obj_lst);
 			exit(1);
 		}
-	img_data.img = draw_image(obj_lst, &img_data);
-	img_to_window(&img_data);
+		img_data.img = draw_image(obj_lst, &img_data);
+		img_to_window(&img_data);
 }

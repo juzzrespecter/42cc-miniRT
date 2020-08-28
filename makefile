@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/08/26 20:28:49 by danrodri         ###   ########.fr        #
+#    Updated: 2020/08/28 17:07:08 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -45,7 +45,9 @@ PARSER_SRCS	= build_amb.c \
 			build_square.c \
 			build_triangle.c
 
-COL_SRCS	= collision_plane.c \
+COL_SRCS	= collision_cylinder.c \
+			collision_cylinder_utils.c \
+			collision_plane.c \
 			collision_searcher.c \
 			collision_sphere.c \
 			collision_square.c \

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:20:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/25 19:41:02 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/28 19:02:22 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray)
 	point[0] = ray->orig[0] + t * ray->dir[0];
 	point[1] = ray->orig[1] + t * ray->dir[1];
 	point[2] = ray->orig[2] + t * ray->dir[2];
-	normal[0] = sp->center[0] - point[0];
-	normal[1] = sp->center[1] - point[1];
-	normal[2] = sp->center[2] - point[2];
+	normal[0] = point[0] - sp->center[0];
+	normal[1] = point[1] - sp->center[1];
+	normal[2] = point[2] - sp->center[2];
 	normalize(normal);
 	point_found(point, normal, sp->color, ray);
 	return (ray);

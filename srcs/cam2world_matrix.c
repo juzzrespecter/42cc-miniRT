@@ -6,11 +6,12 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:09:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:10:07 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/28 19:02:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
+#include <stdio.h>
 
 static void vinv (float *forward)
 {
@@ -22,6 +23,17 @@ static void vinv (float *forward)
 			forward [i] *= -1;
 			i++;
 		}
+}
+
+void printv(float *v)
+{
+	int i = 0;
+	while (i < 3)
+		{
+			printf("%f ", v[i]);
+			i++;
+		}
+	printf("\n");
 }
 
 void cam2world_matrix(float *forward, float *eye, float c2w_m[4][4])

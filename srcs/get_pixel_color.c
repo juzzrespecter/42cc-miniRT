@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:24:56 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/26 20:26:01 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/28 18:56:21 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,17 @@ static void add_light_to_color(t_light *l, t_3dvec *ray, unsigned int *color)
 	color_rgb[0] = (unsigned char)*color;
 	color_rgb[1] = (*color >> 8) & 0xff;
 	color_rgb[2] = (*color >> 16) & 0xff;
+	i = 0;
 	nl_angle = ft_max(dot(light_ray, ray->normal), 0.0);
 	i = 0;
+	printf("dot: (%f)\n", dot(light_ray, ray->normal));
 	while (i < 3)
 		{
 			color_rgb[i] *= (l->bright * (l->color[i] / 255) * nl_angle);
-			i++;
+		 i++;
 		}
-	*color = color_rgb[0] + (color_rgb[1] << 8) + (color_rgb[2] << 16) & 0xffffff;
+		*color = color_rgb[0] + (color_rgb[1] << 8) + (color_rgb[2] << 16) & 0xffffff;
+	printf("color a: (%#x)\n\n\n", *color);
 }
 
 static unsigned int amb_light(t_amb *amb, unsigned char *color_rgb)

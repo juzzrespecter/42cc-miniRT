@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/26 20:29:17 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/28 17:40:06 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_data
 {
 	void *mlx_ptr;
 	void *img_ptr;
+	void *win_ptr;
 	char *img;
 	int res_x;
 	int res_y;
@@ -156,6 +157,10 @@ bool point_in_plane(float *normal, t_3dvec *ray, float d, float *point);
 t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray);
 t_3dvec *collision_plane(t_pl *pl, t_3dvec *ray);
 t_3dvec *collision_square(t_sq *sq, t_3dvec *ray);
+t_3dvec *collision_cylinder(t_cy *cy, t_3dvec *ray);
+float a_calc(float *ray_dir, float *axis_dir);
+float b_calc(float *ray_dir, float *axis_dir, float *or, float *axis_or);
+float c_calc(float *axis_dir, float *or, float *axis_or, float r);
 unsigned int get_pixel_color(t_objlst *obj_lst, t_3dvec *ray);
 void *image_save_bmp(t_data *img_data);
 

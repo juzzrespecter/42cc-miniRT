@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 19:32:52 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 17:13:21 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/28 18:35:08 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_3dvec *pl_loop(t_pl *pl, t_3dvec *ray)
 	pl_aux = pl;
 	while (pl_aux)
 		{
-			//pl_collision(pl_aux, *ray);
+			collision_plane(pl_aux, ray);
 			pl_aux = pl_aux->next;
 		}
 	return (ray);
