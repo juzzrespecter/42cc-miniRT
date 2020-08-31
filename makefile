@@ -6,25 +6,21 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/08/28 17:07:08 by danrodri         ###   ########.fr        #
+#    Updated: 2020/08/31 18:25:33 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 .PHONY		= all re clean fclean
 
 SRCS		= main.c \
-			scene_parser.c \
 			delete_obj_lst.c \
 			setup_obj_lst.c \
-			greater_length.c \
-			check_scene_array.c \
 			light_check.c \
 			color_check.c \
 			coord_check.c \
 			vector_check.c \
 			dim_check.c \
 			array_char_to_float.c \
-			char_to_color.c \
 			draw_image.c \
 			vector_operations.c \
 			matrix_operations.c \
@@ -43,7 +39,11 @@ PARSER_SRCS	= build_amb.c \
 			build_res.c \
 			build_sphere.c \
 			build_square.c \
-			build_triangle.c
+			build_triangle.c \
+			scene_parser.c \
+			check_scene_array.c \
+			greater_length.c \
+			char_to_color.c
 
 COL_SRCS	= collision_cylinder.c \
 			collision_cylinder_utils.c \

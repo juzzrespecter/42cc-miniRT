@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 19:02:22 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/31 20:24:55 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void img_to_window(t_data *data)
 	data->win_ptr = win_ptr;
 	mlx_put_image_to_window(data->mlx_ptr, win_ptr, data->img_ptr, 0, 0);
 	mlx_key_hook(win_ptr, &esc, data);
-	mlx_mouse_hook()
+//	mlx_mouse_hook()
 	mlx_loop(data->mlx_ptr);
 	}
 

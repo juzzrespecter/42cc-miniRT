@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:25:45 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/25 19:50:07 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/08/31 19:18:39 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool color_check(char *color)
 		{
 		 if (!ft_isdigit(color[cont]))
 				return (false);
-			color_int = ft_atoi(color);
+			color_int = ft_atoi(color + cont);
 			if (color_int < 0 || color_int > 255)
 				return (false);
 			while (ft_isdigit(color[cont]))

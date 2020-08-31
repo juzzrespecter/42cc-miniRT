@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/06 16:23:44 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 16:24:14 by danrodri         ###   ########.fr       */
+/*   Created: 2020/08/31 20:19:57 by danrodri          #+#    #+#             */
+/*   Updated: 2020/08/31 20:21:37 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 int greater_length(char *s1, char *s2)
 {
