@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/08/31 18:25:33 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/02 20:02:22 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -109,6 +109,7 @@ fclean:		clean
 		@rm $(NAME)
 		@make fclean -C libft
 
-debug:
+debug: $(OBJS) $(PARSER_OBJS) $(COL_OBJS)
 		@make -C libft
-		$(GCC) -g -o $(NAME) $(addprefix $(SRCSDIR), $(SRCS)) $(LIB) $(MLXLIB)
+		@gcc -g -o $(NAME) $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(LIB) $(MLXLIB)
+

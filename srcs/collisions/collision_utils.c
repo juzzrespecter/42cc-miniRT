@@ -6,11 +6,11 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:40:39 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/31 20:22:18 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/02 19:52:47 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#include "minirt.h"
 
 void point_found(float *p_coord, float *n_vec, unsigned char *p_color, t_3dvec *ray)
 {

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/14 19:32:52 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 18:35:08 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/02 20:22:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_3dvec *sq_loop(t_sq *sq, t_3dvec *ray)
 	sq_aux = sq;
 	while (sq_aux)
 		{
-			//sq_collision(sq_aux, *ray);
+			collision_square(sq_aux, ray);
 			sq_aux = sq_aux->next;
 		}
 	return (ray);
@@ -58,7 +58,7 @@ t_3dvec *cy_loop(t_cy *cy, t_3dvec *ray)
 	cy_aux = cy;
 	while (cy_aux)
 		{
-			//cy_collision(cy_aux, cam, *ray);
+			collision_cylinder(cy_aux, ray);
 			cy_aux = cy_aux->next;
 		}
 	return (ray);
@@ -71,7 +71,7 @@ t_3dvec *tr_loop(t_tr *tr, t_3dvec *ray)
 	tr_aux = tr;
 	while (tr_aux)
 		{
-			//tr_collision(tr_aux, cam, *ray);
+			//collision_triangle(tr_aux, ray);
 			tr_aux = tr_aux->next;
 		}
 	return (ray);

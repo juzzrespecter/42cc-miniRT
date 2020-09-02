@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 17:40:06 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/02 19:14:10 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray);
 t_3dvec *collision_plane(t_pl *pl, t_3dvec *ray);
 t_3dvec *collision_square(t_sq *sq, t_3dvec *ray);
 t_3dvec *collision_cylinder(t_cy *cy, t_3dvec *ray);
+t_3dvec *collision_triangle(t_tr *tr, t_3dvec *ray);
 float a_calc(float *ray_dir, float *axis_dir);
 float b_calc(float *ray_dir, float *axis_dir, float *or, float *axis_or);
 float c_calc(float *axis_dir, float *or, float *axis_or, float r);

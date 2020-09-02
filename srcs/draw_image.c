@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 18:17:52 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/02 18:39:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ static t_3dvec *build_ray(float x, float y, t_cam *cam)
 	dir_screen[0] = x;
 	dir_screen[1] = y;
 	dir_screen[2] = -1;
-	//printf("\nCoord. SCREEN SPACE: (%f) (%f) (%f)\n", dir_screen[0], dir_screen[1], dir_screen[2]);
 	normalize(dir_screen);
 	vmprod(dir_screen, cam->m_c2w, ray->dir);
 	normalize(ray->dir);
-	//printf("Coord. WORLD SPACE: (%f) (%f) (%f)\n", ray->dir[0], ray->dir[1], ray->dir[2]);
 	ray->orig[0] = cam->coord[0];
 	ray->orig[1] = cam->coord[1];
 	ray->orig[2] = cam->coord[2];
@@ -40,7 +38,7 @@ static float x_pixel(t_data *data, int x, int fov)
 	float NDC_pixel;
 	float ratio;
 
-	ratio = data->res_x / data->res_y;
+	ratio = (float)data->res_x / (float)data->res_y;
 	NDC_pixel = (x + 0.5) / data->res_x;
 	x_pixel = (2 * NDC_pixel - 1)  * ratio * tan((fov / 2)  * M_PI / 180);
 	return (x_pixel);

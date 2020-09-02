@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:24:56 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 18:56:21 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/02 19:12:35 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,66 +33,56 @@
 	return (light_ray.point_found ? true : false);
 	}*/
 
-static void add_light_to_color(t_light *l, t_3dvec *ray, unsigned int *color)
+static void diff_lightning_sum(t_light *l, t_3dvec *ray, unsigned char *diff_lightning)
 {
-	float light_ray[3];
-	unsigned char color_rgb[3];
-	float nl_angle;
-	int i;
+	float dot_product;
+	float light_vector[3];
 
-	i = 0;
-	while (i < 3)
-		{
-			light_ray[i] = l->coord[i] - ray->point[i];
-			i++;
-		}
-	normalize(light_ray);
-	color_rgb[0] = (unsigned char)*color;
-	color_rgb[1] = (*color >> 8) & 0xff;
-	color_rgb[2] = (*color >> 16) & 0xff;
-	i = 0;
-	nl_angle = ft_max(dot(light_ray, ray->normal), 0.0);
-	i = 0;
-	printf("dot: (%f)\n", dot(light_ray, ray->normal));
-	while (i < 3)
-		{
-			color_rgb[i] *= (l->bright * (l->color[i] / 255) * nl_angle);
-		 i++;
-		}
-		*color = color_rgb[0] + (color_rgb[1] << 8) + (color_rgb[2] << 16) & 0xffffff;
-	printf("color a: (%#x)\n\n\n", *color);
-}
+	light_vector[0] = l->coord[0] - ray->point[0];
+	light_vector[1] = l->coord[1] - ray->point[1];
+	light_vector[2] = l->coord[2] - ray->point[2];
 
-static unsigned int amb_light(t_amb *amb, unsigned char *color_rgb)
-{
-	unsigned char  amb_color[3];
-	unsigned int color;
-	int i;
+	dot_product = ft_max(0, dot(light_vector, ray->normal));
+	diff_lightning[0] += ((l->color[0] / 255) * l->bright * dot_product) * 255;
+	diff_lightning[1] += ((l->color[1] / 255) * l->bright * dot_product) * 255;
+	diff_lightning[2] += ((l->color[2] / 255) * l->bright * dot_product) * 255;
 
-	i = 0;
-	while (i < 3)
-		{
-			amb_color[i] = color_rgb[i] * ((amb->color[i] / 255) * amb->bright);
-			i++;
-		}
-	color = amb_color[0] + (amb_color[1] << 8) + (amb_color[2] << 16) & 0xffffff;
-	return (color);
+	diff_lightning[0] = ft_min(diff_lightning[0], 255);
+	diff_lightning[1] = ft_min(diff_lightning[1], 255);
+	diff_lightning[2] = ft_min(diff_lightning[2], 255);
 }
 
 unsigned int get_pixel_color(t_objlst *obj_lst, t_3dvec *ray)
 {
 	t_light *light;
 	t_amb *amb;
+	unsigned char amb_lightning[3];
+	unsigned char diff_lightning[3];
+	unsigned char object_color[3];
 	unsigned int color;
 
 	light = obj_lst->light;
 	amb = obj_lst->amb;
-	color = amb_light(amb, ray->color);
+	diff_lightning[0] = 0;
+	diff_lightning[1] = 0;
+	diff_lightning[2] = 0;
+	color = 0;
 	while (light)
 		{
 			//if (!blocked_by_an_object(obj_lst, ray, light->coord))
-				add_light_to_color(light, ray, &color);
+			diff_lightning_sum(light, ray, diff_lightning);
 			light = light->next;
 		}
+	amb_lightning[0] = ((amb->color[0] / 255) * amb->bright) * 255;
+	amb_lightning[1] = ((amb->color[1] / 255) * amb->bright) * 255;
+	amb_lightning[2] = ((amb->color[2] / 255) * amb->bright) * 255;
+
+	object_color[0] = ((ray->color[0] / 255) * (ft_min(255, (amb_lightning[0] + diff_lightning[0])) / 255)) * 255; 
+	object_color[1] = ((ray->color[1] / 255) * (ft_min(255, (amb_lightning[1] + diff_lightning[1])) / 255)) * 255; 
+	object_color[2] = ((ray->color[2] / 255) * (ft_min(255, (amb_lightning[2] + diff_lightning[2])) / 255)) * 255; 
+
+	//printf("amb: (%d)  (%d)  (%d)\n", amb_lightning[0], amb_lightning[1], amb_lightning[2]);
+   	//printf("diff: (%d)  (%d)  (%d)\n", diff_lightning[0], diff_lightning[1], diff_lightning[2]);
+	color = (((object_color[2] | (object_color[1] << 8)) | (object_color[0] << 16)) & 0xffffff);
 	return (color);
 }

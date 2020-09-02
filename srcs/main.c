@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/31 20:24:55 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/02 20:24:19 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,20 @@ int main(int argc, char **argv)
 			printf("error al leer la escena.\n");
 			exit(1);
 		}
-		if (!(get_image_data(&img_data, obj_lst->res->res_x, obj_lst->res->res_y)))
+	if (!(get_image_data(&img_data, obj_lst->res->res_x, obj_lst->res->res_y)))
 		{
 			printf("error al crear la imagen.\n");
 			delete_obj_lst(obj_lst);
 			exit(1);
-		}
-		img_data.img = draw_image(obj_lst, &img_data);
+	}
+	img_data.img = draw_image(obj_lst, &img_data);
+	if (argc == 3)
+	{
+		image_save_bmp(&img_data);
+		delete_obj_lst(obj_lst);
+		// delete data struct
+	}
+	if (argc == 2)
 		img_to_window(&img_data);
+	return (1);
 }
