@@ -6,9 +6,11 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/15 17:44:07 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/29 17:45:13 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/03 19:00:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stdio.h>
 
 static void m_res_fill(float m[4][4], float m_res[4][4])
 {
@@ -84,6 +86,28 @@ void translate(float *point, float *move)
 		}
 }
 
+void mprint(float matrix[4][4])
+{
+	int i = 0, j = 0;
+
+	printf("matrix: \n");
+	while (i < 4)
+	{
+		printf("( ");
+		while (j < 4)
+		{
+			if (j != 3)
+				printf(" %.2f, ", matrix[i][j]);
+			else
+				printf(" %.2f ", matrix[i][j]);
+			j++;
+		}
+		printf(")\n");
+		j = 0;
+		i++;
+	}
+}
+
 void vmprod(float *v, float matrix[4][4], float *v_prod)
 {
 	int i;
@@ -91,6 +115,10 @@ void vmprod(float *v, float matrix[4][4], float *v_prod)
 
 	i = 0;
 	j = 0;
+	v_prod[0] = 0;
+	v_prod[1] = 0;
+	v_prod[2] = 0;
+	v_prod[3] = 1;
 	while (i < 4)
 		{
 			while (j < 4)

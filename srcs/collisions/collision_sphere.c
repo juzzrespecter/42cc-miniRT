@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:20:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 19:02:22 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/03 20:27:12 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray)
 	float d;
 
 	oc_vector[0] = sp->center[0] - ray->orig[0];
-        oc_vector[1] = sp->center[1] - ray->orig[1];
-        oc_vector[2] = sp->center[2] - ray->orig[2];
+    oc_vector[1] = sp->center[1] - ray->orig[1];
+    oc_vector[2] = sp->center[2] - ray->orig[2];
 	if ((t = dot(oc_vector, ray->dir)) < 0 )
 		return (NULL);
 	if ((d = sqrt(dot(oc_vector, oc_vector) - pow(t, 2))) > sp->d / 2)

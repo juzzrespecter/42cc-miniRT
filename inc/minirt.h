@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/02 19:14:10 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/03 19:57:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <mlx.h>
+#include "mlx.h"
 
 typedef struct s_data
 {
@@ -153,7 +153,7 @@ t_3dvec *tr_loop(t_tr *tr, t_3dvec *ray);
 double ft_max(double a, double b);
 double ft_min(double a, double b);
 void point_found(float *p_coord, float *n_vec, unsigned char *p_color, t_3dvec *ray);
-bool point_in_plane(float *normal, t_3dvec *ray, float d, float *point);
+bool point_in_plane(float *normal, float *plane_point, t_3dvec *ray, float *point);
 t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray);
 t_3dvec *collision_plane(t_pl *pl, t_3dvec *ray);
 t_3dvec *collision_square(t_sq *sq, t_3dvec *ray);

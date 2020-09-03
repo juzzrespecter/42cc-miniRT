@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/02 20:24:19 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/03 19:23:02 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int esc(int keycode, t_data *data)
 	 {
 		 printf("chapando la cosa...\n");
 		 mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		 mlx_destroy_image(data->mlx_ptr, data->img_ptr);
 		 exit(1);
 	 }
  return (1);

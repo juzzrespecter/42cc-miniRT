@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:24:56 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/02 19:12:35 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/03 20:19:25 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void diff_lightning_sum(t_light *l, t_3dvec *ray, unsigned char *diff_lig
 	light_vector[1] = l->coord[1] - ray->point[1];
 	light_vector[2] = l->coord[2] - ray->point[2];
 
+	normalize(light_vector);
 	dot_product = ft_max(0, dot(light_vector, ray->normal));
 	diff_lightning[0] += ((l->color[0] / 255) * l->bright * dot_product) * 255;
 	diff_lightning[1] += ((l->color[1] / 255) * l->bright * dot_product) * 255;

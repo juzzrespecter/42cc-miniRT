@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/02 19:30:28 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/03 20:07:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_3dvec *collision_square(t_sq *sq, t_3dvec *ray)
 	float width_vector[4];
 	float height_vector[4];
 
-	if (!(point_in_plane(sq->normal, ray, dot(sq->normal, sq->center), point)))
+	if (!(point_in_plane(sq->normal, sq->center, ray, point)))
 		return (NULL);
 	transform_vectors(height_vector, width_vector, sq->normal);
 	pc_vector[0] = point[0] - sq->center[0];
