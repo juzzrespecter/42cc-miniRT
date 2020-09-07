@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 19:46:08 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:37:35 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_ray *build_ray(float x, float y, t_cam *cam)
 	t_vector m_c2w[3];
 	t_ray *ray;
 
-	cam2world_matrix(cam->orientation, cam->coord, m_c2w);
+	cam2world_matrix(cam->orientation,  m_c2w);
 	if (!(ray = malloc(sizeof(t_ray))))
 		return (NULL);
 	ray->point_found = false;
