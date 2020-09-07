@@ -6,23 +6,20 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/03 17:43:31 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/07 20:27:44 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 .PHONY		= all re clean fclean
 
 SRCS		= main.c \
-			delete_obj_lst.c \
-			setup_obj_lst.c \
+			delete_olst.c \
 			light_check.c \
 			color_check.c \
 			coord_check.c \
 			vector_check.c \
 			dim_check.c \
-			array_char_to_float.c \
 			draw_image.c \
-			vector_operations.c \
 			matrix_operations.c \
 			obj_loops.c \
 			cam2world_matrix.c \
@@ -43,7 +40,9 @@ PARSER_SRCS	= build_amb.c \
 			scene_parser.c \
 			check_scene_array.c \
 			greater_length.c \
-			char_to_color.c
+			array_to_color.c \
+			array_to_vector.c \
+			array_to_float.c
 
 COL_SRCS	= collision_cylinder.c \
 			collision_cylinder_utils.c \
@@ -54,6 +53,8 @@ COL_SRCS	= collision_cylinder.c \
 			collision_triangle.c \
 			collision_utils.c
 
+VECTOR_SRCS	= vector_operations.c \
+			  more_vector_operations.c
 
 NAME		= miniRT
 
@@ -63,6 +64,8 @@ PARSERDIR	= srcs/parser/
 
 COLDIR		= srcs/collisions/
 
+VECTORDIR	= srcs/vector/
+
 OBJSDIR		= objs/
 
 LIB			= ./libft/libft.a
@@ -71,7 +74,7 @@ MLXLIB_MAC	= -lmlx -framework OpenGL -framework AppKit -lz
 
 MLXLIB_LIN	= minilinx/libmlx.a
 
-INCDIR		= inc/
+INCDIR		= includes/
 
 OBJS		= $(patsubst %.c, $(OBJSDIR)%.o, $(SRCS))
 
@@ -79,13 +82,17 @@ PARSER_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(PARSER_SRCS))
 
 COL_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(COL_SRCS))
 
+VECTOR_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(VECTOR_SRCS))
+
+ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS)
+
 GCC		= gcc -Wall -Werror -Wextra
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS) $(PARSER_OBJS) $(COL_OBJS)
+$(NAME):	$(ALL_OBJS)
 			@make -C libft
-			@$(GCC) -o $(NAME) $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(LIB) $(MLXLIB_MAC)
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
@@ -102,6 +109,10 @@ $(OBJSDIR)%.o:  $(COLDIR)%.c
 		@mkdir -p objs
 		@mv $(@F) $(OBJSDIR)
 
+$(OBJSDIR)%.o:  $(VECTORDIR)%.c
+		@$(GCC) -c $< -I $(INCDIR)
+		@mkdir -p objs
+		@mv $(@F) $(OBJSDIR)
 
 clean:
 		@rm -rf $(OBJSDIR)

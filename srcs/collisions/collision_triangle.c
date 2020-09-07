@@ -6,74 +6,41 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:22:22 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/02 20:21:46 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:21:43 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void triangle_calculate_normal(t_tr *tr, float *normal)
+static bool triangle_point_check(t_tr *tr, t_vector point, t_vector normal)
 {
-	float first_vector[3];
-	float second_vector[3];
-	int count;
+	t_vector cross_1;
+	t_vector cross_2;
+	t_vector cross_3;
 
-	count = 0;
-	while (count < 3)
-		{
-			first_vector[count] = tr->second_point[count] - tr->first_point[count];
-			second_vector[count] = tr->third_point[count] - tr->second_point[count];
-			count++;
-		}
-	cross(first_vector, second_vector, normal);
-	normalize(normal);
-}
-
-static void edge_vp_cross_prod(float *v1, float *v2, float *point, float *cross_prod)
-{
-	float edge[3];
-	float vp[3];
-	int count;
-
-	count = 0;
-	while (count < 3)
-		{
-			edge[count] = v2[count] - v1[count];
-			vp[count] = point[count] - v1[count];
-			count++;
-		}
-	cross(edge, vp, cross_prod);
-	normalize(cross_prod);
-}
-
-static bool triangle_point_check(t_tr *tr, float *point, float *normal)
-{
-	float cross_1[3];
-	float cross_2[3];
-	float cross_3[3];
-
-	edge_vp_cross_prod(tr->first_point, tr->second_point, point, cross_1);
-	edge_vp_cross_prod(tr->second_point, tr->third_point, point, cross_2);
-	edge_vp_cross_prod(tr->third_point, tr->first_point, point, cross_3);
-	if ((dot(cross_1, normal) < 0))
+	cross_1 = v_cross(v_sub(tr->second_point, tr->first_point), v_sub(point, tr->first_point));
+	cross_2 = v_cross(v_sub(tr->third_point, tr->second_point), v_sub(point, tr->second_point));
+	cross_3 = v_cross(v_sub(tr->first_point, tr->third_point), v_sub(point, tr->third_point));
+	cross_1 = v_normalize(cross_1);
+	cross_2 = v_normalize(cross_2);
+	cross_3 = v_normalize(cross_3);
+	if ((v_dot(cross_1, normal) < 0))
 		return (false);
-	if ((dot(cross_2, normal) < 0))
+	if ((v_dot(cross_2, normal) < 0))
 		return (false);
-	if ((dot(cross_3, normal) < 0))
+	if ((v_dot(cross_3, normal) < 0))
 		return (false);
 	return (true);
 }
 
-
-t_3dvec *collision_triangle(t_tr *tr, t_3dvec *ray)
+t_ray *collision_triangle(t_tr *tr, t_ray *ray)
 {
-	float normal[3];
-	float point[3];
-	float d;
+	t_vector normal;
+	t_vector point;
 
-	triangle_calculate_normal(tr, normal);
-	d = dot(normal, tr->first_point);
-	if (!(point_in_plane(normal, ray, d, point)))
+	normal = v_cross(v_sub(tr->second_point, tr->first_point), v_sub(tr->third_point, tr->second_point));
+	normal = v_normalize(normal);
+	if (!(point_in_plane(normal, tr->first_point, ray, &point)))
 		return (NULL);
 	if (!(triangle_point_check(tr, point, normal)))
 		return (NULL);

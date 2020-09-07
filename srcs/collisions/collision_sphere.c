@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:20:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/03 20:27:12 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 18:15:45 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,24 @@ static float choose_t(float t, float r, float d)
 	return ((near_t) > 0 ? near_t : far_t);
 }
 
-t_3dvec *collision_sphere(t_sp *sp, t_3dvec *ray)
+t_ray *collision_sphere(t_sp *sp, t_ray *ray)
 {
-	float oc_vector[3];
-	float normal[3];
-	float point[3];
+	t_vector oc_vector;
+	t_vector normal;
+	t_vector point;
 	float t;
 	float d;
 
-	oc_vector[0] = sp->center[0] - ray->orig[0];
-    oc_vector[1] = sp->center[1] - ray->orig[1];
-    oc_vector[2] = sp->center[2] - ray->orig[2];
-	if ((t = dot(oc_vector, ray->dir)) < 0 )
+	oc_vector = v_sub(sp->center, ray->origin);
+	if ((t = v_dot(oc_vector, ray->dir)) < 0 )
 		return (NULL);
-	if ((d = sqrt(dot(oc_vector, oc_vector) - pow(t, 2))) > sp->d / 2)
+	if ((d = sqrt(v_dot(oc_vector, oc_vector) - pow(t, 2))) > sp->d / 2)
 		return (NULL);
 	if (d < sp->d / 2)
 		t = choose_t(t, sp->d / 2, d);
-	point[0] = ray->orig[0] + t * ray->dir[0];
-	point[1] = ray->orig[1] + t * ray->dir[1];
-	point[2] = ray->orig[2] + t * ray->dir[2];
-	normal[0] = point[0] - sp->center[0];
-	normal[1] = point[1] - sp->center[1];
-	normal[2] = point[2] - sp->center[2];
-	normalize(normal);
+	point = v_add(ray->origin, v_scalar(ray->dir, t));
+	normal = v_sub(point, sp->center);
+	v_normalize(normal);
 	point_found(point, normal, sp->color, ray);
 	return (ray);
 }

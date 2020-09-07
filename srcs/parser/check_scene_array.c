@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 bool check_scene_array(char **scene_line, int n_lines)
 {

@@ -6,52 +6,47 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/03 20:07:56 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:20:34 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void transform_vectors(float *height, float *width, float *world_or)
+static void transform_vectors(t_vector *height, t_vector *width, t_vector world_or)
 {
-	float object_or[4];
-	float transformation_matrix[4][4];
-	float height_obj[4];
-	float width_obj[4];
-	int count;
+	t_vector object_or;
+	t_vector transformation_matrix[3];
+	t_vector height_obj;
+	t_vector width_obj;
 
-	count = 0;
-	while (count < 4)
-		{
-			height_obj[count] = 1 * (count == 1 || count == 3);
-			width_obj[count] = 1 * (count == 0 || count == 3);
-			object_or[count] = 1 * (count == 2 || count == 3);
-			count++;
-		}
+	ft_bzero(&height_obj, sizeof(t_vector));
+	ft_bzero(&width_obj, sizeof(t_vector));
+	ft_bzero(&object_or, sizeof(t_vector));
+	height_obj.y = 1;
+	width_obj.x = 1;
+	object_or.z = 1;
 	obj2world_matrix(object_or, world_or, transformation_matrix);
-	vmprod(height_obj, transformation_matrix, height);
-	vmprod(width_obj, transformation_matrix, width);
-	normalize(height);
-	normalize(width);
+	*height = vmprod(height_obj, transformation_matrix);
+	*width = vmprod(width_obj, transformation_matrix);
+	*height = v_normalize(*height);
+	*width = v_normalize(*width);
 }
 
-t_3dvec *collision_square(t_sq *sq, t_3dvec *ray)
+t_ray *collision_square(t_sq *sq, t_ray *ray)
 {
-	float point[3];
-	float pc_vector[3];
-	float width_vector[4];
-	float height_vector[4];
+	t_vector point;
+	t_vector pc_vector;
+	t_vector width_vector;
+	t_vector height_vector;
 
-	if (!(point_in_plane(sq->normal, sq->center, ray, point)))
+	if (!(point_in_plane(sq->orientation, sq->center, ray, &point)))
 		return (NULL);
-	transform_vectors(height_vector, width_vector, sq->normal);
-	pc_vector[0] = point[0] - sq->center[0];
-	pc_vector[1] = point[1] - sq->center[1];
-	pc_vector[2] = point[2] - sq->center[2];
-	if (fabs(dot(pc_vector, width_vector)) > sq->side / 2)
+	transform_vectors(&height_vector, &width_vector, sq->orientation);
+	pc_vector = v_sub(point, sq->center);
+	if (fabs(v_dot(pc_vector, width_vector)) > sq->side / 2)
 		return (NULL);
-	if (fabs(dot(pc_vector, height_vector)) > sq->side / 2)
+	if (fabs(v_dot(pc_vector, height_vector)) > sq->side / 2)
 		return (NULL);
-	point_found(point, sq->normal, sq->color, ray);
+	point_found(point, sq->orientation, sq->color, ray);
 	return (ray);
 }

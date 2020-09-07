@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:04:07 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:13:12 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 17:49:50 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_light_to_back(t_objlst *obj_lst, t_light *light)
+static void add_light_to_back(t_olst *olst, t_light *light)
 {
 	t_light *light_aux;
 
-	light_aux = obj_lst->light;
+	light_aux = olst->light;
 	if (!light_aux)
-		obj_lst->light = light;
+		olst->light = light;
 	else
 		{
 			while (light_aux->next)
@@ -27,7 +27,7 @@ static void add_light_to_back(t_objlst *obj_lst, t_light *light)
 		}
 }
 
-bool build_light(char **scene_line, t_objlst *obj_lst)
+bool build_light(char **scene_line, t_olst *olst)
 {
 	char *coord;
 	char *bright;
@@ -43,10 +43,10 @@ bool build_light(char **scene_line, t_objlst *obj_lst)
 			return (false);
 	if (!(light = malloc(sizeof(t_light))))
 		return (false);
-	array_char_to_float(light->coord, coord);
-	light->bright = char_to_float(bright);
-	char_to_color(light->color, color);
+	light->coord = array_to_vector(coord);
+	light->bright = array_to_float(bright);
+	light->color = array_to_color(color);
 	light->next = NULL;
-	add_light_to_back(obj_lst, light);
+	add_light_to_back(olst, light);
 	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/03 19:23:02 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:29:00 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static bool get_image_data(t_data *img_data, int res_x, int res_y)
 
 int main(int argc, char **argv)
 {
-	t_objlst *obj_lst;
+	t_olst *olst;
 	t_data img_data;
 
 	if (!check_valid_args(argc, argv))
@@ -86,22 +86,22 @@ int main(int argc, char **argv)
 			printf("error al introducir los argumentos.\n");
 			exit(1);
 		}
-	if (!(obj_lst = scene_parser(argv[1])))
+	if (!(olst = scene_parser(argv[1])))
 		{
 			printf("error al leer la escena.\n");
 			exit(1);
 		}
-	if (!(get_image_data(&img_data, obj_lst->res->res_x, obj_lst->res->res_y)))
+	if (!(get_image_data(&img_data, olst->res->res_x, olst->res->res_y)))
 		{
 			printf("error al crear la imagen.\n");
-			delete_obj_lst(obj_lst);
+			delete_olst(olst);
 			exit(1);
 	}
-	img_data.img = draw_image(obj_lst, &img_data);
+	img_data.img = draw_image(olst, &img_data);
 	if (argc == 3)
 	{
 		image_save_bmp(&img_data);
-		delete_obj_lst(obj_lst);
+		delete_olst(olst);
 		// delete data struct
 	}
 	if (argc == 2)

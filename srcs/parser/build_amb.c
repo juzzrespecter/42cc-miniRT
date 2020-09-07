@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:00:52 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 17:28:28 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 19:59:34 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool build_amb(char **scene_line, t_objlst *obj_lst)
+bool build_amb(char **scene_line, t_olst *olst)
 {
 	char *light;
 	char *color;
 	t_amb *amb;
 
-	if (!check_scene_array(scene_line, 3) || obj_lst->amb)
+	if (!check_scene_array(scene_line, 3) || olst->amb)
 		return (false);
 	light = scene_line[1];
 	color = scene_line[2];
@@ -26,8 +26,8 @@ bool build_amb(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(amb = malloc(sizeof(t_amb))))
 		return (false);
-	amb->bright = char_to_float(light);
-	char_to_color(amb->color, color);
-	obj_lst->amb = amb;
+	amb->bright = array_to_float(light);
+	amb->color = array_to_color(color);
+	olst->amb = amb;
 	return (true);
 }

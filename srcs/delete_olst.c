@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   delete_obj_lst.c                                   :+:      :+:    :+:   */
+/*   delete_olst.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 16:58:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/09 20:06:28 by danrodri         ###   ########.fr       */
+/*   Created: 2020/09/07 20:29:53 by danrodri          #+#    #+#             */
+/*   Updated: 2020/09/07 20:29:57 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
-static void delete_cam_lst(t_objlst *obj_lst)
+static void delete_cam_lst(t_olst *obj_lst)
 {
 	t_cam *cam_aux;
 	t_cam *cam;
@@ -26,7 +26,7 @@ static void delete_cam_lst(t_objlst *obj_lst)
 		}
 }
 
-static void delete_light_sp_lst(t_objlst *obj_lst)
+static void delete_light_sp_lst(t_olst *obj_lst)
 {
 	t_light *light_aux;
 	t_light *light;
@@ -49,7 +49,7 @@ static void delete_light_sp_lst(t_objlst *obj_lst)
 		}
 }
 
-static void delete_pl_sq_lst(t_objlst *obj_lst)
+static void delete_pl_sq_lst(t_olst *obj_lst)
 {
 	t_pl *pl_aux;
 	t_pl *pl;
@@ -72,7 +72,7 @@ static void delete_pl_sq_lst(t_objlst *obj_lst)
 		}
 }
 
-static void delete_cy_tr_lst(t_objlst *obj_lst)
+static void delete_cy_tr_lst(t_olst *obj_lst)
 {
 	t_cy *cy_aux;
 	t_cy *cy;
@@ -95,7 +95,7 @@ static void delete_cy_tr_lst(t_objlst *obj_lst)
 		}
 }
 
-void	delete_obj_lst(t_objlst *obj_lst)
+void	delete_olst(t_olst *obj_lst)
 {
 	if (obj_lst->res)
 		free(obj_lst->res);

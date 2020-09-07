@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
-t_3dvec *sp_loop(t_sp *sp, t_3dvec *ray)
+t_ray *sp_loop(t_sp *sp, t_ray *ray)
 {
 	t_sp *sp_aux;
 
@@ -25,7 +25,7 @@ t_3dvec *sp_loop(t_sp *sp, t_3dvec *ray)
 	return (ray);
 }
 
-t_3dvec *pl_loop(t_pl *pl, t_3dvec *ray)
+t_ray *pl_loop(t_pl *pl, t_ray *ray)
 {
 	t_pl *pl_aux;
 
@@ -38,7 +38,7 @@ t_3dvec *pl_loop(t_pl *pl, t_3dvec *ray)
 	return (ray);
 }
 
-t_3dvec *sq_loop(t_sq *sq, t_3dvec *ray)
+t_ray *sq_loop(t_sq *sq, t_ray *ray)
 {
 	t_sq *sq_aux;
 
@@ -51,7 +51,7 @@ t_3dvec *sq_loop(t_sq *sq, t_3dvec *ray)
 	return (ray);
 }
 
-t_3dvec *cy_loop(t_cy *cy, t_3dvec *ray)
+t_ray *cy_loop(t_cy *cy, t_ray *ray)
 {
 	t_cy *cy_aux;
 
@@ -64,7 +64,7 @@ t_3dvec *cy_loop(t_cy *cy, t_3dvec *ray)
 	return (ray);
 }
 
-t_3dvec *tr_loop(t_tr *tr, t_3dvec *ray)
+t_ray *tr_loop(t_tr *tr, t_ray *ray)
 {
 	t_tr *tr_aux;
 

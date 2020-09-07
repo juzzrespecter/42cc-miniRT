@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:06:09 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:16:54 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:03:06 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_sq_to_back(t_objlst *obj_lst, t_sq *sq)
+static void add_sq_to_back(t_olst *olst, t_sq *sq)
 {
 	t_sq *sq_aux;
 
-	sq_aux = obj_lst->sq;
+	sq_aux = olst->sq;
 	if (!sq_aux)
-		obj_lst->sq = sq;
+		olst->sq = sq;
 	else
 		{
 			while (sq_aux->next)
@@ -27,7 +27,7 @@ static void add_sq_to_back(t_objlst *obj_lst, t_sq *sq)
 		}
 }
 
-bool build_square(char **scene_line, t_objlst *obj_lst)
+bool build_square(char **scene_line, t_olst *olst)
 {
 	char *coord;
 	char *vector;
@@ -46,11 +46,11 @@ bool build_square(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(sq = malloc(sizeof(t_sq))))
 		return (false);
-	array_char_to_float(sq->center, coord);
-	array_char_to_float(sq->normal, vector);
-	sq->side = char_to_float(side);
-	char_to_color(sq->color, color);
+	sq->center = array_to_vector(coord);
+	sq->orientation = array_to_vector(vector);
+	sq->side = array_to_float(side);
+	sq->color = array_to_color(color);
 	sq->next = NULL;
-	add_sq_to_back(obj_lst, sq);
+	add_sq_to_back(olst, sq);
 	return (true);
 }

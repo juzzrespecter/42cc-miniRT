@@ -6,45 +6,35 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 17:40:39 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/03 20:27:14 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:22:27 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void point_found(float *p_coord, float *n_vec, unsigned char *p_color, t_3dvec *ray)
+void point_found(t_vector p_coord, t_vector n_vec, t_color p_color, t_ray *ray)
 {
-	int count;
-
-	count = 0;
-	if (!ray->point_found || (length(p_coord) - length(ray->point)) < 0)
+	if (!ray->point_found || (v_mod(p_coord) - v_mod(ray->point)) < 0)
 	{
 		ray->point_found = true;
-		while (count < 3)
-		{
-			 ray->color[count] = p_color[count];
-			 ray->point[count] = p_coord[count];
-			 ray->normal[count] = n_vec[count];
-			 count++;
-		 }
+		ray->color = p_color;
+		ray->point = p_coord;
+		ray->normal = n_vec;
 	}
 }
 
-bool point_in_plane(float *normal, float *plane_point, t_3dvec *ray, float *point)
+bool point_in_plane(t_vector normal, t_vector plane_point, t_ray *ray, t_vector *point)
 {
 	float t;
-	float points_vector[3];
+	t_vector points_vector;
 	float eq_denom;
 
-	if ((eq_denom = dot(normal, ray->dir)) < 1e-6)
+	if ((eq_denom = v_dot(normal, ray->dir)) < 1e-6)
 		return (false);
-	points_vector[0] = plane_point[0] - ray->orig[0];
-	points_vector[1] = plane_point[1] - ray->orig[1];
-	points_vector[2] = plane_point[2] - ray->orig[2];
-	if ((t = dot(normal, points_vector) / eq_denom) < 0)
+	points_vector = v_sub(plane_point, ray->origin);
+	v_normalize(points_vector);
+	if ((t = v_dot(normal, points_vector) / eq_denom) < 0)
 		return (false);
-	point[0] = ray->orig[0] + t * ray->dir[0];
-	point[1] = ray->orig[1] + t * ray->dir[1];
-	point[2] = ray->orig[2] + t * ray->dir[2];
+	*point = v_add(ray->origin, v_scalar(ray->dir, t));
 	return (true);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   array_char_to_float.c                              :+:      :+:    :+:   */
+/*   array_to_float.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/07 17:45:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:13:29 by danrodri         ###   ########.fr       */
+/*   Created: 2020/09/07 17:31:55 by danrodri          #+#    #+#             */
+/*   Updated: 2020/09/07 20:08:43 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int digit_count(int n)
 	return (count);
 }
 
-float char_to_float(char *array)
+float array_to_float(char *array)
 {
 	int count;
 	int intgr;
@@ -50,20 +50,3 @@ float char_to_float(char *array)
 	return (neg ? num * -1 : num);
 }
 
-void array_char_to_float(float *coord, char *array)
-{
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (i < 3)
-		{
-			coord[i] = char_to_float(array + count);
-			while (array[count] == '.' || array[count] == '-' || ft_isdigit(array[count]))
-				count++;
-			if (array[count] == ',')
-				count++;
-			i++;
-		}
-}

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:01:33 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 17:54:12 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 17:47:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static bool fov_check(char *fov)
 	return (!fov[i] ? true : false);
 }
 
-static void add_cam_to_back(t_objlst *obj_lst, t_cam *cam)
+static void add_cam_to_back(t_olst *olst, t_cam *cam)
 {
 	t_cam *cam_aux;
 
-	cam_aux = obj_lst->cam;
+	cam_aux = olst->cam;
 	if (!cam_aux)
-		obj_lst->cam = cam;
+		olst->cam = cam;
 	else
 		{
 			while (cam_aux->next)
@@ -43,7 +43,7 @@ static void add_cam_to_back(t_objlst *obj_lst, t_cam *cam)
 		}
 }
 
-bool build_cam(char **scene_line, t_objlst *obj_lst)
+bool build_cam(char **scene_line, t_olst *olst)
 {
 	char *coord;
 	char *vector;
@@ -59,11 +59,10 @@ bool build_cam(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(cam = malloc(sizeof(t_cam))))
 		return (false);
-	array_char_to_float(cam->coord, coord);
-	array_char_to_float(cam->normal, vector);
+	cam->coord = array_to_vector(coord);
+	cam->orientation = array_to_vector(vector);
 	cam->fov = ft_atoi(fov);
-	cam2world_matrix(cam->normal, cam->coord, cam->m_c2w);
 	cam->next = NULL;
-	add_cam_to_back(obj_lst, cam);
+	add_cam_to_back(olst, cam);
 	return (true);
 }

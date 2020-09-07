@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minirt.h"
+#include "minirt.h"
 
 static int normalized_float_check(char *vector)
 {

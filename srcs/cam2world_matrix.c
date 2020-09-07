@@ -6,62 +6,32 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:09:20 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 19:02:23 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 19:49:46 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include <stdio.h>
 
-static void vinv (float *forward)
+void cam2world_matrix(t_vector forward, t_vector c2w_m[3])
 {
-	int i;
+	t_vector tmp;
+	t_vector up;
+	t_vector right;
 
-	i = 0;
-	while (i < 3)
-		{
-			forward [i] *= -1;
-			i++;
-		}
-}
-
-void printv(float *v)
-{
-	int i = 0;
-	while (i < 3)
-		{
-			printf("%f ", v[i]);
-			i++;
-		}
-	printf("\n");
-}
-
-void cam2world_matrix(float *forward, float *eye, float c2w_m[4][4])
-{
-	float tmp[4];
-	float up[4];
-	float right[4];
-
-	tmp[0] = 0;
-	tmp[1] = 1;
-	tmp[2] = 0;
-	tmp[3] = 1;
-	vinv(forward);
-	cross(forward, tmp, right);
-	normalize(right);
-	cross(forward, right, up);
-	normalize(up);
-	set_id_matrix(c2w_m);
-	c2w_m[0][0] = right[0];
-	c2w_m[0][1] = right[1];
-	c2w_m[0][2] = right[2];
-	c2w_m[1][0] = up[0];
-	c2w_m[1][1] = up[1];
-	c2w_m[1][2] = up[2];
-	c2w_m[2][0] = forward[0];
-	c2w_m[2][1] = forward[1];
-	c2w_m[2][2] = forward[2];
-	c2w_m[3][0] = eye[0];
-	c2w_m[3][1] = eye[1];
-	c2w_m[3][2] = eye[2];
+	tmp.x = 0;
+	tmp.y = 1;
+	tmp.z = 0;
+	forward = v_scalar(forward, -1);
+	right = v_normalize(v_cross(forward, tmp));
+	up = v_normalize(v_cross(forward, right));
+	c2w_m[0].x = right.x;
+	c2w_m[0].y = right.y;
+	c2w_m[0].z = right.z;
+	c2w_m[1].x = up.x;
+	c2w_m[1].y = up.y;
+	c2w_m[1].z = up.z;
+	c2w_m[2].x = forward.x;
+	c2w_m[2].y = forward.y;
+	c2w_m[2].z = forward.z;
 }

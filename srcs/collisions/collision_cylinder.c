@@ -6,29 +6,26 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:15:29 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/28 17:06:43 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:17:19 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void transform_axis(float *axis, float *world_or)
+static t_vector transform_axis(t_vector world_or)
 {
-	float object_or[4];
-	float axis_object_or[4];
-	float transformation_matrix[4][4];
-	int count;
+	t_vector object_or;
+	t_vector axis_object_or;
+	t_vector axis;
+	t_vector transformation_matrix[3];
 
-	count = 0;
-	while (count < 4)
-		{
-			axis_object_or[count] = 1 * (count == 1 || count == 3);
-			object_or[count] = 1 * (count == 2 || count == 3);
-			count++;
-		}
+	ft_bzero(&object_or, sizeof(t_vector));
+	ft_bzero(&axis_object_or, sizeof(t_vector));
+	object_or.z = 1;
+	axis_object_or.y = 1;
 	obj2world_matrix(object_or, world_or, transformation_matrix);
-	vmprod(axis_object_or, transformation_matrix, axis);
-	normalize(axis);
+	axis = v_normalize(vmprod(axis_object_or, transformation_matrix));
+	return (axis);
 }
 
 static float choose_nearest_t(float a, float b, float eq_sqrt)
@@ -44,16 +41,16 @@ static float choose_nearest_t(float a, float b, float eq_sqrt)
 		return (t2);
 }
 
-static bool collision_cy_inf(t_3dvec *ray, t_cy *cy, float *axis, float *t)
+static bool collision_cy_inf(t_ray *ray, t_cy *cy, t_vector axis, float *t)
 {
 	float a;
 	float b;
 	float c;
 	float eq_sqrt;
 
-	a = a_calc (ray->dir, axis);
-	b = b_calc (ray->dir, axis, ray->orig, cy->coord);
-	c = c_calc (axis, ray->orig, cy->coord, cy->d / 2);
+	a = a_calc(ray->dir, axis);
+	b = b_calc(ray->dir, axis, ray->origin, cy->coord);
+	c = c_calc(axis, ray->origin, cy->coord, cy->d / 2);
 	eq_sqrt = pow (b, 2) - 4 * a * c;
 	if (eq_sqrt < 0 || a < 1e-6)
 		return (false);
@@ -77,41 +74,32 @@ static bool collision_cy_inf(t_3dvec *ray, t_cy *cy, float *axis, float *t)
 	if ((t_denom = dot (normal)))
 	}*/
 
-static void get_normal (t_cy *cy, float *point, float *axis, float *normal)
+static t_vector get_normal(t_cy *cy, t_vector point, t_vector axis)
 {
-	float p_vec [3];
-	float p_norm [3];
+	t_vector p_norm;
+	t_vector normal;
 	float axis_dot;
 
-	p_vec [0] = point [0] - cy->coord [0];
-	p_vec [1] = point [1] - cy->coord [1];
-	p_vec [2] = point [2] - cy->coord [2];
-	axis_dot = dot (p_vec, axis);
-	p_norm [0] = cy->coord [0] + axis_dot * axis [0];
-	p_norm [1] = cy->coord [1] + axis_dot * axis [1];
-	p_norm [2] = cy->coord [2] + axis_dot * axis [2];
-	normal [0] = point [0] - p_norm [0];
-	normal [1] = point [1] - p_norm [1];
-	normal [2] = point [2] - p_norm [2];
-	normalize (normal);
+	axis_dot = v_dot(v_sub(point, cy->coord), axis);
+	p_norm = v_add(cy->coord, v_scalar(axis, axis_dot));
+	normal = v_normalize(v_sub(point, p_norm));
+	return (normal);
 }
 
-t_3dvec *collision_cylinder(t_cy *cy, t_3dvec *ray)
+t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
 {
-	float point[3];
+	t_vector point;
 	float infinite_cy_t;
-	float axis[4];
-	float normal[3];
+	t_vector axis;
+	t_vector normal;
 
-	transform_axis(axis, cy->normal);
+	axis = transform_axis(cy->orientation);
 	if((collision_cy_inf(ray, cy, axis, &infinite_cy_t)) == false)
 		return (NULL);
 	if (infinite_cy_t < 0)
 		return (NULL);
-	point [0] = ray->orig [0] + infinite_cy_t * ray->dir [0];
-	point [1] = ray->orig [1] + infinite_cy_t * ray->dir [1];
-	point [2] = ray->orig [2] + infinite_cy_t * ray->dir [2];
-	get_normal (cy, point, axis, normal);
-	point_found (point, normal, cy->color, ray);
+	point = v_add(ray->origin, v_scalar(ray->dir, infinite_cy_t));
+	normal = get_normal(cy, point, axis);
+	point_found(point, normal, cy->color, ray);
 	return (ray);
 }

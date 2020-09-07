@@ -6,19 +6,19 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:04:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/24 18:15:09 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:02:46 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_pl_to_back(t_objlst *obj_lst, t_pl *pl)
+static void add_pl_to_back(t_olst *olst, t_pl *pl)
 {
 	t_pl *pl_aux;
 
-	pl_aux = obj_lst->pl;
+	pl_aux = olst->pl;
 	if (!pl_aux)
-		obj_lst->pl = pl;
+		olst->pl = pl;
 	else
 		{
 			while (pl_aux->next)
@@ -27,7 +27,7 @@ static void add_pl_to_back(t_objlst *obj_lst, t_pl *pl)
 		}
 }
 
-bool build_plane(char **scene_line, t_objlst *obj_lst)
+bool build_plane(char **scene_line, t_olst *olst)
 {
 	char *coord;
 	char *vector;
@@ -43,10 +43,10 @@ bool build_plane(char **scene_line, t_objlst *obj_lst)
 		return (false);
 	if (!(pl = malloc(sizeof(t_pl))))
 		return (false);
-	array_char_to_float(pl->coord, coord);
-	array_char_to_float(pl->normal, vector);
-	char_to_color(pl->color, color);
+	pl->coord = array_to_vector(coord);
+	pl->orientation = array_to_vector(vector);
+	pl->color = array_to_color(color);
 	pl->next = NULL;
-	add_pl_to_back(obj_lst, pl);
+	add_pl_to_back(olst, pl);
 	return (true);
 }

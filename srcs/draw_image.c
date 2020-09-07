@@ -6,29 +6,30 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/03 19:04:20 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/07 19:46:08 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_3dvec *build_ray(float x, float y, t_cam *cam)
+static t_ray *build_ray(float x, float y, t_cam *cam)
 {
-	float dir_screen[3];
-	t_3dvec *ray;
+	t_vector dir_screen;
+	t_vector m_c2w[3];
+	t_ray *ray;
 
-	if (!(ray = malloc(sizeof(t_3dvec))))
+	cam2world_matrix(cam->orientation, cam->coord, m_c2w);
+	if (!(ray = malloc(sizeof(t_ray))))
 		return (NULL);
 	ray->point_found = false;
-	dir_screen[0] = x;
-	dir_screen[1] = y;
-	dir_screen[2] = -1;
-	normalize(dir_screen);
-	vmprod(dir_screen, cam->m_c2w, ray->dir);
-	normalize(ray->dir);
-	ray->orig[0] = cam->coord[0];
-	ray->orig[1] = cam->coord[1];
-	ray->orig[2] = cam->coord[2];
+	dir_screen.x = x;
+	dir_screen.y = y;
+	dir_screen.z = 1;
+	dir_screen = v_normalize(dir_screen);
+	ray->dir = vmprod(dir_screen, m_c2w);
+	ray->dir = v_add(ray->dir, cam->coord);
+	ray->dir = v_normalize(ray->dir);
+	ray->origin = cam->coord;
 	return (ray);
 }
 
@@ -54,9 +55,9 @@ static float y_pixel(t_data *data, int y, int fov)
 	return (y_pixel);
 }
 
-char *draw_image(t_objlst *obj_lst, t_data *data)
+char *draw_image(t_olst *olst, t_data *data)
 {
-	t_3dvec *ray;
+	t_ray *ray;
 	int fov;
 	int x;
 	int y;
@@ -65,16 +66,16 @@ char *draw_image(t_objlst *obj_lst, t_data *data)
 	x = 0;
 	y = 0;
 	i = 0;
-	fov = obj_lst->cam->fov;
+	fov = olst->cam->fov;
 	while (data->res_y > y)
 		{
 			while (data->res_x > x)
 				{
 					i = (x * (data->bits_per_pixel / 8) + (y * data->size_line));
-					ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), obj_lst->cam);
-					collision_searcher(obj_lst, ray);
+					ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), olst->cam);
+					collision_searcher(olst, ray);
 					if (ray->point_found)
-						*(unsigned int *)(data->img + i) = get_pixel_color(obj_lst, ray);
+						*(unsigned int *)(data->img + i) = get_pixel_color(olst, ray);
 					else
 						*(unsigned int *)(data->img + i) = 0;
 					free(ray);
