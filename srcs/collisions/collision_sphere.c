@@ -40,8 +40,7 @@ t_ray *collision_sphere(t_sp *sp, t_ray *ray)
 	if (d < sp->d / 2)
 		t = choose_t(t, sp->d / 2, d);
 	point = v_add(ray->origin, v_scalar(ray->dir, t));
-	normal = v_sub(point, sp->center);
-	v_normalize(normal);
+	normal = v_normalize(v_sub(point, sp->center));
 	point_found(point, normal, sp->color, ray);
 	return (ray);
 }

@@ -31,8 +31,7 @@ bool point_in_plane(t_vector normal, t_vector plane_point, t_ray *ray, t_vector 
 
 	if ((eq_denom = v_dot(normal, ray->dir)) < 1e-6)
 		return (false);
-	points_vector = v_sub(plane_point, ray->origin);
-	v_normalize(points_vector);
+	points_vector = v_normalize(v_sub(plane_point, ray->origin));
 	if ((t = v_dot(normal, points_vector) / eq_denom) < 0)
 		return (false);
 	*point = v_add(ray->origin, v_scalar(ray->dir, t));

@@ -35,14 +35,15 @@ static bool check_valid_args(int argc, char **argv)
 
 static int esc(int keycode, t_data *data)
 {
+	
 	//esc == 53
- if (keycode == 53)
-	 {
-		 printf("chapando la cosa...\n");
-		 mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		 mlx_destroy_image(data->mlx_ptr, data->img_ptr);
-		 exit(1);
-	 }
+	if (keycode == 53)
+	{
+		printf("chapando la cosa...\n");
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		mlx_destroy_image(data->mlx_ptr, data->img_ptr);
+		exit(EXIT_SUCCESS);
+	}
  return (1);
  }
 

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "vector.h"
+#include <stdio.h>
 
 t_vector v_add(t_vector v1, t_vector v2)
 {
@@ -18,7 +19,7 @@ t_vector v_add(t_vector v1, t_vector v2)
 
 	v.x = v1.x + v2.x;
 	v.y = v1.y + v2.y;
-	v.x = v1.z + v2.z;
+	v.z = v1.z + v2.z;
 	return (v);
 }
 
@@ -28,7 +29,7 @@ t_vector v_sub(t_vector v1, t_vector v2)
 
 	v.x = v1.x - v2.x;
 	v.y = v1.y - v2.y;
-	v.x = v1.z - v2.z;
+	v.z = v1.z - v2.z;
 	return (v);
 }
 

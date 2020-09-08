@@ -24,11 +24,9 @@ static t_ray *build_ray(float x, float y, t_cam *cam)
 	ray->point_found = false;
 	dir_screen.x = x;
 	dir_screen.y = y;
-	dir_screen.z = 1;
+	dir_screen.z = -1;
 	dir_screen = v_normalize(dir_screen);
-	ray->dir = vmprod(dir_screen, m_c2w);
-	ray->dir = v_add(ray->dir, cam->coord);
-	ray->dir = v_normalize(ray->dir);
+	ray->dir = v_normalize(vmprod(dir_screen, m_c2w));
 	ray->origin = cam->coord;
 	return (ray);
 }
@@ -68,21 +66,21 @@ char *draw_image(t_olst *olst, t_data *data)
 	i = 0;
 	fov = olst->cam->fov;
 	while (data->res_y > y)
-		{
-			while (data->res_x > x)
-				{
-					i = (x * (data->bits_per_pixel / 8) + (y * data->size_line));
-					ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), olst->cam);
-					collision_searcher(olst, ray);
-					if (ray->point_found)
-						*(unsigned int *)(data->img + i) = get_pixel_color(olst, ray);
-					else
-						*(unsigned int *)(data->img + i) = 0;
-					free(ray);
-					x++;
-				}
-			x = 0;
-			y++;
-		}
+	{
+		while (data->res_x > x)
+			{
+				i = (x * (data->bits_per_pixel / 8) + (y * data->size_line));
+				ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), olst->cam);
+				collision_searcher(olst, ray);
+				if (ray->point_found)
+					*(unsigned int *)(data->img + i) = get_pixel_color(olst, ray);
+				else
+					*(unsigned int *)(data->img + i) = 0;
+				free(ray);
+				x++;
+			}
+		x = 0;
+		y++;
+	}
 	return (data->img);
 }

@@ -33,20 +33,22 @@
 	return (light_ray.point_found ? true : false);
 	}*/
 
-static void diff_lightning_sum(t_light *l, t_ray *ray, t_color diff_lightning)
+static t_color diff_lightning_sum(t_light *l, t_ray *ray, t_color diff_lightning)
 {
 	float v_dot_product;
 	t_vector light_vector;
 
 	light_vector = v_normalize(v_sub(l->coord, ray->point));
 	v_dot_product = ft_max(0, v_dot(light_vector, ray->normal));
+	
 	diff_lightning.r += ((l->color.r / 255) * l->bright * v_dot_product) * 255;
 	diff_lightning.g += ((l->color.g / 255) * l->bright * v_dot_product) * 255;
 	diff_lightning.b += ((l->color.b / 255) * l->bright * v_dot_product) * 255;
-
+	
 	diff_lightning.r = ft_min(diff_lightning.r, 255);
 	diff_lightning.g = ft_min(diff_lightning.g, 255);
 	diff_lightning.b = ft_min(diff_lightning.b, 255);
+	return (diff_lightning);
 }
 
 unsigned int get_pixel_color(t_olst *olst, t_ray *ray)
@@ -67,7 +69,7 @@ unsigned int get_pixel_color(t_olst *olst, t_ray *ray)
 	while (light)
 		{
 			//if (!blocked_by_an_object(olst, ray, light->coord))
-			diff_lightning_sum(light, ray, diff_lightning);
+			diff_lightning = diff_lightning_sum(light, ray, diff_lightning);
 			light = light->next;
 		}
 	amb_lightning.r = ((amb->color.r / 255) * amb->bright) * 255;
@@ -78,8 +80,6 @@ unsigned int get_pixel_color(t_olst *olst, t_ray *ray)
 	object_color.g = ((ray->color.g / 255) * (ft_min(255, (amb_lightning.g + diff_lightning.g)) / 255)) * 255; 
 	object_color.b = ((ray->color.b / 255) * (ft_min(255, (amb_lightning.b + diff_lightning.b)) / 255)) * 255; 
 
-	//printf("amb: (%d)  (%d)  (%d)\n", amb_lightning.r, amb_lightning[1], amb_lightning[2]);
-   	//printf("diff: (%d)  (%d)  (%d)\n", diff_lightning.r, diff_lightning[1], diff_lightning[2]);
 	color = (((object_color.b | (object_color.g << 8)) | (object_color.r << 16)) & 0xffffff);
 	return (color);
 }

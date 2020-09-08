@@ -72,7 +72,7 @@ LIB			= ./libft/libft.a
 
 MLXLIB_MAC	= -lmlx -framework OpenGL -framework AppKit -lz
 
-MLXLIB_LIN	= minilinx/libmlx.a
+MLXLIB_LIN	= minilibx-linux/libmlx.a -lm -lXext -lX11
 
 INCDIR		= includes/
 
@@ -91,8 +91,9 @@ GCC		= gcc -Wall -Werror -Wextra
 all:		$(NAME)
 
 $(NAME):	$(ALL_OBJS)
+			@make -C minilibx-linux
 			@make -C libft
-			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
