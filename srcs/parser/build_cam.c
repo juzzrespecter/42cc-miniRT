@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:01:33 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 17:47:23 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 18:12:05 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ bool build_cam(char **scene_line, t_olst *olst)
 	if (!(cam = malloc(sizeof(t_cam))))
 		return (false);
 	cam->coord = array_to_vector(coord);
-	cam->orientation = array_to_vector(vector);
+	cam->orientation = v_normalize(array_to_vector(vector));
 	cam->fov = ft_atoi(fov);
 	cam->next = NULL;
 	add_cam_to_back(olst, cam);

@@ -6,11 +6,21 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/26 18:33:32 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:18:04 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:37:06 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
+
+t_ry *cy_loop(t_cy *cy, t_ray *ray)
+{
+	while (cy)
+	{
+		collision_cylinder(cy, ray);
+		cy = cy->next;
+	}
+	return (ray);
+}
 
 float a_calc(t_vector ray_dir, t_vector axis_dir)
 {

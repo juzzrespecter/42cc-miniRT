@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/07 20:27:44 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/08 16:29:24 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -68,7 +68,7 @@ VECTORDIR	= srcs/vector/
 
 OBJSDIR		= objs/
 
-LIB			= ./libft/libft.a
+LIB			= -lft -Llibft
 
 MLXLIB_MAC	= -lmlx -framework OpenGL -framework AppKit -lz
 
@@ -93,7 +93,7 @@ all:		$(NAME)
 $(NAME):	$(ALL_OBJS)
 			@make -C minilibx-linux
 			@make -C libft
-			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)

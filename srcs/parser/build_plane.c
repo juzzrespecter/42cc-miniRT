@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:04:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:02:46 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 18:20:38 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ bool build_plane(char **scene_line, t_olst *olst)
 	if (!(pl = malloc(sizeof(t_pl))))
 		return (false);
 	pl->coord = array_to_vector(coord);
-	pl->orientation = array_to_vector(vector);
+	pl->orientation = v_normalize(array_to_vector(vector));
 	pl->color = array_to_color(color);
 	pl->next = NULL;
 	add_pl_to_back(olst, pl);

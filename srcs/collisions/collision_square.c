@@ -6,11 +6,21 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:20:34 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:34:40 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_ray *sq_loop(t_sq *sq, t_ray *ray)
+{
+	while (sq)
+	{
+		collision_square(sq, ray);
+		sq = sq->next;
+	}
+	return (ray);
+}
 
 static void transform_vectors(t_vector *height, t_vector *width, t_vector world_or)
 {
@@ -47,6 +57,7 @@ t_ray *collision_square(t_sq *sq, t_ray *ray)
 		return (NULL);
 	if (fabs(v_dot(pc_vector, height_vector)) > sq->side / 2)
 		return (NULL);
+	printf("square collision = true\n");
 	point_found(point, sq->orientation, sq->color, ray);
 	return (ray);
 }

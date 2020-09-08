@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 19:25:39 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:01:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct	s_data
 	char *img;
 	int res_x;
 	int res_y;
+	int fov;
 	int bits_per_pixel;
 	int size_line;
 	int endian;

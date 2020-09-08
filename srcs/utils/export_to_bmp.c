@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image_save_bmp.c                                   :+:      :+:    :+:   */
+/*   export_to_bmp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/25 19:34:19 by danrodri          #+#    #+#             */
-/*   Updated: 2020/08/26 20:34:22 by danrodri         ###   ########.fr       */
+/*   Created: 2020/09/08 19:11:04 by danrodri          #+#    #+#             */
+/*   Updated: 2020/09/08 19:11:33 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static unsigned char *create_info_header(t_data *img_data)
 	return (info_header);
 }
 
-void *image_save_bmp(t_data *img_data)
+void *export_to_bmp(t_data *img_data)
 {
 	int fd;
 	unsigned int img_size;

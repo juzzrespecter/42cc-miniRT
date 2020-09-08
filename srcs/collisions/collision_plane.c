@@ -6,11 +6,21 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:18:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:18:51 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:38:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_ray *pl_loop(t_pl *pl, t_ray *ray)
+{
+	while (pl)
+	{
+		collision_plane(pl, ray);
+		pl = pl->next;
+	}
+	return (ray);
+}
 
 t_ray *collision_plane(t_pl *pl, t_ray *ray)
 {

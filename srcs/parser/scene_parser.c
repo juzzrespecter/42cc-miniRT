@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:31:04 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:38:49 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,24 @@ t_olst *scene_parser(char *scene_file)
 	char **scene_line;
 	t_olst *olst;
 
+	olst = NULL;
 	if ((fd = open(scene_file, O_RDONLY)) < 0)
-		{
-			printf("error al abrir el fichero.\n");
-			return (NULL);
-		}
+		rt_failure(olst, "Error en la apertura del archivo.");
 	if (!(olst = calloc(1, sizeof(t_olst))))
-		return (NULL);
+		rt_failure(olst, strerror(errno));
 	while ((get_next_line(fd, &line)) == 1)
-		{
+	{
 		if (*line)
-				{
-					if (!(scene_line = ft_split(line, ' ')))
-						return (NULL);
-					if (!check_elem_list(scene_line, olst))
-						{
-							printf("error en la escena.\n");
-							delete_olst(olst);
-							return (NULL);
-						}
-					free(scene_line);
-				}
-			free(line);
+		{
+			if (!(scene_line = ft_split(line, ' ')))
+				rt_failure(olst, strerror(errno));
+			if (!check_elem_list(scene_line, olst))
+				rt_failure(olst, "Error al leer la escena (escena no válida).");
+			free(scene_line);
 		}
-	return (olst->cam ? olst : NULL);
+		free(line);
+	}
+	if (!olst->cam)
+		rt_failure(olst, "Error: no hay cámara en la escena."); 
+	return (olst);
 }

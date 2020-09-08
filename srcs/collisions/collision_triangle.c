@@ -6,11 +6,21 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:22:22 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:21:43 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:33:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_ray *tr_loop(t_tr *tr, t_ray *ray)
+{
+	while (sp)
+	{
+		collision_triangle(tr, ray);
+		tr = tr->next;
+	}
+	return (ray);
+}
 
 static bool triangle_point_check(t_tr *tr, t_vector point, t_vector normal)
 {

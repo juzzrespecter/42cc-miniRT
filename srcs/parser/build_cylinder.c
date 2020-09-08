@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:03:10 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 17:48:42 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 18:13:52 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool build_cylinder(char **scene_line, t_olst *olst)
 	if (!(cy = malloc(sizeof(t_cy))))
 		return (false);
 	cy->coord = array_to_vector(scene_line[1]);
-	cy->orientation = array_to_vector(scene_line[2]);
+	cy->orientation = v_normalize(array_to_vector(scene_line[2]));
 	cy->d = array_to_float(scene_line[3]);
 	cy->h = array_to_float(scene_line[4]);
 	cy->color = array_to_color(scene_line[5]);

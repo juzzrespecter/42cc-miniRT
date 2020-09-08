@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:29:00 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:20:07 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,30 +82,15 @@ int main(int argc, char **argv)
 	t_olst *olst;
 	t_data img_data;
 
+	t_olst = NULL;
 	if (!check_valid_args(argc, argv))
-		{
-			printf("error al introducir los argumentos.\n");
-			exit(1);
-		}
-	if (!(olst = scene_parser(argv[1])))
-		{
-			printf("error al leer la escena.\n");
-			exit(1);
-		}
+		rt_failure(olst, "Error al introducir los argumentos.");
+	olst = scene_parser(argv[1]);
 	if (!(get_image_data(&img_data, olst->res->res_x, olst->res->res_y)))
-		{
-			printf("error al crear la imagen.\n");
-			delete_olst(olst);
-			exit(1);
-	}
+		rt_failure(olst, "error al crear la imagen.");
 	img_data.img = draw_image(olst, &img_data);
 	if (argc == 3)
-	{
-		image_save_bmp(&img_data);
-		delete_olst(olst);
-		// delete data struct
-	}
-	if (argc == 2)
-		img_to_window(&img_data);
+		export_to_bmp(&img_data);
+	img_to_window(&img_data);
 	return (1);
 }

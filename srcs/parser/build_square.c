@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:06:09 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:03:06 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 17:54:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool build_square(char **scene_line, t_olst *olst)
 	if (!(sq = malloc(sizeof(t_sq))))
 		return (false);
 	sq->center = array_to_vector(coord);
-	sq->orientation = array_to_vector(vector);
+	sq->orientation = v_normalize(array_to_vector(vector));
 	sq->side = array_to_float(side);
 	sq->color = array_to_color(color);
 	sq->next = NULL;

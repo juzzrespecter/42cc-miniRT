@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:24:56 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 19:58:55 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 18:21:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ static t_color diff_lightning_sum(t_light *l, t_ray *ray, t_color diff_lightning
 
 	light_vector = v_normalize(v_sub(l->coord, ray->point));
 	v_dot_product = ft_max(0, v_dot(light_vector, ray->normal));
-	
+
+	//printf("\nlcoord: (%.2f, %.2f, %.2f), raypoint: (%.2f, %.2f, %.2f)\n", l->coord.x, l->coord.y, l->coord.z, ray->point.x, ray->point.y, ray->point.z);
+	//printf("lv: (%.2f, %.2f, %.2f), rn: (%.2f, %.2f, %.2f), dot (%.2f)\n\n", light_vector.x, light_vector.y, light_vector.z, ray->normal.x, ray->normal.y, ray->normal.z, v_dot_product);	
 	diff_lightning.r += ((l->color.r / 255) * l->bright * v_dot_product) * 255;
 	diff_lightning.g += ((l->color.g / 255) * l->bright * v_dot_product) * 255;
 	diff_lightning.b += ((l->color.b / 255) * l->bright * v_dot_product) * 255;

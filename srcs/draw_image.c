@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:37:35 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:38:51 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ char *draw_image(t_olst *olst, t_data *data)
 
 	x = 0;
 	y = 0;
-	i = 0;
 	fov = olst->cam->fov;
 	while (data->res_y > y)
 	{
@@ -74,8 +73,6 @@ char *draw_image(t_olst *olst, t_data *data)
 				collision_searcher(olst, ray);
 				if (ray->point_found)
 					*(unsigned int *)(data->img + i) = get_pixel_color(olst, ray);
-				else
-					*(unsigned int *)(data->img + i) = 0;
 				free(ray);
 				x++;
 			}

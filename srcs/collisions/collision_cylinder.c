@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:15:29 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:17:19 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/08 19:36:15 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,12 @@ static t_vector transform_axis(t_vector world_or)
 
 static float choose_nearest_t(float a, float b, float eq_sqrt)
 {
-	float t1;
-	float t2;
+	float far_t;
+	float near_t;
 
-	t1 = (-b + sqrt(eq_sqrt)) / (2 * a);
-	t2 = (-b - sqrt(eq_sqrt)) / (2 * a);
-	if (t1 < 0)
-		return (t1 < t2 ? t1 : t2);
-	else
-		return (t2);
+	far_t = (-b + sqrt(eq_sqrt)) / (2 * a);
+	near_t = (-b - sqrt(eq_sqrt)) / (2 * a);
+	return (near_t > 0 ? near_t : far_t);
 }
 
 static bool collision_cy_inf(t_ray *ray, t_cy *cy, t_vector axis, float *t)
@@ -94,6 +91,7 @@ t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
 	t_vector normal;
 
 	axis = transform_axis(cy->orientation);
+	printf("axis: (%.2f, %.2f, %.2f).\n", axis.x, axis.y, axis.z);
 	if((collision_cy_inf(ray, cy, axis, &infinite_cy_t)) == false)
 		return (NULL);
 	if (infinite_cy_t < 0)
