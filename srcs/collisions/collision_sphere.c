@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:20:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:35:56 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/09 17:11:17 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_ray *collision_sphere(t_sp *sp, t_ray *ray)
 		return (NULL);
 	if (d < sp->d / 2)
 		t = choose_t(t, sp->d / 2, d);
-	printf("t (%.2f).\n", t);
 	point = v_add(ray->origin, v_scalar(ray->dir, t));
 	normal = v_normalize(v_sub(point, sp->center));
 	point_found(point, normal, sp->color, ray);

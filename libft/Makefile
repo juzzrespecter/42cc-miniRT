@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 15:49:46 by danrodri          #+#    #+#              #
-#    Updated: 2020/01/15 14:39:28 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/09 17:07:29 by danrodri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,9 @@ INC_DIR			= includes/
 
 OBJS			= $(patsubst %.c, $(OBJS_DIR)%.o, $(SRCS))
 
-RM			= rm -f
+RM				= rm -f
+
+RMDIR			= rm -rf
 
 PRINTF_LIB		= libftprintf.a
 
@@ -91,7 +93,7 @@ $(OBJS_DIR)%.o:		$(SRCS_DIR)%.c
 
 clean:
 			@make clean -C ft_printf
-			@$(RMDIR) $(OBJS_DIR)
+			@$(RMDIR) ./$(OBJS_DIR)
 
 fclean:			clean
 			@make fclean -C ft_printf

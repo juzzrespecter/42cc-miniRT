@@ -6,14 +6,13 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/08 16:29:24 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/09 17:08:16 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 .PHONY		= all re clean fclean
 
 SRCS		= main.c \
-			delete_olst.c \
 			light_check.c \
 			color_check.c \
 			coord_check.c \
@@ -92,14 +91,14 @@ UTILS_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(UTILS_SRCS))
 
 ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS) $(UTILS_OBJS)
 
-GCC		= gcc -Wall -Werror -Wextra
+GCC			= gcc -Wall -Werror -Wextra
 
 all:		$(NAME)
 
 $(NAME):	$(ALL_OBJS)
 			@make -C minilibx-linux
 			@make -C libft
-			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
@@ -107,36 +106,35 @@ $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(PARSERDIR)%.c
-		@$(GCC) -c $< -I $(INCDIR)
-		@mkdir -p objs
-		@mv $(@F) $(OBJSDIR)
+			@$(GCC) -c $< -I $(INCDIR)
+			@mkdir -p objs
+			@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(COLDIR)%.c
-		@$(GCC) -c $< -I $(INCDIR)
-		@mkdir -p objs
-		@mv $(@F) $(OBJSDIR)
+			@$(GCC) -c $< -I $(INCDIR)
+			@mkdir -p objs
+			@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(VECTORDIR)%.c
-		@$(GCC) -c $< -I $(INCDIR)
-		@mkdir -p objs
-		@mv $(@F) $(OBJSDIR)
+			@$(GCC) -c $< -I $(INCDIR)
+			@mkdir -p objs
+			@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(UTILSDIR)%.c
-		@$(GCC) -c $< -I $(INCDIR)
-		@mkdir -p objs
-		@mv $(@F) $(OBJSDIR)
+			@$(GCC) -c $< -I $(INCDIR)
+			@mkdir -p objs
+			@mv $(@F) $(OBJSDIR)
 
 clean:
-		@rm -rf $(OBJSDIR)
-		@make clean -C libft
+			@rm -rf $(OBJSDIR)
+			@make clean -C libft
 
 fclean:		clean
-		@rm -f $(NAME)
-		@make fclean -C libft
+			@rm -f $(NAME)
+			@make fclean -C libft
 
-re:		fclean all
+re:			fclean all
 
-debug: $(OBJS) $(PARSER_OBJS) $(COL_OBJS)
-		@make -C libft
-		@gcc -g -o $(NAME) $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(LIB) $(MLXLIB)
-
+debug:		$(OBJS) $(PARSER_OBJS) $(COL_OBJS)
+			@make -C libft
+			@gcc -g -o $(NAME) $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(LIB) $(MLXLIB)
