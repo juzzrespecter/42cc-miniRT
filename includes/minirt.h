@@ -12,12 +12,13 @@
 
 #ifndef MINIRT_H
 #define MINIRT_H
-#include "../libft/libft.h"
+#include "libft.h"
 #include "vector.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <errno.h>
 #include "mlx.h"
 #include "structs.h"
 
@@ -64,6 +65,7 @@ float a_calc(t_vector ray_dir, t_vector axis_dir);
 float b_calc(t_vector ray_dir, t_vector axis_dir, t_vector or, t_vector axis_or);
 float c_calc(t_vector axis_dir, t_vector or, t_vector axis_or, float r);
 unsigned int get_pixel_color(t_olst *obj_lst, t_ray *ray);
-void *image_save_bmp(t_data *img_data);
+void *export_to_bmp(t_data *img_data);
+void rt_failure(t_olst *olst, char *err_msg);
 
 #endif

@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 	t_olst *olst;
 	t_data img_data;
 
-	t_olst = NULL;
+	olst = NULL;
 	if (!check_valid_args(argc, argv))
 		rt_failure(olst, "Error al introducir los argumentos.");
 	olst = scene_parser(argv[1]);

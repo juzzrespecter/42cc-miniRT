@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
+#include "minirt.h"
 
-t_ry *cy_loop(t_cy *cy, t_ray *ray)
+t_ray *cy_loop(t_cy *cy, t_ray *ray)
 {
 	while (cy)
 	{

@@ -6,16 +6,21 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:46:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/02 18:46:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:39:39 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
+
 # include <string.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# define BUFFER_SIZE 32
 
 typedef struct	s_list
 {
@@ -71,5 +76,6 @@ void			ft_putchar(char c);
 void			ft_putstr(char *str);
 char			*ft_lltoa_base(long long int i, char *base);
 int			get_next_line(int fd, char **line);
+int			ft_printf(char *fmt, ...);
 
 #endif

@@ -14,7 +14,7 @@
 
 t_ray *tr_loop(t_tr *tr, t_ray *ray)
 {
-	while (sp)
+	while (tr)
 	{
 		collision_triangle(tr, ray);
 		tr = tr->next;

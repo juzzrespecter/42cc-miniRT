@@ -21,12 +21,9 @@ SRCS		= main.c \
 			dim_check.c \
 			draw_image.c \
 			matrix_operations.c \
-			obj_loops.c \
 			cam2world_matrix.c \
 			obj2world_matrix.c \
 			get_pixel_color.c \
-			utils.c \
-			image_save_bmp.c
 
 PARSER_SRCS	= build_amb.c \
 			build_cam.c \
@@ -54,7 +51,12 @@ COL_SRCS	= collision_cylinder.c \
 			collision_utils.c
 
 VECTOR_SRCS	= vector_operations.c \
-			  more_vector_operations.c
+			more_vector_operations.c
+
+UTILS_SRCS	= delete_olst.c \
+		  	export_to_bmp.c \
+			rt_failure.c \
+			utils.c
 
 NAME		= miniRT
 
@@ -65,6 +67,8 @@ PARSERDIR	= srcs/parser/
 COLDIR		= srcs/collisions/
 
 VECTORDIR	= srcs/vector/
+
+UTILSDIR	= srcs/utils/
 
 OBJSDIR		= objs/
 
@@ -84,7 +88,9 @@ COL_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(COL_SRCS))
 
 VECTOR_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(VECTOR_SRCS))
 
-ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS)
+UTILS_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(UTILS_SRCS))
+
+ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS) $(UTILS_OBJS)
 
 GCC		= gcc -Wall -Werror -Wextra
 
@@ -93,7 +99,7 @@ all:		$(NAME)
 $(NAME):	$(ALL_OBJS)
 			@make -C minilibx-linux
 			@make -C libft
-			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
@@ -111,6 +117,11 @@ $(OBJSDIR)%.o:  $(COLDIR)%.c
 		@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(VECTORDIR)%.c
+		@$(GCC) -c $< -I $(INCDIR)
+		@mkdir -p objs
+		@mv $(@F) $(OBJSDIR)
+
+$(OBJSDIR)%.o:  $(UTILSDIR)%.c
 		@$(GCC) -c $< -I $(INCDIR)
 		@mkdir -p objs
 		@mv $(@F) $(OBJSDIR)

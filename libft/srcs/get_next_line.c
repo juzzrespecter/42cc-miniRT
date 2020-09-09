@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 18:14:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:31:05 by danrodri         ###   ########.fr       */
+/*   Updated: 2019/12/02 15:52:39 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	find_newline(char *str)
 	nl_pos = 0;
 	while (str[nl_pos])
 	{
-	 if (str[nl_pos] == '\n')
+		if (str[nl_pos] == '\n')
 			return (nl_pos);
 		nl_pos++;
 	}

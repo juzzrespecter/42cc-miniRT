@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   flag_format.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/04 19:14:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/07/06 18:03:59 by danrodri         ###   ########.fr       */
+/*   Created: 2020/01/24 18:46:51 by danrodri          #+#    #+#             */
+/*   Updated: 2020/02/01 17:41:51 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libftprintf.h"
 
-size_t	ft_strlen(const char *s)
+int	flag_format(t_flst *flags, char *fmt)
 {
-	size_t len;
+	int count;
 
-	len = 0;
-	while (*s)
+	count = 0;
+	while (ft_strchr("0-", fmt[count]))
 	{
-		len++;
-		s++;
+		if (fmt[count] == '-')
+			flags->minus = true;
+		if (fmt[count] == '0')
+			flags->zero = true;
+		count++;
 	}
-	return (len);
+	if (flags->minus)
+		flags->zero = false;
+	return (count);
 }
