@@ -6,12 +6,12 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:15:29 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/09 20:03:55 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/10 19:32:08 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
+/*
 static t_vector transform_axis(t_vector world_or)
 {
 	t_vector object_or;
@@ -59,7 +59,7 @@ static bool collision_cy_inf(t_ray *ray, t_cy *cy, t_vector axis, float *t)
 		*t = choose_nearest_t(a, b, eq_sqrt);
 	return (true);
 }
-/*
+
 static float collision_caps(t_cy *cy, float *normal, float t)
 {
 	float coord_2[3];
@@ -72,7 +72,7 @@ static float collision_caps(t_cy *cy, float *normal, float t)
 	coord_2 [2] = cy->coord [2] + cy->height * normal [2];
 	if ((t_denom = dot (normal)))
 	}
-*/
+
 static t_vector get_normal(t_cy *cy, t_vector point, t_vector axis)
 {
 	t_vector p_norm;
@@ -104,8 +104,8 @@ t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
 	normal = get_normal(cy, point, axis);
 	point_found(point, normal, cy->color, ray);
 	return (ray);
-}
-/*
+} 
+
 float a(t_vector axis, t_vector dir)
 {
 	return (v_dot(axis, axis) - (pow(v_dot(axis, dir), 2))); 
@@ -138,43 +138,54 @@ t_vector calc_normal(t_cy *cy, t_vector point)
 	center = v_scalar(axis_objspace, point.y);
 	normal = v_sub(point, center);
 	return (normal);
-} */
-/*
+}*/
+
 t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
 {
-	t_vector point_a;
-	t_vector point_b;
+	//calculos hechos por el muchacho Inigo Quilez:
+	t_vector pa = cy->coord;
+	t_vector pb = v_add(pa, v_scalar(cy->orientation, cy->h));
+	t_vector axis = v_sub(pb, pa);
+	t_vector oc = v_sub(ray->origin, pa);
+
 	t_vector point;
-	t_vector oc;
-	t_vector axis;
 	t_vector normal;
-	
-	float discriminant;
-	float t;
-	float y;
 
-	float a;
-	float b;
-	float c;
+	float d_axis = v_dot(axis, axis);
+	float d_adir = v_dot(axis, ray->dir);
+	float d_aoc = v_dot(axis, oc);
 
-	point_a = cy->coord;
-	point_b = v_add(cy->coord, v_scalar(cy->orientation, cy->h));
-	axis = v_sub(point_b, cy->coord);
-	oc = v_sub(ray->origin, point_a);
-	a = v_dot(axis, axis) - pow(v_dot(axis, ray->dir), 2);
-	b = v_dot(axis, axis) * v_dot(ray->dir, oc) - (v_dot(axis, oc) * v_dot(axis, ray->dir));
-	c = v_dot(axis, axis) * v_dot(oc, oc) - (pow(v_dot(axis, oc), 2) - pow(cy->d / 2, 2) * v_dot(axis, axis));
-	discriminant = pow(b, 2) - (a - c);
-	if (discriminant < 0)
-		return (NULL); //no hay colision con el cilindro infinito
-	discriminant = sqrt(discriminant);
-	t = ((-b - discriminant) / a);
-	y = v_dot(axis, oc) + t * v_dot(axis, ray->dir);	//valor escalar de la altura del cilindro finito
-	printf("a (%.2f)  b (%.2f)  c (%.2f)  t (%.2f) y (%.2f)  discriminant (%.2f)\n",a, b, c, t, y, discriminant);
-	if (y < 0.0 || y > v_dot(axis, axis))
+	float a = d_axis - d_adir * d_adir;
+	float b = d_axis * v_dot(oc, ray->dir) - d_aoc * d_adir;
+	float c = d_axis * v_dot(oc, oc) - d_aoc * d_aoc - (cy->d / 2) * (cy->d / 2) * d_axis;
+
+	float h = b * b - a * c;
+
+	printf("h (%.2f).\n", h);
+	if (h < 0) return (NULL);
+	h = sqrt(h);
+
+	float t = (-b-h) / a;
+
+	float y = d_aoc + t * d_adir;
+	printf("t: (%.2f) y: (%.2f)\n\n", t, y);
+	if (y > 0 && y < d_axis)
+	{
+		point = v_add(ray->origin, v_scalar(ray->dir, t));
+		normal = v_scalar(v_scalar(v_sub(v_add(oc, v_scalar(ray->dir, t)), v_scalar(axis, y)), 1 / d_axis), 1 /  cy->d /2);
+		point_found(point, normal, cy->color, ray);
+	}
+	else
+	{
+		float t2 = (((y < 0) ? 0 : d_axis) - d_aoc) / d_adir;
+		if (fabs(b + a * t2) < h)
+		{
+			point = v_add(ray->origin, v_scalar(ray->dir, t));
+			//normal = v_scalar(v_scalar(axis, sign(y)), 1 / d_axis);
+			normal = v_scalar(v_scalar(v_sub(v_add(oc, v_scalar(ray->dir, t)), v_scalar(axis, y)), 1 / d_axis), 1 /  cy->d /2);
+			point_found(point, normal, cy->color, ray);
+		}
 		return (NULL);
-	point = v_add(ray->origin, v_scalar(ray->dir, t));
-	normal = v_scalar(v_scalar(v_sub(v_add(oc, v_scalar(ray->dir, t)), v_scalar(axis, y)), 1 / v_dot(axis, axis)), 1 / cy->d / 2);
-	point_found(point, normal, cy->color, ray);
+	}
 	return (ray);
-} */
+}

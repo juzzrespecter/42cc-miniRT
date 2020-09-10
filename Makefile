@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/09 17:08:16 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/10 16:11:17 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -98,12 +98,12 @@ GCC			= gcc -Wall -Werror -Wextra
 all:		$(NAME)
 
 $(NAME):	$(ALL_OBJS)
-			@make -C libft
+			make -C libft
 ifeq ($(OS), Linux)
 			@make -C minilibx-linux
 			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
 else
-			@$(GCC) -c $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
 endif
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c

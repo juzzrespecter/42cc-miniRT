@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:22:22 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:33:42 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/10 19:32:12 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_ray *collision_triangle(t_tr *tr, t_ray *ray)
 
 	normal = v_cross(v_sub(tr->second_point, tr->first_point), v_sub(tr->third_point, tr->second_point));
 	normal = v_normalize(normal);
+	printf("normal: (%.2f, %.2f, %.2f)\n", normal.x, normal.y, normal.z);
 	if (!(point_in_plane(normal, tr->first_point, ray, &point)))
 		return (NULL);
 	if (!(triangle_point_check(tr, point, normal)))
