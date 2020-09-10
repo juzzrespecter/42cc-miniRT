@@ -22,8 +22,7 @@ static t_vector transform_axis(t_vector world_or)
 	ft_bzero(&axis, sizeof(t_vector));
 	object_or.z = 1;
 	axis.y = 1;
-	printf("\ntr: axis: (%.2f, %.2f, %.2f), objecto: (%.2f, %.2f, %.2f), worldo: (%.2f, %.2f, %.2f)\n",\
-			axis.x, axis.y, axis.z, object_or.x, object_or.y, object_or.z, world_or.x, world_or.y, world_or.z);
+//	printf("\ntr: axis: (%.2f, %.2f, %.2f), objecto: (%.2f, %.2f, %.2f), worldo: (%.2f, %.2f, %.2f)\n", axis.x, axis.y, axis.z, object_or.x, object_or.y, object_or.z, world_or.x, world_or.y, world_or.z);
 	obj2world_matrix(object_or, world_or, transformation_matrix);
 	axis = v_normalize(vmprod(axis, transformation_matrix));
 	return (axis);
@@ -50,7 +49,7 @@ static bool collision_cy_inf(t_ray *ray, t_cy *cy, t_vector axis, float *t)
 	b = b_calc(ray->dir, axis, ray->origin, cy->coord);
 	c = c_calc(axis, ray->origin, cy->coord, cy->d / 2);
 	eq_sqrt = pow (b, 2) - 4 * a * c;
-	printf("on cyinf: a (%.2f), b (%.2f), c (%.2f)\n", a, b, c);
+//	printf("on cyinf: a (%.2f), b (%.2f), c (%.2f)\n", a, b, c);
 
 	if (eq_sqrt < 0 || a < 1e-6)
 		return (false);
@@ -94,13 +93,13 @@ t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
 	t_vector normal;
 
 	axis = transform_axis(cy->orientation);
-	printf("axis: (%.2f, %.2f, %.2f).\n\n", axis.x, axis.y, axis.z);
+//	printf("axis: (%.2f, %.2f, %.2f).\n\n", axis.x, axis.y, axis.z);
 	if((collision_cy_inf(ray, cy, axis, &infinite_cy_t)) == false)
 		return (NULL);
-	printf("col on line TRUE\n");
+//	printf("col on line TRUE\n");
 	if (infinite_cy_t < 0)
 		return (NULL);
-	printf("col on scene TRUE\n\n");
+//	printf("col on scene TRUE\n\n");
 	point = v_add(ray->origin, v_scalar(ray->dir, infinite_cy_t));
 	normal = get_normal(cy, point, axis);
 	point_found(point, normal, cy->color, ray);

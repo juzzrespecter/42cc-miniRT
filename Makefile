@@ -79,6 +79,8 @@ MLXLIB_LIN	= minilibx-linux/libmlx.a -lm -lXext -lX11
 
 INCDIR		= includes/
 
+OS		:= $(shell uname)
+
 OBJS		= $(patsubst %.c, $(OBJSDIR)%.o, $(SRCS))
 
 PARSER_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(PARSER_SRCS))
@@ -96,9 +98,13 @@ GCC			= gcc -Wall -Werror -Wextra
 all:		$(NAME)
 
 $(NAME):	$(ALL_OBJS)
-			@make -C minilibx-linux
 			@make -C libft
-			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
+ifeq ($(OS), Linux)
+			@make -C minilibx-linux
+			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
+else
+			@$(GCC) -c $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
+endif
 
 $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
@@ -134,6 +140,7 @@ fclean:		clean
 			@make fclean -C libft
 
 re:			fclean all
+
 
 debug:		$(OBJS) $(PARSER_OBJS) $(COL_OBJS)
 			@make -C libft
