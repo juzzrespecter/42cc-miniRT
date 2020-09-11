@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/10 16:11:17 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/11 19:01:46 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -50,7 +50,9 @@ COL_SRCS	= collision_cylinder.c \
 			collision_utils.c
 
 VECTOR_SRCS	= vector_operations.c \
-			more_vector_operations.c
+			more_vector_operations.c \
+			matrix_operations.c \
+			rotations.c
 
 UTILS_SRCS	= delete_olst.c \
 		  	export_to_bmp.c \

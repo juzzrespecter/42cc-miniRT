@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/13 18:21:17 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 19:48:08 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/11 19:01:48 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ t_vector v_cross(t_vector v1, t_vector v2);
 t_vector vmprod(t_vector v, t_vector matrix[3]);
 void cam2world_matrix(t_vector forward, t_vector c2w_m[3]);
 void obj2world_matrix(t_vector obj_or, t_vector world_or, t_vector o2w_m[3]);
+t_vector rot_x(t_vector v, float d);
+t_vector rot_y(t_vector v, float d);
+t_vector rot_z(t_vector v, float d);
 
 #endif
