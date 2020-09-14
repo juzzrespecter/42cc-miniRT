@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 19:11:04 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:11:33 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/14 20:28:49 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static unsigned char *create_info_header(t_data *img_data)
 	return (info_header);
 }
 
-void *export_to_bmp(t_data *img_data)
+void *export_to_bmp(t_data *img_data, t_cam *cam)
 {
 	int fd;
 	unsigned int img_size;
@@ -63,13 +63,13 @@ void *export_to_bmp(t_data *img_data)
 	fd = open("scene.bmp", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd < 0)
 		return (NULL);
-	img_size = img_data->res_x * img_data->res_y * (img_data->bits_per_pixel / 8);
+	img_size = img_data->res_x * img_data->res_y * (cam->bpp / 8);
 	if (!(file_header = create_file_header(img_size)))
 		return (NULL);
-	if (!(info_header = create_info_header(img_data)))
+	if (!(info_header = create_info_header(img_data, cam)))
 		return (NULL);
 	write(fd, file_header, FILE_HEADER_SIZE);
 	write(fd, info_header, INFO_HEADER_SIZE);
-	write(fd, img_data->img, img_size);
+	write(fd, cam->img, img_size);
 	return (img_data);
 }

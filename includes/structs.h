@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:01:09 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/14 20:03:44 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,9 @@
 typedef struct	s_data
 {
 	void *mlx_ptr;
-	void *img_ptr;
 	void *win_ptr;
-	char *img;
 	int res_x;
 	int res_y;
-	int fov;
-	int bits_per_pixel;
-	int size_line;
-	int endian;
 }				t_data;
 
 typedef struct	s_vector
@@ -69,6 +63,11 @@ typedef struct	s_cam
 	t_vector coord;
 	t_vector orientation;
 	int fov;
+	int bpp;
+	int sl;
+	int endian;
+	void *img_ptr;
+	char *img;
 	struct s_cam *next;
 }				t_cam;
 
@@ -115,6 +114,20 @@ typedef struct	s_cy
 	struct s_cy *next;
 }				t_cy;
 
+typedef struct s_cyaux
+{
+	t_vector oc;
+	t_vector a_adir;
+	t_vector a_aoc;
+	t_vector v1;
+	t_vector v2;
+	float dot_adir;
+	float dot_aoc;
+	float a;
+	float b;
+	float c;
+}				t_cyaux;
+
 typedef struct	s_tr
 {
 	t_vector first_point;
@@ -124,17 +137,24 @@ typedef struct	s_tr
 	struct s_tr *next;
 }				t_tr;
 
-typedef struct	s_olst
+typedef struct	s_objects
 {
 	t_res *res;
 	t_amb *amb;
-	t_cam *cam;
 	t_light *light;
 	t_sp *sp;
 	t_pl *pl;
 	t_sq *sq;
 	t_cy *cy;
 	t_tr *tr;
-}				t_olst;
+}				t_objects;
+
+typedef struct	s_rtindex
+{
+	t_objects *o_lst;
+	t_data *data;
+	t_cam *cam_lst;
+	t_cam *current_cam;
+}				t_rtindex;
 
 #endif

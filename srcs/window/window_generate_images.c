@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collision_searcher.c                               :+:      :+:    :+:   */
+/*   window_generate_images.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/08/24 16:19:33 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/14 19:03:15 by danrodri         ###   ########.fr       */
+/*   Created: 2020/09/14 20:22:54 by danrodri          #+#    #+#             */
+/*   Updated: 2020/09/14 20:28:57 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void collision_searcher(t_olst *olst, t_ray *ray)
+void window_generate_images(t_rtindex *index)
 {
-	t_sp *sp;
-	t_sq *sq;
-	t_pl *pl;
-	t_cy *cy;
-	t_tr *tr;
-	if (olst->sp)
+	t_cam *cam;
+	t_data *data;
+
+	cam = index->cam_lst;
+	data = index->data;
+	cam = cam->next;
+	while (cam)
 	{
-		...;
-		...;
+		if (!(cam->img = ray_tracer(index->o_lst, cam, data)))
+		   rt_failure(index, "error bla bla");
+		cam = cam->next;	
 	}
-	if (olst->pl)
-		pl_loop(olst->pl, ray);
-	if (olst->sq)
-		sq_loop(olst->sq, ray);
-	if (olst->cy)
-		cy_loop(olst->cy, ray);
-	if (olst->tr)
-		tr_loop(olst->tr, ray);
 }

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:20:07 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/14 20:28:59 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,64 +33,32 @@ static bool check_valid_args(int argc, char **argv)
 	return (false);
 }
 
-static int esc(int keycode, t_data *data)
-{
-	
-	//esc == 53
-	if (keycode == 53)
-	{
-		printf("chapando la cosa...\n");
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		mlx_destroy_image(data->mlx_ptr, data->img_ptr);
-		exit(EXIT_SUCCESS);
-	}
- return (1);
- }
-
-static void img_to_window(t_data *data)
-{
-	void *win_ptr = mlx_new_window(data->mlx_ptr, data->res_x, data->res_y, "test");
-	printf("en windows mgmt!\n");
-	data->win_ptr = win_ptr;
-	mlx_put_image_to_window(data->mlx_ptr, win_ptr, data->img_ptr, 0, 0);
-	mlx_key_hook(win_ptr, &esc, data);
-//	mlx_mouse_hook()
-	mlx_loop(data->mlx_ptr);
-	}
-
-static bool get_image_data(t_data *img_data, int res_x, int res_y)
-{
-	int bpp;
-	int sl;
-	int endian;
-
-	img_data->mlx_ptr = mlx_init();
-	img_data->res_x = res_x;
-	img_data->res_y = res_y;
-	img_data->img_ptr = mlx_new_image(img_data->mlx_ptr, res_x, res_y);
-	img_data->img = mlx_get_data_addr(img_data->img_ptr, &bpp, &sl, &endian);
-	if (!img_data->img)
-			return (false);
-	img_data->bits_per_pixel = bpp;
-	img_data->size_line = sl;
-	img_data->endian = endian;
-	return (true);
-}
-
 int main(int argc, char **argv)
 {
 	t_olst *olst;
-	t_data img_data;
+	t_cam *cam_lst;
+	t_data *data;
+	t_rtindex index;
 
-	olst = NULL;
 	if (!check_valid_args(argc, argv))
 		rt_failure(olst, "Error al introducir los argumentos.");
-	olst = scene_parser(argv[1]);
-	if (!(get_image_data(&img_data, olst->res->res_x, olst->res->res_y)))
-		rt_failure(olst, "error al crear la imagen.");
-	img_data.img = draw_image(olst, &img_data);
+	if (!(img_data = malloc(sizeof(t_data))))
+		rt_failure(olst, "malloc error etc etc");
+	olst = scene_parser(argv[1], cam_lst);
+	data->res_x = olst->res->res_x;
+	data->res_y = olst->res->res_y;
+	data->mlx_ptr = mlx_init();
+	index.data = data;
+	index.o_lst = olst;
+	index.cam_lst = cam_lst;
+	index.current_cam = cam_lst;
+	cam_lst->img = draw_image(olst, img_data);
 	if (argc == 3)
-		export_to_bmp(&img_data);
-	img_to_window(&img_data);
+		export_to_bmp(img_data, cam_lst);
+	else
+	{
+		//crear imagenes para todas las camaras disponibles
+		img_to_window(img_data, &index);
+	}
 	return (1);
 }

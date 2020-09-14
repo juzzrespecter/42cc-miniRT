@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_image.c                                       :+:      :+:    :+:   */
+/*   ray_tracer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/09 19:49:37 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:38:51 by danrodri         ###   ########.fr       */
+/*   Created: 2020/09/14 20:21:26 by danrodri          #+#    #+#             */
+/*   Updated: 2020/09/14 20:28:47 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,34 @@ static float y_pixel(t_data *data, int y, int fov)
 	return (y_pixel);
 }
 
-char *draw_image(t_olst *olst, t_data *data)
+char *ray_tracer(t_olst *olst, t_cam *cam, t_data *data)
 {
 	t_ray *ray;
-	int fov;
 	int x;
 	int y;
 	int i;
 
 	x = 0;
 	y = 0;
-	fov = olst->cam->fov;
+	fov = cam->fov;
+	cam->img_ptr = mlx_new_image(data->mlx_ptr, data->res_x, data->res_y);
+	cam->img = mlx_get_data_addr(cam->img_ptr, &cam->bpp, &cam->sl, &cam->endian);
+	if (!cam->img)
+		rt_failure(olst, "error en img mlx etc etc");
 	while (data->res_y > y)
 	{
 		while (data->res_x > x)
 			{
-				i = (x * (data->bits_per_pixel / 8) + (y * data->size_line));
-				ray = build_ray(x_pixel(data, x, fov), y_pixel(data, y, fov), olst->cam);
+				i = (x * (cam->bpp / 8) + (y * cam->sl));
+				ray = build_ray(x_pixel(data, x, cam->fov), y_pixel(data, y, cam->fov), cam);
 				collision_searcher(olst, ray);
 				if (ray->point_found)
-					*(unsigned int *)(data->img + i) = get_pixel_color(olst, ray);
+					*(unsigned int *)(cam->img + i) = get_pixel_color(olst, ray);
 				free(ray);
 				x++;
 			}
 		x = 0;
 		y++;
 	}
-	return (data->img);
+	return (cam->img);
 }
