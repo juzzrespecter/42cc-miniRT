@@ -35,30 +35,21 @@ static bool check_valid_args(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	t_olst *olst;
-	t_cam *cam_lst;
-	t_data *data;
-	t_rtindex index;
+	t_rtindex *index;
 
 	if (!check_valid_args(argc, argv))
-		rt_failure(olst, "Error al introducir los argumentos.");
-	if (!(img_data = malloc(sizeof(t_data))))
-		rt_failure(olst, "malloc error etc etc");
-	olst = scene_parser(argv[1], cam_lst);
-	data->res_x = olst->res->res_x;
-	data->res_y = olst->res->res_y;
-	data->mlx_ptr = mlx_init();
-	index.data = data;
-	index.o_lst = olst;
-	index.cam_lst = cam_lst;
-	index.current_cam = cam_lst;
-	cam_lst->img = draw_image(olst, img_data);
+		rt_failure(NULL, "Error al introducir los argumentos.");
+	index = scene_parser(argv[1]);
+	index->res_x = index->o_lst->res->res_x; //cambiar esto
+	index->res_y = index->o_lst->res->res_y;
+	index->mlx_ptr = mlx_init();
+	index->current_cam->img = ray_tracer(index);
 	if (argc == 3)
-		export_to_bmp(img_data, cam_lst);
+		export_to_bmp(index);
 	else
 	{
 		//crear imagenes para todas las camaras disponibles
-		img_to_window(img_data, &index);
+		img_to_window(index);
 	}
 	return (1);
 }

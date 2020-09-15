@@ -14,14 +14,6 @@
 # define STRUCTS_H
 # include <stdbool.h>
 
-typedef struct	s_data
-{
-	void *mlx_ptr;
-	void *win_ptr;
-	int res_x;
-	int res_y;
-}				t_data;
-
 typedef struct	s_vector
 {
 	float x;
@@ -151,8 +143,11 @@ typedef struct	s_objects
 
 typedef struct	s_rtindex
 {
+	void *mlx_ptr;
+	void *win_ptr;
+	int res_x;
+	int res_y;
 	t_objects *o_lst;
-	t_data *data;
 	t_cam *cam_lst;
 	t_cam *current_cam;
 }				t_rtindex;

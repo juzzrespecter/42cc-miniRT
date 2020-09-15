@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void collision_searcher(t_olst *olst, t_ray *ray)
+void collision_searcher(t_objects *olst, t_ray *ray)
 {
 	t_sp *sp;
 	t_sq *sq;

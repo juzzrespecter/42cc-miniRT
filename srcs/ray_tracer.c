@@ -53,7 +53,7 @@ static float y_pixel(t_data *data, int y, int fov)
 	return (y_pixel);
 }
 
-char *ray_tracer(t_olst *olst, t_cam *cam, t_data *data)
+char *ray_tracer(t_rtindex *index, t_cam *cam)
 {
 	t_ray *ray;
 	int x;
@@ -67,15 +67,15 @@ char *ray_tracer(t_olst *olst, t_cam *cam, t_data *data)
 	cam->img = mlx_get_data_addr(cam->img_ptr, &cam->bpp, &cam->sl, &cam->endian);
 	if (!cam->img)
 		rt_failure(olst, "error en img mlx etc etc");
-	while (data->res_y > y)
+	while (index->res_y > y)
 	{
-		while (data->res_x > x)
+		while (index->res_x > x)
 			{
 				i = (x * (cam->bpp / 8) + (y * cam->sl));
-				ray = build_ray(x_pixel(data, x, cam->fov), y_pixel(data, y, cam->fov), cam);
-				collision_searcher(olst, ray);
+				ray = build_ray(x_pixel(index, x, cam->fov), y_pixel(index, y, cam->fov), cam);
+				collision_searcher(index->o_lst, ray);
 				if (ray->point_found)
-					*(unsigned int *)(cam->img + i) = get_pixel_color(olst, ray);
+					*(unsigned int *)(cam->img + i) = get_pixel_color(index->o_lst, ray);
 				free(ray);
 				x++;
 			}

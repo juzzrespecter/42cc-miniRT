@@ -18,7 +18,7 @@ SRCS		= main.c \
 			coord_check.c \
 			vector_check.c \
 			dim_check.c \
-			draw_image.c \
+			ray_tracer.c \
 			cam2world_matrix.c \
 			obj2world_matrix.c \
 			get_pixel_color.c \
@@ -52,6 +52,12 @@ VECTOR_SRCS	= vector_operations.c \
 			matrix_operations.c \
 			rotations.c
 
+WINDOW_SRCS	= img_to_window.c \
+		  	window_change_cam.c \
+			window_click_exit.c \
+			window_press_esc.c \
+			window_generate_images.c
+
 UTILS_SRCS	= delete_olst.c \
 		  	export_to_bmp.c \
 			rt_failure.c \
@@ -66,6 +72,8 @@ PARSERDIR	= srcs/parser/
 COLDIR		= srcs/collisions/
 
 VECTORDIR	= srcs/vector/
+
+WINDOWDIR	= srcs/window/
 
 UTILSDIR	= srcs/utils/
 
@@ -89,9 +97,11 @@ COL_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(COL_SRCS))
 
 VECTOR_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(VECTOR_SRCS))
 
+WINDOW_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(WINDOW_SRCS))
+
 UTILS_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(UTILS_SRCS))
 
-ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS) $(UTILS_OBJS)
+ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS) $(WINDOW_OBJS) $(UTILS_OBJS)
 
 GCC			= gcc -Wall -Werror -Wextra
 
@@ -122,6 +132,11 @@ $(OBJSDIR)%.o:  $(COLDIR)%.c
 			@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(VECTORDIR)%.c
+			@$(GCC) -c $< -I $(INCDIR)
+			@mkdir -p objs
+			@mv $(@F) $(OBJSDIR)
+
+$(OBJSDIR)%.o:  $(WINDOWDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
 			@mkdir -p objs
 			@mv $(@F) $(OBJSDIR)
