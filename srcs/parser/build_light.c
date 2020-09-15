@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void add_light_to_back(t_olst *olst, t_light *light)
+static void add_light_to_back(t_objects *olst, t_light *light)
 {
 	t_light *light_aux;
 
@@ -27,7 +27,7 @@ static void add_light_to_back(t_olst *olst, t_light *light)
 		}
 }
 
-bool build_light(char **scene_line, t_olst *olst)
+bool build_light(char **scene_line, t_objects *olst)
 {
 	char *coord;
 	char *bright;

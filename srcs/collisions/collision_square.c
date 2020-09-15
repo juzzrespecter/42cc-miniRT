@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:34:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 19:45:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 
 t_ray *sq_loop(t_sq *sq, t_ray *ray)
 {
+	bool found_point;
+
+	found_point = false;
 	while (sq)
 	{
-		collision_square(sq, ray);
+		if (collision_square(sq, ray))
+			found_point = true;
 		sq = sq->next;
 	}
-	return (ray);
+	return (found_point ? ray : NULL);
 }
 
 static void transform_vectors(t_vector *height, t_vector *width, t_vector world_or)
 {
 	t_vector object_or;
-	t_vector transformation_matrix[3];
+	t_matrix matrix;
 	t_vector height_obj;
 	t_vector width_obj;
 
@@ -35,9 +39,9 @@ static void transform_vectors(t_vector *height, t_vector *width, t_vector world_
 	height_obj.y = 1;
 	width_obj.x = 1;
 	object_or.z = 1;
-	obj2world_matrix(object_or, world_or, transformation_matrix);
-	*height = vmprod(height_obj, transformation_matrix);
-	*width = vmprod(width_obj, transformation_matrix);
+	matrix = matrix_obj2world(object_or, world_or);
+	*height = vmprod(height_obj, matrix);
+	*width = vmprod(width_obj, matrix);
 	*height = v_normalize(*height);
 	*width = v_normalize(*width);
 }
@@ -57,7 +61,6 @@ t_ray *collision_square(t_sq *sq, t_ray *ray)
 		return (NULL);
 	if (fabs(v_dot(pc_vector, height_vector)) > sq->side / 2)
 		return (NULL);
-	printf("square collision = true\n");
 	point_found(point, sq->orientation, sq->color, ray);
 	return (ray);
 }

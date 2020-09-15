@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-bool build_res(char **scene_line, t_olst *olst)
+bool build_res(char **scene_line, t_objects *olst)
 {
 	t_res *res;
 	int res_x;

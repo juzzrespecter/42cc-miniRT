@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/14 20:28:59 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 18:21:18 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@ int main(int argc, char **argv)
 	if (!check_valid_args(argc, argv))
 		rt_failure(NULL, "Error al introducir los argumentos.");
 	index = scene_parser(argv[1]);
+	index->current_cam = index->cam_lst;;
 	index->res_x = index->o_lst->res->res_x; //cambiar esto
 	index->res_y = index->o_lst->res->res_y;
 	index->mlx_ptr = mlx_init();
-	index->current_cam->img = ray_tracer(index);
+	index->current_cam->img = ray_tracer(index, index->current_cam);
 	if (argc == 3)
 		export_to_bmp(index);
 	else
 	{
-		//crear imagenes para todas las camaras disponibles
+		window_generate_images(index);
 		img_to_window(index);
 	}
 	return (1);

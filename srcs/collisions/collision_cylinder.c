@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 18:44:01 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/14 20:28:51 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 18:29:10 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 t_ray *cy_loop(t_cy *cy, t_ray *ray)
 {
+	bool found_point;
+
+	found_point = false;
 	while (cy)
 	{
-		collision_cylinder(cy, ray);
+		if (collision_cylinder(cy, ray))
+			found_point = true;
 		cy = cy->next;
 	}
-	return (ray);
+	return (found_point ? ray : NULL);
 }
 
 t_vector cy_normal(t_vector point, t_cy *cy)

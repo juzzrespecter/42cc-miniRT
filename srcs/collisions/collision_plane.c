@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:18:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 19:38:23 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 17:26:26 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 t_ray *pl_loop(t_pl *pl, t_ray *ray)
 {
+	bool found_point;
+
+	found_point = false;
 	while (pl)
 	{
-		collision_plane(pl, ray);
+		if (collision_plane(pl, ray))
+			found_point = true;
 		pl = pl->next;
 	}
-	return (ray);
+	return (found_point ? ray : NULL);
 }
 
 t_ray *collision_plane(t_pl *pl, t_ray *ray)

@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:04:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 18:20:38 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 19:43:08 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_pl_to_back(t_olst *olst, t_pl *pl)
+static void add_pl_to_back(t_objects *olst, t_pl *pl)
 {
 	t_pl *pl_aux;
 
@@ -27,7 +27,7 @@ static void add_pl_to_back(t_olst *olst, t_pl *pl)
 		}
 }
 
-bool build_plane(char **scene_line, t_olst *olst)
+bool build_plane(char **scene_line, t_objects *olst)
 {
 	char *coord;
 	char *vector;

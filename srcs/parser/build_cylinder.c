@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void add_cy_to_back(t_olst *olst, t_cy *cy)
+static void add_cy_to_back(t_objects *olst, t_cy *cy)
 {
 	t_cy *cy_aux;
 
@@ -27,7 +27,7 @@ static void add_cy_to_back(t_olst *olst, t_cy *cy)
 		}
 }
 
-bool build_cylinder(char **scene_line, t_olst *olst)
+bool build_cylinder(char **scene_line, t_objects *olst)
 {
 	t_cy *cy;
 

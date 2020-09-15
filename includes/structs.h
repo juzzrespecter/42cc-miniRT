@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/14 20:03:44 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 18:08:02 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ typedef struct	s_vector
 	float y;
 	float z;
 }				t_vector;
+
+typedef struct	s_matrix
+{
+	t_vector a;
+	t_vector b;
+	t_vector c;
+}				t_matrix;
 
 typedef struct	s_color
 {
@@ -54,6 +61,7 @@ typedef struct	s_cam
 {
 	t_vector coord;
 	t_vector orientation;
+	t_matrix matrix;
 	int fov;
 	int bpp;
 	int sl;

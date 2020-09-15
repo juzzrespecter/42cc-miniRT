@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:01:33 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/14 19:17:35 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 18:33:00 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,22 @@ static bool fov_check(char *fov)
 	return (!fov[i] ? true : false);
 }
 
-static void add_cam_to_back(t_olst *cam_lst, t_cam *cam)
+static void add_cam_to_back(t_rtindex *index, t_cam *cam)
 {
-	if (!cam_lst)
-		olst->cam = cam;
+	t_cam *aux;
+
+	aux = index->cam_lst;
+	if (!aux)
+		index->cam_lst = cam;
 	else
 		{
-			while (cam_lst->next)
-				cam_lst = cam_lst->next;
-			cam_lst->next = cam;
+			while (aux->next)
+				aux = aux->next;
+			aux->next = cam;
 		}
 }
 
-bool build_cam(char **scene_line, t_cam *cam_lst)
+bool build_cam(char **scene_line, t_rtindex *index)
 {
 	char *coord;
 	char *vector;
@@ -59,7 +62,8 @@ bool build_cam(char **scene_line, t_cam *cam_lst)
 	cam->coord = array_to_vector(coord);
 	cam->orientation = v_normalize(array_to_vector(vector));
 	cam->fov = ft_atoi(fov);
+	cam->matrix = matrix_cam2world(cam->orientation);
 	cam->next = NULL;
-	add_cam_to_back(cam_lst, cam);
+	add_cam_to_back(index, cam);
 	return (true);
 }

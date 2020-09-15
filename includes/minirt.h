@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:27:54 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 17:18:28 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 void delete_olst(t_objects *olst);
 int greater_length(char *s1, char *s2);
-char *ray_tracer(t_rtindex *index);
-void collision_searcher(t_objects *obj_lst, t_ray *ray);
+char *ray_tracer(t_rtindex *index, t_cam *cam);
+t_ray *collision_loops(t_objects *obj_lst, t_ray *ray);
 t_ray *sp_loop(t_sp *sp, t_ray *ray);
 t_ray *pl_loop(t_pl *pl, t_ray *ray);
 t_ray *sq_loop(t_sq *sq, t_ray *ray);

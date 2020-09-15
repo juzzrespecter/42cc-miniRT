@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 19:11:04 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/14 20:28:49 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/15 17:09:27 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,27 @@ static unsigned char *create_file_header(unsigned int img_size)
 	return (file_header);
 }
 
-static unsigned char *create_info_header(t_data *img_data)
+static unsigned char *create_info_header(t_rtindex *index)
 {
 	unsigned char *info_header;
 
 	if (!(info_header = ft_calloc(INFO_HEADER_SIZE, sizeof(unsigned char))))
 		return (NULL);
 	*info_header = (unsigned char)INFO_HEADER_SIZE;
-	*(info_header + 4) = (unsigned char)img_data->res_x;
-	*(info_header + 5) = (unsigned char)(img_data->res_x >> 8);
-	*(info_header + 6) = (unsigned char)(img_data->res_x >> 16);
-	*(info_header + 7) = (unsigned char)(img_data->res_x >> 24);
-	*(info_header + 8) = (unsigned char)img_data->res_y;
-	*(info_header + 9) = (unsigned char)(img_data->res_y >> 8);
-	*(info_header + 10) = (unsigned char)(img_data->res_y >> 16);
-	*(info_header + 11) = (unsigned char)(img_data->res_y >> 24);
+	*(info_header + 4) = (unsigned char)index->res_x;
+	*(info_header + 5) = (unsigned char)(index->res_x >> 8);
+	*(info_header + 6) = (unsigned char)(index->res_x >> 16);
+	*(info_header + 7) = (unsigned char)(index->res_x >> 24);
+	*(info_header + 8) = (unsigned char)index->res_y;
+	*(info_header + 9) = (unsigned char)(index->res_y >> 8);
+	*(info_header + 10) = (unsigned char)(index->res_y >> 16);
+	*(info_header + 11) = (unsigned char)(index->res_y >> 24);
 	*(info_header + 12) = 1;
-	*(info_header + 14) = (unsigned char)img_data->bits_per_pixel;
+	*(info_header + 14) = (unsigned char)index->current_cam->bpp;
 	return (info_header);
 }
 
-void *export_to_bmp(t_data *img_data, t_cam *cam)
+void *export_to_bmp(t_rtindex *index)
 {
 	int fd;
 	unsigned int img_size;
@@ -63,13 +63,13 @@ void *export_to_bmp(t_data *img_data, t_cam *cam)
 	fd = open("scene.bmp", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	if (fd < 0)
 		return (NULL);
-	img_size = img_data->res_x * img_data->res_y * (cam->bpp / 8);
+	img_size = index->res_x * index->res_y * (index->current_cam->bpp / 8);
 	if (!(file_header = create_file_header(img_size)))
 		return (NULL);
-	if (!(info_header = create_info_header(img_data, cam)))
+	if (!(info_header = create_info_header(index)))
 		return (NULL);
 	write(fd, file_header, FILE_HEADER_SIZE);
 	write(fd, info_header, INFO_HEADER_SIZE);
-	write(fd, cam->img, img_size);
-	return (img_data);
+	write(fd, index->current_cam->img, img_size);
+	return (index);
 }

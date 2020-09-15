@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-bool build_amb(char **scene_line, t_olst *olst)
+bool build_amb(char **scene_line, t_objects *olst)
 {
 	char *light;
 	char *color;

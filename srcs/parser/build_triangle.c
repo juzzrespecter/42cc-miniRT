@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void add_tr_to_back(t_olst *olst, t_tr *tr)
+static void add_tr_to_back(t_objects *olst, t_tr *tr)
 {
 	t_tr *tr_aux;
 
@@ -27,7 +27,7 @@ static void add_tr_to_back(t_olst *olst, t_tr *tr)
 		}
 }
 
-bool build_triangle(char **scene_line, t_olst *olst)
+bool build_triangle(char **scene_line, t_objects *olst)
 {
 	char *first_point;
 	char *second_point;

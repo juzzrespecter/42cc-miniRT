@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/14 18:08:40 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/15 18:36:21 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,8 +19,7 @@ SRCS		= main.c \
 			vector_check.c \
 			dim_check.c \
 			ray_tracer.c \
-			cam2world_matrix.c \
-			obj2world_matrix.c \
+			matrix_obj2world.c \
 			get_pixel_color.c \
 
 PARSER_SRCS	= build_amb.c \
@@ -41,7 +40,6 @@ PARSER_SRCS	= build_amb.c \
 
 COL_SRCS	= collision_cylinder.c \
 			collision_plane.c \
-			collision_searcher.c \
 			collision_sphere.c \
 			collision_square.c \
 			collision_triangle.c \
@@ -55,7 +53,7 @@ VECTOR_SRCS	= vector_operations.c \
 WINDOW_SRCS	= img_to_window.c \
 		  	window_change_cam.c \
 			window_click_exit.c \
-			window_press_esc.c \
+			window_key_options.c \
 			window_generate_images.c
 
 UTILS_SRCS	= delete_olst.c \
