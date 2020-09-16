@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 18:44:01 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 18:29:10 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/16 16:53:50 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vector normal_cylinder(t_vector point, t_cy *cy)
+t_vector normal_cylinder(t_cy *cy, t_vector point)
 {
 	t_vector normal;
 	t_vector op;
@@ -43,7 +43,7 @@ float collision_cylinder(t_cy *cy, t_ray *ray)
 	aux.c = v_dot(aux.v2, aux.v2) - cy->d;
 	sqrt_ec = (aux.b * aux.b)- (4 * aux.a * aux.c);
 	if (sqrt_ec < 0)
-		return (NULL);
+		return (-1);
 	t = (- aux.b - sqrt(sqrt_ec)) / (2 * aux.a);
 	return (t);
 }

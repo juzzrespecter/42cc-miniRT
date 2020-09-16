@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 19:45:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/16 16:30:14 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ float	collision_square(t_sq *sq, t_ray *ray)
 
 	if ((t = collision_plane(sq->orientation, sq->center, ray)) == -1)
 		return (-1);
-	point = v_add(ray->origin, v_scalar(ray->dir, t);
+	point = v_add(ray->origin, v_scalar(ray->dir, t));
 	transform_vectors(&height_vector, &width_vector, sq->orientation);
 	pc_vector = v_sub(point, sq->center);
 	if (fabs(v_dot(pc_vector, width_vector)) > sq->side / 2)

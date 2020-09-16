@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 18:08:02 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/16 17:43:32 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ typedef struct	s_matrix
 
 typedef struct	s_color
 {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+	float r;
+	float g;
+	float b;
 }				t_color;
 
 typedef struct			s_ray
@@ -135,9 +135,9 @@ typedef struct s_cyaux
 
 typedef struct	s_tr
 {
-	t_vector first_point;
-	t_vector second_point;
-	t_vector third_point;
+	t_vector f_p;
+	t_vector s_p;
+	t_vector t_p;
 	t_color color;
 	struct s_tr *next;
 }				t_tr;
