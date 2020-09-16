@@ -12,26 +12,16 @@
 
 #include "minirt.h"
 
-t_ray *pl_loop(t_pl *pl, t_ray *ray)
+float	collision_plane(t_pl *pl, t_ray *ray, t_point *point)
 {
-	bool found_point;
+	float		t;
+	t_vector	points_vector;
+        float		eq_denom;
 
-	found_point = false;
-	while (pl)
-	{
-		if (collision_plane(pl, ray))
-			found_point = true;
-		pl = pl->next;
-	}
-	return (found_point ? ray : NULL);
-}
-
-t_ray *collision_plane(t_pl *pl, t_ray *ray)
-{
-	t_vector point;
-
-	if (!(point_in_plane(pl->orientation, pl->coord, ray, &point)))
-		return (NULL);
-	point_found(point, pl->orientation, pl->color, ray);
-	return (ray);
+        if (fabs((eq_denom = v_dot(normal, ray->dir))) < 1e-6)
+                return (-1);
+        points_vector = v_sub(plane_point, ray->origin);
+        if ((t = v_dot(normal, points_vector) / eq_denom) < 0)
+                return (-1);
+	return (t);
 }

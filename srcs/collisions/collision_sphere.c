@@ -12,21 +12,11 @@
 
 #include "minirt.h"
 
-t_ray *sp_loop(t_sp *sp, t_ray *ray)
+static float	choose_t(float t, float r, float d)
 {
-	while (sp)
-	{
-		collision_sphere(sp, ray);
-		sp = sp->next;
-	}
-	return (ray);
-}
-
-static float choose_t(float t, float r, float d)
-{
-	float near_t;
-	float far_t;
-	float hc_t;
+	float	near_t;
+	float	far_t;
+	float	hc_t;
 
 	hc_t = sqrt(pow(r, 2) - pow(d, 2));
 	near_t = t - hc_t;
@@ -34,23 +24,18 @@ static float choose_t(float t, float r, float d)
 	return ((near_t) > 0 ? near_t : far_t);
 }
 
-t_ray *collision_sphere(t_sp *sp, t_ray *ray)
+float		collision_sphere(t_sp *sp, t_ray *ray)
 {
 	t_vector oc_vector;
-	t_vector normal;
-	t_vector point;
 	float t;
 	float d;
 
 	oc_vector = v_sub(sp->center, ray->origin);
 	if ((t = v_dot(oc_vector, ray->dir)) < 0 )
-		return (NULL);
+		return (-1);
 	if ((d = sqrt(v_dot(oc_vector, oc_vector) - pow(t, 2))) > sp->d / 2)
-		return (NULL);
+		return (-1);
 	if (d < sp->d / 2)
 		t = choose_t(t, sp->d / 2, d);
-	point = v_add(ray->origin, v_scalar(ray->dir, t));
-	normal = v_normalize(v_sub(point, sp->center));
-	point_found(point, normal, sp->color, ray);
-	return (ray);
+	return (t);
 }

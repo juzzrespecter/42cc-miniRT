@@ -12,15 +12,7 @@
 
 #include "minirt.h"
 
-t_ray *tr_loop(t_tr *tr, t_ray *ray)
-{
-	while (tr)
-	{
-		collision_triangle(tr, ray);
-		tr = tr->next;
-	}
-	return (ray);
-}
+//revisar el check
 
 static bool triangle_point_check(t_tr *tr, t_vector point, t_vector normal)
 {
@@ -40,20 +32,26 @@ static bool triangle_point_check(t_tr *tr, t_vector point, t_vector normal)
 		return (false);
 	if ((v_dot(cross_3, normal) < 0))
 		return (false);
+	printf("ojo!\n");
 	return (true);
 }
 
-t_ray *collision_triangle(t_tr *tr, t_ray *ray)
+t_vector normal_triangle(t_vector f_p, t_vector s_p, t_vector t_p)
 {
+	return (v_normalize(v_cross(v_sub(s_p, f_p), v_sub(t_p, s_p))))
+}
+
+float	collision_triangle(t_tr *tr, t_ray *ray)
+{
+	float t;
 	t_vector normal;
 	t_vector point;
 
-	normal = v_cross(v_sub(tr->second_point, tr->first_point), v_sub(tr->third_point, tr->second_point));
-	normal = v_normalize(normal);
-	if (!(point_in_plane(normal, tr->first_point, ray, &point)))
-		return (NULL);
+	normal = normal_triangle(tr->first_point, tr->second_point, tr->third_point);
+	if ((t = collision_plane(normal, tr->first_point, ray) == -1))
+		return (-1);
+	point = v_add(ray->origin, v_scalar(ray->dir, t);
 	if (!(triangle_point_check(tr, point, normal)))
-		return (NULL);
-	point_found(point, normal, tr->color, ray);
-	return (ray);
+		return (-1);
+	return (t);
 }

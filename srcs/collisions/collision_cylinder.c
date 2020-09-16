@@ -12,21 +12,7 @@
 
 #include "minirt.h"
 
-t_ray *cy_loop(t_cy *cy, t_ray *ray)
-{
-	bool found_point;
-
-	found_point = false;
-	while (cy)
-	{
-		if (collision_cylinder(cy, ray))
-			found_point = true;
-		cy = cy->next;
-	}
-	return (found_point ? ray : NULL);
-}
-
-t_vector cy_normal(t_vector point, t_cy *cy)
+t_vector normal_cylinder(t_vector point, t_cy *cy)
 {
 	t_vector normal;
 	t_vector op;
@@ -38,10 +24,8 @@ t_vector cy_normal(t_vector point, t_cy *cy)
 	return (normal);
 }
 
-t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
+float collision_cylinder(t_cy *cy, t_ray *ray)
 {
-	t_vector point;
-	t_vector normal;
 	float t;
 	float sqrt_ec;
 	t_cyaux aux;
@@ -61,8 +45,5 @@ t_ray *collision_cylinder(t_cy *cy, t_ray *ray)
 	if (sqrt_ec < 0)
 		return (NULL);
 	t = (- aux.b - sqrt(sqrt_ec)) / (2 * aux.a);
-	point = v_add(ray->origin, v_scalar(ray->dir, t));
-	normal = cy_normal(point, cy);
-	point_found(point, normal, cy->color, ray);
-	return (ray);
+	return (t);
 }

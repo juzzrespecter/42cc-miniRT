@@ -19,7 +19,6 @@ static t_ray *build_ray(float x, float y, t_cam *cam)
 
 	if (!(ray = malloc(sizeof(t_ray))))
 		return (NULL);
-	ray->point_found = false;
 	dir_screen.x = x;
 	dir_screen.y = y;
 	dir_screen.z = 1;
@@ -51,27 +50,10 @@ static float y_pixel(t_rtindex *index, int y, int fov)
 	return (y_pixel);
 }
 
-t_ray *collision_loops(t_objects *o_lst, t_ray *ray)
-{
-	bool found_point;
-
-	found_point = false;
-	if (sp_loop(o_lst->sp, ray))
-		found_point = true;
-	if (pl_loop(o_lst->pl, ray))
-		found_point = true;
-	if (sq_loop(o_lst->sq, ray))
-		found_point = true;
-	if (tr_loop(o_lst->tr, ray))
-		found_point = true;
-	if (cy_loop(o_lst->cy, ray))
-		found_point = true;
-	return (found_point ? ray : NULL);
-}
-
 char *ray_tracer(t_rtindex *index, t_cam *cam)
 {
 	t_ray *ray;
+	t_point *point;
 	int x;
 	int y;
 	int i;
@@ -85,15 +67,15 @@ char *ray_tracer(t_rtindex *index, t_cam *cam)
 	while (index->res_y > y)
 	{
 		while (index->res_x > x)
-			{
-				i = (x * (cam->bpp / 8) + (y * cam->sl));
-				ray = build_ray(x_pixel(index, x, cam->fov), y_pixel(index, y, cam->fov), cam);
-				collision_loops(index->o_lst, ray);
-				if (ray->point_found)
-					*(unsigned int *)(cam->img + i) = get_pixel_color(index->o_lst, ray);
-				free(ray);
-				x++;
-			}
+		{
+			i = (x * (cam->bpp / 8) + (y * cam->sl));
+			ray = build_ray(x_pixel(index, x, cam->fov), y_pixel(index, y, cam->fov), cam);
+			if(!(point = collision_loops(index->o_lst, ray)))
+				rt_failure(index, "Vaya por dios!");
+			*(unsigned int *)(cam->img + i) = get_pixel_color(index->o_lst, ray, point); //no point == escribe nulo
+			free(ray);
+			x++;
+		}
 		x = 0;
 		y++;
 	}

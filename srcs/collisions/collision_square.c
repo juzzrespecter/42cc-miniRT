@@ -12,20 +12,6 @@
 
 #include "minirt.h"
 
-t_ray *sq_loop(t_sq *sq, t_ray *ray)
-{
-	bool found_point;
-
-	found_point = false;
-	while (sq)
-	{
-		if (collision_square(sq, ray))
-			found_point = true;
-		sq = sq->next;
-	}
-	return (found_point ? ray : NULL);
-}
-
 static void transform_vectors(t_vector *height, t_vector *width, t_vector world_or)
 {
 	t_vector object_or;
@@ -46,21 +32,22 @@ static void transform_vectors(t_vector *height, t_vector *width, t_vector world_
 	*width = v_normalize(*width);
 }
 
-t_ray *collision_square(t_sq *sq, t_ray *ray)
+float	collision_square(t_sq *sq, t_ray *ray)
 {
 	t_vector point;
+	float t;
 	t_vector pc_vector;
 	t_vector width_vector;
 	t_vector height_vector;
 
-	if (!(point_in_plane(sq->orientation, sq->center, ray, &point)))
-		return (NULL);
+	if ((t = collision_plane(sq->orientation, sq->center, ray)) == -1)
+		return (-1);
+	point = v_add(ray->origin, v_scalar(ray->dir, t);
 	transform_vectors(&height_vector, &width_vector, sq->orientation);
 	pc_vector = v_sub(point, sq->center);
 	if (fabs(v_dot(pc_vector, width_vector)) > sq->side / 2)
-		return (NULL);
+		return (-1);
 	if (fabs(v_dot(pc_vector, height_vector)) > sq->side / 2)
-		return (NULL);
-	point_found(point, sq->orientation, sq->color, ray);
-	return (ray);
+		return (-1);
+	return (t);
 }

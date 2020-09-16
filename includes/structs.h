@@ -35,15 +35,20 @@ typedef struct	s_color
 	unsigned char b;
 }				t_color;
 
-typedef struct s_ray
+typedef struct			s_ray
 {
-	t_vector origin;
-	t_vector dir;
-	t_vector point;
-	t_vector normal;
-	t_color color;
-	bool point_found;
+	t_vector		origin;
+	t_vector		dir;
 }				t_ray;
+
+typedef struct		s_point
+{
+	t_vector	coord;
+	float		t;
+	t_vector	normal;
+	t_color		color;
+
+}		t_point;
 
 typedef struct	s_res
 {
