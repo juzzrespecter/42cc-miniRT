@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:24:56 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 19:02:43 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/17 17:59:08 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@
 static bool blocked_by_an_object(t_objects *o_lst, t_vector l, t_vector p)
 {
 	t_ray ray;
+	t_vector lp;
+	float len;
 
-	ray.dir = v_normalize(v_sub(l, p));
+	lp = v_sub(l, p);
+	len = sqrt(v_dot(lp, lp));
+	ray.dir = v_normalize(lp);
 	ray.origin = p;
-	return (lightning_loops(&ray, o_lst));
+	return (lightning_loops(&ray, o_lst, len));
 }
 
 static t_color diff_lightning_sum(t_light *l, t_point *p, t_color diff_lightning)
@@ -56,11 +60,11 @@ unsigned int get_pixel_color(t_objects *o_lst, t_point *point)
 	diff_lightning.b = 0;
 	color = 0;
 	while (light)
-		{
-			if (blocked_by_an_object(o_lst, light->coord, point->coord) == false)
-				diff_lightning = diff_lightning_sum(light, point, diff_lightning);
-			light = light->next;
-		}
+	{
+		if (blocked_by_an_object(o_lst, light->coord, point->coord) == false)
+			diff_lightning = diff_lightning_sum(light, point, diff_lightning);
+		light = light->next;
+	}
 	amb_lightning.r = o_lst->amb->color.r * o_lst->amb->bright;
 	amb_lightning.g = o_lst->amb->color.g * o_lst->amb->bright;
 	amb_lightning.b = o_lst->amb->color.b * o_lst->amb->bright;

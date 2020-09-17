@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 16:53:26 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/17 19:56:48 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ float			collision_triangle(t_tr *tr, t_ray *ray);
 t_vector		normal_cylinder(t_cy *cy, t_vector point);
 t_vector		normal_triangle(t_vector f_p, t_vector s_p, t_vector t_p);
 unsigned int	get_pixel_color(t_objects *obj_lst, t_point *point);
-bool			lightning_loops(t_ray *light_ray, t_objects *o_lst);
+bool			lightning_loops(t_ray *light_ray, t_objects *o_lst, float len);
 void			*export_to_bmp(t_rtindex *index);
 void			rt_failure(t_rtindex *index, char *err_msg);
 

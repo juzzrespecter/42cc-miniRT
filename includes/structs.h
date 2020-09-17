@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 19:06:53 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/17 19:57:08 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,13 +156,13 @@ typedef struct	s_objects
 
 typedef struct	s_rtindex
 {
-	void *mlx_ptr;
-	void *win_ptr;
-	int res_x;
-	int res_y;
-	t_objects *o_lst;
-	t_cam *cam_lst;
-	t_cam *current_cam;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	int			res_x;
+	int			res_y;
+	t_objects	*o_lst;
+	t_cam		*cam_lst;
+	t_cam		*current_cam;
 }				t_rtindex;
 
 #endif

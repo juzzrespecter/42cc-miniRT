@@ -6,15 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:22:22 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 16:48:37 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/17 17:28:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-//revisar el check
-
-static bool triangle_point_check(t_tr *tr, t_vector point, t_vector normal)
+static bool collision_true(t_tr *tr, t_vector point, t_vector normal)
 {
 	t_vector cross_1;
 	t_vector cross_2;
@@ -32,7 +30,6 @@ static bool triangle_point_check(t_tr *tr, t_vector point, t_vector normal)
 		return (false);
 	if ((v_dot(cross_3, normal) < 0))
 		return (false);
-	printf("ojo!\n");
 	return (true);
 }
 
@@ -51,7 +48,7 @@ float	collision_triangle(t_tr *tr, t_ray *ray)
 	if ((t = collision_plane(normal, tr->f_p, ray) == -1))
 		return (-1);
 	point = v_add(ray->origin, v_scalar(ray->dir, t));
-	if (!(triangle_point_check(tr, point, normal)))
+	if (!(collision_true(tr, point, normal)))
 		return (-1);
 	return (t);
 }

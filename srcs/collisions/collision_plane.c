@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:18:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 19:06:45 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/17 18:06:31 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ float	collision_plane(t_vector normal, t_vector pl_point, t_ray *ray)
 	t_vector	points_vector;
 	float		eq_denom;
 
-	if (fabs((eq_denom = v_dot(normal, ray->dir))) < 1e-6)
+	if (fabs((eq_denom = v_dot(normal, ray->dir))) < 1e-4)
 		return (-1);
 	points_vector = v_sub(pl_point, ray->origin);
-	if ((t = v_dot(normal, points_vector) / eq_denom) < 1e-6)
+	if ((t = v_dot(normal, points_vector) / eq_denom) < 1e-4)
 		return (-1);
 	return (t);
 }
