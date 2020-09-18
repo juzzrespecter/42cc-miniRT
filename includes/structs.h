@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/17 19:57:08 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/18 19:41:31 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,6 @@ typedef struct		s_point
 	t_color		color;
 
 }		t_point;
-
-typedef struct	s_res
-{
-	int res_x;
-	int res_y;
-}				t_res;
 
 typedef struct	s_amb
 {
@@ -144,7 +138,6 @@ typedef struct	s_tr
 
 typedef struct	s_objects
 {
-	t_res *res;
 	t_amb *amb;
 	t_light *light;
 	t_sp *sp;

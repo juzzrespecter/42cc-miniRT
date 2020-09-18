@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:29:53 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 17:04:37 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/18 19:42:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ static void delete_cy_tr_lst(t_objects *o_lst)
 
 void	delete_olst(t_objects *o_lst)
 {
-	if (o_lst->res)
-		free(o_lst->res);
-	if (o_lst->amb)
-		free(o_lst->amb);
+	free(o_lst->amb);
 	if (o_lst->light || o_lst->sp)
 		delete_light_sp_lst(o_lst);
 	if (o_lst->pl || o_lst->sq)

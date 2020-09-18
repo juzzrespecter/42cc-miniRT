@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/15 17:25:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 17:32:11 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/18 18:46:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,18 @@
 
 int window_press_esc(t_rtindex *index)
 {
+	t_cam *aux;
+
 	ft_printf("...\n");
 	mlx_destroy_window(index->mlx_ptr, index->win_ptr);
-	//funcion que borre todas las imagenes de la lista de camaras (index->cam_lst)
-	//funcion que borre la lista de camaras (index->cam_lst)
+	while (index->cam_lst)
+	{
+		aux = index->cam_lst;
+		mlx_destroy_image(index->mlx_ptr, aux->img_ptr);
+		index->cam_lst = index->cam_lst->next;
+		free(aux);
+	}
+	delete_olst(index->o_lst);
 	//funcion que elimine la lista de objetos (index->o_lst)
 	exit(EXIT_SUCCESS);
 }

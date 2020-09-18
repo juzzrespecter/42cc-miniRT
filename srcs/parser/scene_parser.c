@@ -6,66 +6,66 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 16:17:31 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/18 20:01:15 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool check_elem_list(char **line, t_rtindex *index)
+static bool check_elem_list(char *id, char **line, t_rtindex *index, t_objects *o_lst)
 {
-	char *id;
+	int	id_len;
 
-	id = line[0];
-	if (!ft_strncmp(id, "R", greater_length(id, "R")))
-			return (build_res(line, index->o_lst));
-	if (!ft_strncmp(id, "A", greater_length(id, "A")))
-		return (build_amb(line, index->o_lst));
-	if (!ft_strncmp(id, "c", greater_length(id, "c")))
+	id_len = ft_strlen(id);
+	if (!ft_strncmp(id, "R", id_len))
+		return (build_res(line, index));
+	if (!ft_strncmp(id, "A", id_len))
+		return (build_amb(line, o_lst));
+	if (!ft_strncmp(id, "c", id_len))
 		return (build_cam(line, index));
-	if (!ft_strncmp(id, "l", greater_length(id, "l")))
-		return (build_light(line, index->o_lst));
-	if (!ft_strncmp(id, "sp", greater_length(id, "sp")))
-		return (build_sphere(line, index->o_lst));
-	if (!ft_strncmp(id, "pl", greater_length(id, "pl")))
-		return (build_plane(line, index->o_lst));
-	if (!ft_strncmp(id, "sq", greater_length(id, "sq")))
-		return (build_square(line, index->o_lst));
-	if (!ft_strncmp(id, "cy", greater_length(id, "cy")))
-		return (build_cylinder(line, index->o_lst));
-	if (!ft_strncmp(id, "tr", greater_length(id, "tr")))
-		return (build_triangle(line, index->o_lst));
+	if (!ft_strncmp(id, "l", id_len))
+		return (build_light(line, o_lst));
+	if (!ft_strncmp(id, "sp", id_len))
+		return (build_sphere(line, o_lst));
+	if (!ft_strncmp(id, "pl", id_len))
+		return (build_plane(line, o_lst));
+	if (!ft_strncmp(id, "sq", id_len))
+		return (build_square(line, o_lst));
+	if (!ft_strncmp(id, "cy", id_len))
+		return (build_cylinder(line, o_lst));
+	if (!ft_strncmp(id, "tr", id_len))
+		return (build_triangle(line, o_lst));
 	return (false);
 }
 
-t_rtindex *scene_parser(char *scene_file)
+t_objects *scene_parser(char *scene_file, t_rtindex *index)
 {
 	int fd;
 	char *line;
 	char **scene_line;
-	t_rtindex *index;
 	t_objects *o_lst;
 
 	if ((fd = open(scene_file, O_RDONLY)) < 0)
-		rt_failure(NULL, "Error en la apertura del archivo.");
-	o_lst = calloc(1, sizeof(t_objects));
-	index = calloc(1, sizeof(t_rtindex));
-	if (!o_lst || !index)	
-		rt_failure(index, strerror(errno));
-	index->o_lst = o_lst;
+		rt_failure(index, "Error en la apertura del archivo.");
+	if (!(o_lst = ft_calloc(1, sizeof(t_objects))))
+		rt_failure(index, "malloc etc...");
+	index->res_x = -1;
+	index->res_y = -1;
 	while ((get_next_line(fd, &line)) == 1)
 	{
 		if (*line)
 		{
 			if (!(scene_line = ft_split(line, ' ')))
-				rt_failure(index, strerror(errno));
-			if (!check_elem_list(scene_line, index))
+				rt_failure(index, "malloc etc...");
+			if (!check_elem_list(scene_line[0], scene_line, index, o_lst))
 				rt_failure(index, "Error al leer la escena (escena no válida).");
 			free(scene_line);
 		}
 		free(line);
 	}
+	if (index->res_x == -1 || index->res_y == -1)
+		rt_failure(index, "Error al leer la resolucion!");
 	if (!index->cam_lst)
 		rt_failure(index, "Error: no hay cámara en la escena."); 
-	return (index);
+	return (o_lst);
 }
