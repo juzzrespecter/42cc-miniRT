@@ -6,43 +6,42 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/18 20:00:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/21 17:06:57 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool check_scene_name(char *scene)
+static bool	check_name(char *scene)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (scene[i] && scene[i] != '.')
 		i++;
-	if (i && !ft_strncmp(scene + i, ".rt", 4))
+	return ((i && !ft_strncmp(scene + i, ".rt", 4)) ? true : false);
+}
+
+static bool	check_valid_args(int argc, char **argv)
+{
+	if (argc == 2 && check_name(argv[1]))
+		return (true);
+	if (argc == 3 && check_name(argv[1]) && !ft_strncmp(argv[2], "--save", 7))
 		return (true);
 	return (false);
 }
 
-static bool check_valid_args(int argc, char **argv)
+int			main(int argc, char **argv)
 {
-	if (argc == 2 && check_scene_name(argv[1]))
-		return (true);
-	if (argc == 3 && check_scene_name(argv[1]) && !ft_strncmp(argv[2], "--save", 7))
-		return (true);
-	return (false);
-}
-
-int main(int argc, char **argv)
-{
-	t_rtindex *index;
+	t_rtindex	*index;
 
 	if (!check_valid_args(argc, argv))
 		rt_failure(NULL, "Error al introducir los argumentos.");
 	if (!(index = ft_calloc(1, sizeof(t_rtindex))))
 		rt_failure(NULL, "malloc error etc...");
+	index->cam_lst = NULL;
 	index->o_lst = scene_parser(argv[1], index);
-	index->current_cam = index->cam_lst;;
+	index->current_cam = index->cam_lst;
 	index->mlx_ptr = mlx_init();
 	index->current_cam->img = ray_tracer(index, index->current_cam);
 	if (argc == 3)

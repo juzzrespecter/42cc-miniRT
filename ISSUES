@@ -1,0 +1,3 @@
+cylinder objects // weird shadow projection (folded paper?), inside illumination still doesnt fully work
+every object // far enough, lightning stops working properly
+camera // check (x axis) movement

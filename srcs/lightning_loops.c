@@ -6,15 +6,15 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:28 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/17 20:18:17 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/21 17:00:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
 {
-	t_tr *tr_aux;
+	t_tr	*tr_aux;
 	float	t;
 
 	tr_aux = o_lst->tr;
@@ -28,7 +28,7 @@ static bool lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
 	return (false);
 }
 
-static bool lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
 {
 	t_cy 	*cy_aux;
 	float	t;
@@ -44,7 +44,7 @@ static bool lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
 	return (lightning_loops_5(ray, o_lst, len));
 }
 
-static bool lightning_loops_3(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, float len)
 {
 	t_sq	*sq_aux;
 	float	t;
@@ -60,10 +60,10 @@ static bool lightning_loops_3(t_ray *ray, t_objects *o_lst, float len)
 	return (lightning_loops_4(ray, o_lst, len));
 }
 
-static bool lightning_loops_2(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, float len)
 {
-	t_pl *pl_aux;
-	float t;
+	t_pl	*pl_aux;
+	float	t;
 
 	pl_aux = o_lst->pl;
 	while (pl_aux)
@@ -76,7 +76,7 @@ static bool lightning_loops_2(t_ray *ray, t_objects *o_lst, float len)
 	return (lightning_loops_3(ray, o_lst, len));
 }
 
-bool lightning_loops(t_ray *ray, t_objects *o_lst, float len)
+bool		lightning_loops(t_ray *ray, t_objects *o_lst, float len)
 {
 	t_sp	*sp_aux;
 	float	t;

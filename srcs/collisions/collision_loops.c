@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:47 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/17 20:18:19 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/21 17:11:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static t_point *collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
 			point->normal = normal_triangle(tr_aux->f_p, tr_aux->s_p, tr_aux->t_p);
+			if (v_dot(point->normal, ray->dir) > 0)
+				point->normal = v_scalar(point->normal, -1);
 			point->color = tr_aux->color;
 		}
 		tr_aux = tr_aux->next;
@@ -47,6 +49,8 @@ static t_point *collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
 			point->normal = normal_cylinder(cy_aux, point->coord);
+			if (v_dot(point->normal, ray->dir) > 0)
+				point->normal = v_scalar(point->normal, -1);
 			point->color = cy_aux->color;
 		}
 		cy_aux = cy_aux->next;
@@ -69,6 +73,8 @@ static t_point *collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
 			point->normal = sq_aux->orientation;
+			if (v_dot(point->normal, ray->dir) > 0)
+				point->normal = v_scalar(point->normal, -1);
 			point->color = sq_aux->color;
 		}
 		sq_aux = sq_aux->next;
@@ -91,6 +97,8 @@ static t_point *collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
 			point->normal = pl_aux->orientation;
+			if (v_dot(point->normal, ray->dir) > 0)
+				point->normal = v_scalar(point->normal, -1);
 			point->color = pl_aux->color;
 		}
 		pl_aux = pl_aux->next;

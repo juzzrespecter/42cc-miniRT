@@ -6,16 +6,16 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 20:21:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 17:01:02 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/21 17:08:25 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_ray *build_ray(float x, float y, t_cam *cam)
+static t_ray	*build_ray(float x, float y, t_cam *cam)
 {
-	t_vector dir_screen;
-	t_ray *ray;
+	t_vector	dir_screen;
+	t_ray		*ray;
 
 	if (!(ray = malloc(sizeof(t_ray))))
 		return (NULL);
@@ -28,42 +28,42 @@ static t_ray *build_ray(float x, float y, t_cam *cam)
 	return (ray);
 }
 
-static float x_pixel(t_rtindex *index, int x, int fov)
+static float	x_pixel(t_rtindex *index, int x, int fov)
 {
-	float x_pixel;
-	float NDC_pixel;
-	float ratio;
+	float	x_pixel;
+	float	ndc_pixel;
+	float	ratio;
 
 	ratio = (float)index->res_x / (float)index->res_y;
-	NDC_pixel = (x + 0.5) / index->res_x;
-	x_pixel = (2 * NDC_pixel - 1)  * ratio * tan((fov / 2)  * M_PI / 180);
+	ndc_pixel = (x + 0.5) / index->res_x;
+	x_pixel = (2 * ndc_pixel - 1)  * ratio * tan((fov / 2)  * M_PI / 180);
 	return (x_pixel);
 }
 
-static float y_pixel(t_rtindex *index, int y, int fov)
+static float	y_pixel(t_rtindex *index, int y, int fov)
 {
-	float y_pixel;
-	float NDC_pixel;
+	float	y_pixel;
+	float	ndc_pixel;
 
-	NDC_pixel = (y + 0.5) / index->res_y;
-	y_pixel = (1 - 2 * NDC_pixel) * tan((fov / 2) * M_PI / 180);
+	ndc_pixel = (y + 0.5) / index->res_y;
+	y_pixel = (1 - 2 * ndc_pixel) * tan((fov / 2) * M_PI / 180);
 	return (y_pixel);
 }
 
-char *ray_tracer(t_rtindex *index, t_cam *cam)
+char			*ray_tracer(t_rtindex *index, t_cam *cam)
 {
-	t_ray *ray;
-	t_point *point;
-	int x;
-	int y;
-	int i;
+	t_ray	*ray;
+	t_point	*point;
+	int		x;
+	int		y;
+	int		i;
 
 	x = 0;
 	y = 0;
 	cam->img_ptr = mlx_new_image(index->mlx_ptr, index->res_x, index->res_y);
 	cam->img = mlx_get_data_addr(cam->img_ptr, &cam->bpp, &cam->sl, &cam->endian);
 	if (!cam->img)
-		rt_failure(index, "error en img mlx etc etc");
+		rt_failure(index, "Error: mlx malfunction.");
 	while (index->res_y > y)
 	{
 		while (index->res_x > x)

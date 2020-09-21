@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/16 16:31:20 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/21 16:58:03 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -19,7 +19,6 @@ SRCS		= main.c \
 			vector_check.c \
 			dim_check.c \
 			ray_tracer.c \
-			matrix_obj2world.c \
 			get_pixel_color.c \
 			lightning_loops.c
 
@@ -49,6 +48,7 @@ COL_SRCS	= collision_cylinder.c \
 VECTOR_SRCS	= vector_operations.c \
 			more_vector_operations.c \
 			matrix_operations.c \
+			matrix_obj2world.c \
 			rotations.c
 
 WINDOW_SRCS	= img_to_window.c \

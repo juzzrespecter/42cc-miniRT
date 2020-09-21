@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 19:03:03 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/18 19:00:07 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/21 16:57:06 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,20 @@
 
 void rt_failure(t_rtindex *index, char *err_msg)
 {
-	//posibilidad de que aun no se haya montado el index??
+	t_cam *aux;
+
 	ft_printf("%s\n", err_msg);
-	if (!(index == NULL))
+	if (index)
 	{
 		delete_olst(index->o_lst);
-	
-	//borrar la lista de camaras
+		aux = index->cam_lst;
+		while (index->cam_lst)
+		{
+			aux = index->cam_lst->next;
+			free(index->cam_lst);
+			index->cam_lst = aux;
+		}
+		free(index);
 	}
 	exit(EXIT_FAILURE);
 }
