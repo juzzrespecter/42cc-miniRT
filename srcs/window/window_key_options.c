@@ -32,7 +32,7 @@ int window_press_esc(t_rtindex *index)
 
 int window_key_options(int key, t_rtindex *index)
 {
-	if (key == ESC_KEY)
+	if (key == ESC_KEY || key == 65307)
 		window_press_esc(index);
 	if (key == PREV_CAM || key == NEXT_CAM)
 		window_change_cam(key, index);

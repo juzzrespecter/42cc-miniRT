@@ -45,7 +45,8 @@ float	collision_triangle(t_tr *tr, t_ray *ray)
 	t_vector point;
 
 	normal = normal_triangle(tr->f_p, tr->s_p, tr->t_p);
-	if ((t = collision_plane(normal, tr->f_p, ray) == -1))
+	t = collision_plane(normal, tr->f_p, ray);
+	if (t == -1)
 		return (-1);
 	point = v_add(ray->origin, v_scalar(ray->dir, t));
 	if (!(collision_true(tr, point, normal)))

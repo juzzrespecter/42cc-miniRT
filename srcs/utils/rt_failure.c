@@ -16,8 +16,11 @@ void rt_failure(t_rtindex *index, char *err_msg)
 {
 	//posibilidad de que aun no se haya montado el index??
 	ft_printf("%s\n", err_msg);
-	delete_olst(index->o_lst);
-	//chapar los punteros de mlx
+	if (!(index == NULL))
+	{
+		delete_olst(index->o_lst);
+	
 	//borrar la lista de camaras
+	}
 	exit(EXIT_FAILURE);
 }

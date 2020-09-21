@@ -21,6 +21,7 @@ float	collision_plane(t_vector normal, t_vector pl_point, t_ray *ray)
 	if (fabs((eq_denom = v_dot(normal, ray->dir))) < 1e-4)
 		return (-1);
 	points_vector = v_sub(pl_point, ray->origin);
+	t = v_dot(normal, points_vector) / eq_denom;
 	if ((t = v_dot(normal, points_vector) / eq_denom) < 1e-4)
 		return (-1);
 	return (t);
