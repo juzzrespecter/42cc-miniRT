@@ -6,21 +6,13 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/21 16:58:03 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/22 20:05:06 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 .PHONY		= all re clean fclean
 
 SRCS		= main.c \
-			light_check.c \
-			color_check.c \
-			coord_check.c \
-			vector_check.c \
-			dim_check.c \
-			ray_tracer.c \
-			get_pixel_color.c \
-			lightning_loops.c
 
 PARSER_SRCS	= build_amb.c \
 			build_cam.c \
@@ -36,7 +28,12 @@ PARSER_SRCS	= build_amb.c \
 			greater_length.c \
 			array_to_color.c \
 			array_to_vector.c \
-			array_to_float.c
+			array_to_float.c \
+			color_check.c \
+			coord_check.c \
+			dim_check.c \
+			light_check.c \
+			vector_check.c
 
 COL_SRCS	= collision_cylinder.c \
 			collision_plane.c \
@@ -48,8 +45,7 @@ COL_SRCS	= collision_cylinder.c \
 VECTOR_SRCS	= vector_operations.c \
 			more_vector_operations.c \
 			matrix_operations.c \
-			matrix_obj2world.c \
-			rotations.c
+			matrix_obj2world.c
 
 WINDOW_SRCS	= img_to_window.c \
 		  	window_change_cam.c \
@@ -61,6 +57,10 @@ UTILS_SRCS	= delete_olst.c \
 		  	export_to_bmp.c \
 			rt_failure.c \
 			utils.c
+
+RT_SRCS		= ray_tracer.c \
+			  get_pixel_color.c \
+			  lightning_loops.c
 
 NAME		= miniRT
 
@@ -75,6 +75,8 @@ VECTORDIR	= srcs/vector/
 WINDOWDIR	= srcs/window/
 
 UTILSDIR	= srcs/utils/
+
+RTDIR		= srcs/raytracer/
 
 OBJSDIR		= objs/
 
@@ -100,7 +102,9 @@ WINDOW_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(WINDOW_SRCS))
 
 UTILS_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(UTILS_SRCS))
 
-ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS) $(WINDOW_OBJS) $(UTILS_OBJS)
+RT_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(RT_SRCS))
+
+ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(COL_OBJS) $(VECTOR_OBJS) $(WINDOW_OBJS) $(UTILS_OBJS) $(RT_OBJS)
 
 GCC			= gcc -Wall -Werror -Wextra
 
@@ -144,6 +148,12 @@ $(OBJSDIR)%.o:  $(UTILSDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
 			@mkdir -p objs
 			@mv $(@F) $(OBJSDIR)
+
+$(OBJSDIR)%.o:  $(RTDIR)%.c
+			@$(GCC) -c $< -I $(INCDIR)
+			@mkdir -p objs
+			@mv $(@F) $(OBJSDIR)
+
 
 clean:
 			@rm -rf $(OBJSDIR)

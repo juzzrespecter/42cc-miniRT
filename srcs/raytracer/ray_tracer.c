@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 20:21:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/21 17:08:25 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/22 20:05:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_ray	*build_ray(float x, float y, t_cam *cam)
 		return (NULL);
 	dir_screen.x = x;
 	dir_screen.y = y;
-	dir_screen.z = 1;
+	dir_screen.z = -1;
 	dir_screen = v_normalize(dir_screen);
 	ray->dir = v_normalize(vmprod(dir_screen, cam->matrix));
 	ray->origin = cam->coord;
