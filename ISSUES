@@ -1,3 +1,3 @@
-cylinder objects // weird shadow projection (folded paper?), inside illumination still doesnt fully work
-every object // far enough, lightning stops working properly
-camera // check (x axis) movement
+cylinder objects // inside illumination still doesnt fully work --> check sup normals when camera axis and cy axis are aligned
+every object // far enough, lightning stops working properly (tmax ??)
+clean exits // check segfaults when rt stops with an error

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/18 19:41:31 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/23 20:39:24 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,12 @@ typedef struct	s_cy
 typedef struct s_cyaux
 {
 	t_vector oc;
-	t_vector a_adir;
-	t_vector a_aoc;
+	t_vector v_doo;
+	t_vector v_ocoo;
 	t_vector v1;
 	t_vector v2;
-	float dot_adir;
-	float dot_aoc;
+	float d_do;
+	float d_oco;
 	float a;
 	float b;
 	float c;

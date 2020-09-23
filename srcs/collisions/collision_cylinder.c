@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 18:44:01 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/22 20:05:14 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/23 20:39:22 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ float cylinder_height(t_cy *cy, float t1, float t2, t_ray *ray)
 	dot_11 = v_dot(v_sub(point_1, cy->coord), axis);
 	dot_12 = v_dot(v_sub(point_1, p2), axis);
 	if (dot_11 > 0 && dot_12 < 0)
-		return (t1 < 1e-4 ? -1 : t1);
+		return (t1 < 1e-3 ? -1 : t1);
 	point_2 = v_add(ray->origin, v_scalar(ray->dir, t2));
 	dot_21 = v_dot(v_sub(point_2, cy->coord), axis);
 	dot_22 = v_dot(v_sub(point_2, p2), axis);
-	if ((dot_11 < 0 && dot_21 > 0 && dot_12 < 0) || \
-			(dot_21 > 0 && dot_22 < 0 && dot_11 < 0))
-		return (t2 < 1e-4 ? -1 : t2);
+	if (dot_21 > 0 && dot_22 < 0)
+		return (t2 < 1e-3 ? -1 : t2);
 	return (-1);
 }
 
@@ -63,16 +62,16 @@ float collision_cylinder(t_cy *cy, t_ray *ray)
 
 	ft_bzero(&aux, sizeof(t_cyaux));
 	aux.oc = v_sub(ray->origin, cy->coord);
-	aux.dot_adir = v_dot(cy->orientation, ray->dir);
-	aux.dot_aoc = v_dot(cy->orientation, aux.oc);
-	aux.a_adir = v_scalar(cy->orientation, aux.dot_adir);
-	aux.a_aoc = v_scalar(cy->orientation, aux.dot_aoc);
-	aux.v1 = v_sub(ray->dir, aux.a_adir);
-	aux.v2 = v_sub(aux.oc, aux.a_aoc);
+	aux.d_do = v_dot(cy->orientation, ray->dir);
+	aux.d_oco = v_dot(cy->orientation, aux.oc);
+	aux.v_doo = v_scalar(cy->orientation, aux.d_do);
+	aux.v_ocoo = v_scalar(cy->orientation, aux.d_oco);
+	aux.v1 = v_sub(ray->dir, aux.v_doo);
+	aux.v2 = v_sub(aux.oc, aux.v_ocoo);
 	aux.a = v_dot(aux.v1, aux.v1);
 	aux.b = 2 * v_dot(aux.v1, aux.v2);
-	aux.c = v_dot(aux.v2, aux.v2) - cy->d;
-	sqrt_ec = (aux.b * aux.b)- (4 * aux.a * aux.c);
+	aux.c = v_dot(aux.v2, aux.v2) - pow(cy->d / 2, 2);
+	sqrt_ec = (aux.b * aux.b) - (4 * aux.a * aux.c);
 	if (sqrt_ec < 0)
 		return (-1);
 	t1 = ((-1 * aux.b) - sqrt(sqrt_ec)) / (2 * aux.a);
