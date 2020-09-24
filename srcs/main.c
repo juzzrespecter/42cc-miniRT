@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/23 20:39:32 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:27:47 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int			main(int argc, char **argv)
 	if (!(index = ft_calloc(1, sizeof(t_rtindex))))
 		rt_failure(NULL, "malloc error etc...");
 	index->cam_lst = NULL;
+	index->res_x = -1;
+	index->res_y = -1;
 	index->o_lst = scene_parser(argv[1], index);
 	index->current_cam = index->cam_lst;
 	index->mlx_ptr = mlx_init();

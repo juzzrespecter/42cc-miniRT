@@ -6,30 +6,30 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:03:10 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 18:13:52 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:15:27 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_cy_to_back(t_objects *olst, t_cy *cy)
+static void	add_cy_to_back(t_objects *olst, t_cy *cy)
 {
-	t_cy *cy_aux;
+	t_cy	*cy_aux;
 
 	cy_aux = olst->cy;
 	if (!cy_aux)
 		olst->cy = cy;
 	else
-		{
-			while (cy_aux->next)
-				cy_aux = cy_aux->next;
-			cy_aux->next = cy;
-		}
+	{
+		while (cy_aux->next)
+			cy_aux = cy_aux->next;
+		cy_aux->next = cy;
+	}
 }
 
-bool build_cylinder(char **scene_line, t_objects *olst)
+bool		build_cylinder(char **scene_line, t_objects *olst)
 {
-	t_cy *cy;
+	t_cy	*cy;
 
 	if (!check_scene_array(scene_line, 6))
 		return (false);

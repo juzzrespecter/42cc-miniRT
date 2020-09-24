@@ -6,16 +6,16 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:01:33 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 18:33:00 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:09:16 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool fov_check(char *fov)
+static bool	fov_check(char *fov)
 {
-	int fov_int;
-	int i;
+	int	fov_int;
+	int	i;
 
 	i = 0;
 	if (!ft_isdigit(fov[i]))
@@ -28,27 +28,27 @@ static bool fov_check(char *fov)
 	return (!fov[i] ? true : false);
 }
 
-static void add_cam_to_back(t_rtindex *index, t_cam *cam)
+static void	add_cam_to_back(t_rtindex *index, t_cam *cam)
 {
-	t_cam *aux;
+	t_cam	*aux;
 
 	aux = index->cam_lst;
 	if (!aux)
 		index->cam_lst = cam;
 	else
-		{
-			while (aux->next)
-				aux = aux->next;
-			aux->next = cam;
-		}
+	{
+		while (aux->next)
+			aux = aux->next;
+		aux->next = cam;
+	}
 }
 
-bool build_cam(char **scene_line, t_rtindex *index)
+bool		build_cam(char **scene_line, t_rtindex *index)
 {
-	char *coord;
-	char *vector;
-	char *fov;
-	t_cam *cam;
+	char	*coord;
+	char	*vector;
+	char	*fov;
+	t_cam	*cam;
 
 	if (!check_scene_array(scene_line, 4))
 		return (false);

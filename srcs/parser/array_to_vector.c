@@ -6,28 +6,28 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 17:32:25 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 20:07:39 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:15:01 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vector array_to_vector(char *array)
+t_vector	array_to_vector(char *s)
 {
-	int count;
-	t_vector vector;
+	int			count;
+	t_vector	vector;
 
 	count = 0;
-	vector.x = array_to_float(array + count);
-	while (array[count] == '.' || array[count] == '-' || ft_isdigit(array[count]))
+	vector.x = array_to_float(s + count);
+	while (s[count] == '.' || s[count] == '-' || ft_isdigit(s[count]))
 		count++;
-	if (array[count] == ',')
+	if (s[count] == ',')
 		count++;
-	vector.y = array_to_float(array + count);
-	while (array[count] == '.' || array[count] == '-' || ft_isdigit(array[count]))
+	vector.y = array_to_float(s + count);
+	while (s[count] == '.' || s[count] == '-' || ft_isdigit(s[count]))
 		count++;
-	if (array[count] == ',')
+	if (s[count] == ',')
 		count++;
-	vector.z = array_to_float(array + count);
+	vector.z = array_to_float(s + count);
 	return (vector);
 }

@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:05:50 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 17:53:03 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:20:56 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_sp_to_back(t_objects *olst, t_sp *sp)
+static void	add_sp_to_back(t_objects *olst, t_sp *sp)
 {
 	t_sp *sp_aux;
 
@@ -20,14 +20,14 @@ static void add_sp_to_back(t_objects *olst, t_sp *sp)
 	if (!sp_aux)
 		olst->sp = sp;
 	else
-		{
-			while (sp_aux->next)
-				sp_aux = sp_aux->next;
-			sp_aux->next = sp;
-		}
+	{
+		while (sp_aux->next)
+			sp_aux = sp_aux->next;
+		sp_aux->next = sp;
+	}
 }
 
-bool build_sphere(char **scene_line, t_objects *olst)
+bool		build_sphere(char **scene_line, t_objects *olst)
 {
 	char *coord;
 	char *d;

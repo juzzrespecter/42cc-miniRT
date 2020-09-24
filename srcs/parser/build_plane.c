@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:04:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/15 19:43:08 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:19:36 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_pl_to_back(t_objects *olst, t_pl *pl)
+static void	add_pl_to_back(t_objects *olst, t_pl *pl)
 {
 	t_pl *pl_aux;
 
@@ -20,14 +20,14 @@ static void add_pl_to_back(t_objects *olst, t_pl *pl)
 	if (!pl_aux)
 		olst->pl = pl;
 	else
-		{
-			while (pl_aux->next)
-				pl_aux = pl_aux->next;
-			pl_aux->next = pl;
-		}
+	{
+		while (pl_aux->next)
+			pl_aux = pl_aux->next;
+		pl_aux->next = pl;
+	}
 }
 
-bool build_plane(char **scene_line, t_objects *olst)
+bool		build_plane(char **scene_line, t_objects *olst)
 {
 	char *coord;
 	char *vector;

@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/06 16:24:51 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 19:27:34 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:27:02 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool light_check(char *light)
+bool	light_check(char *light)
 {
 	int i;
 

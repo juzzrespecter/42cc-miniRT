@@ -6,18 +6,18 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 16:30:14 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:31:22 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void transform_vectors(t_vector *height, t_vector *width, t_vector world_or)
+static void	transform_vectors(t_vector *height, t_vector *width, t_vector world_or)
 {
-	t_vector object_or;
-	t_matrix matrix;
-	t_vector height_obj;
-	t_vector width_obj;
+	t_vector	object_or;
+	t_matrix	matrix;
+	t_vector	height_obj;
+	t_vector	width_obj;
 
 	ft_bzero(&height_obj, sizeof(t_vector));
 	ft_bzero(&width_obj, sizeof(t_vector));
@@ -32,13 +32,13 @@ static void transform_vectors(t_vector *height, t_vector *width, t_vector world_
 	*width = v_normalize(*width);
 }
 
-float	collision_square(t_sq *sq, t_ray *ray)
+float		collision_square(t_sq *sq, t_ray *ray)
 {
-	t_vector point;
-	float t;
-	t_vector pc_vector;
-	t_vector width_vector;
-	t_vector height_vector;
+	t_vector	point;
+	float		t;
+	t_vector	pc_vector;
+	t_vector	width_vector;
+	t_vector	height_vector;
 
 	if ((t = collision_plane(sq->orientation, sq->center, ray)) == -1)
 		return (-1);

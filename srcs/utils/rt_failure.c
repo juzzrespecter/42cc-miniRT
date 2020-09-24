@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 19:03:03 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/21 16:57:06 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 18:37:38 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void rt_failure(t_rtindex *index, char *err_msg)
 	ft_printf("%s\n", err_msg);
 	if (index)
 	{
-		delete_olst(index->o_lst);
+		if (index->o_lst)
+			delete_olst(index->o_lst);
 		aux = index->cam_lst;
 		while (index->cam_lst)
 		{

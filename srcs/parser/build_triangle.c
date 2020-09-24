@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:06:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/16 16:38:10 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:21:28 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_tr_to_back(t_objects *olst, t_tr *tr)
+static void	add_tr_to_back(t_objects *olst, t_tr *tr)
 {
 	t_tr *tr_aux;
 
@@ -20,14 +20,14 @@ static void add_tr_to_back(t_objects *olst, t_tr *tr)
 	if (!tr_aux)
 		olst->tr = tr;
 	else
-		{
-			while (tr_aux->next)
-				tr_aux = tr_aux->next;
-			tr_aux->next = tr;
-		}
+	{
+		while (tr_aux->next)
+			tr_aux = tr_aux->next;
+		tr_aux->next = tr;
+	}
 }
 
-bool build_triangle(char **scene_line, t_objects *olst)
+bool		build_triangle(char **scene_line, t_objects *olst)
 {
 	char *f_p;
 	char *s_p;
@@ -42,7 +42,7 @@ bool build_triangle(char **scene_line, t_objects *olst)
 	t_p = scene_line[3];
 	color = scene_line[4];
 	if (!(coord_check(f_p) && coord_check(s_p) \
-				 && coord_check(t_p)  && color_check(color)))
+				&& coord_check(t_p)  && color_check(color)))
 		return (false);
 	if (!(tr = malloc(sizeof(t_tr))))
 		return (false);

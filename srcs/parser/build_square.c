@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:06:09 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/08 17:54:29 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:20:13 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void add_sq_to_back(t_objects *olst, t_sq *sq)
+static void	add_sq_to_back(t_objects *olst, t_sq *sq)
 {
 	t_sq *sq_aux;
 
@@ -20,14 +20,14 @@ static void add_sq_to_back(t_objects *olst, t_sq *sq)
 	if (!sq_aux)
 		olst->sq = sq;
 	else
-		{
-			while (sq_aux->next)
-				sq_aux = sq_aux->next;
-			sq_aux->next = sq;
-		}
+	{
+		while (sq_aux->next)
+			sq_aux = sq_aux->next;
+		sq_aux->next = sq;
+	}
 }
 
-bool build_square(char **scene_line, t_objects *olst)
+bool		build_square(char **scene_line, t_objects *olst)
 {
 	char *coord;
 	char *vector;
@@ -42,7 +42,7 @@ bool build_square(char **scene_line, t_objects *olst)
 	side = scene_line[3];
 	color = scene_line[4];
 	if (!(coord_check(coord) && vector_check(vector) && dim_check(side) \
-				 && color_check(color)))
+				&& color_check(color)))
 		return (false);
 	if (!(sq = malloc(sizeof(t_sq))))
 		return (false);

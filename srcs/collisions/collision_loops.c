@@ -6,16 +6,16 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:47 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/21 17:11:29 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:30:30 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_point *collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_tr *tr_aux;
-	float t;
+	t_tr	*tr_aux;
+	float	t;
 
 	tr_aux = o_lst->tr;
 	while (tr_aux)
@@ -35,10 +35,10 @@ static t_point *collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 	return (point);
 }
 
-static t_point *collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_cy *cy_aux;
-	float t;
+	t_cy	*cy_aux;
+	float 	t;
 
 	cy_aux = o_lst->cy;
 	while (cy_aux)
@@ -59,15 +59,15 @@ static t_point *collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 	return (point);
 }
 
-static t_point *collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_sq *sq_aux;
-	float t;
+	t_sq	*sq_aux;
+	float	t;
 
 	sq_aux = o_lst->sq;
-        while (sq_aux)
-        {
-                t = collision_square(sq_aux, ray);
+	while (sq_aux)
+	{
+		t = collision_square(sq_aux, ray);
 		if (t > 0 && (point->t > t || point->t == -1))
 		{
 			point->t = t;
@@ -78,15 +78,15 @@ static t_point *collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 			point->color = sq_aux->color;
 		}
 		sq_aux = sq_aux->next;
-        }
+	}
 	point = collision_loops_4(o_lst, ray, point);
 	return (point);
 }
 
-static t_point *collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_pl *pl_aux;
-	float t;
+	t_pl	*pl_aux;
+	float	t;
 
 	pl_aux = o_lst->pl;
 	while (pl_aux)
@@ -102,12 +102,12 @@ static t_point *collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 			point->color = pl_aux->color;
 		}
 		pl_aux = pl_aux->next;
-        }
+	}
 	point = collision_loops_3(o_lst, ray, point);
 	return (point);
 }
 
-t_point *collision_loops(t_objects *o_lst, t_ray *ray)
+t_point			*collision_loops(t_objects *o_lst, t_ray *ray)
 {
 	t_sp *sp_aux;
 	float t;

@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/29 16:24:56 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/21 19:49:12 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:36:12 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool	blocked_by_an_object(t_objects *o_lst, t_vector l, t_vector p)
+static bool		blocked_by_an_object(t_objects *o_lst, t_vector l, t_vector p)
 {
 	t_ray		ray;
 	t_vector	lp;

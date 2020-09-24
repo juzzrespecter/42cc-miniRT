@@ -6,17 +6,17 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 18:44:01 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/23 20:39:22 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:29:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vector normal_cylinder(t_cy *cy, t_vector point)
+t_vector	normal_cylinder(t_cy *cy, t_vector point)
 {
-	t_vector normal;
-	t_vector op;
-	t_vector axis_point;
+	t_vector	normal;
+	t_vector	op;
+	t_vector	axis_point;
 
 	op = v_sub(point, cy->coord);
 	axis_point = v_add(cy->coord, v_scalar(cy->orientation, v_dot(cy->orientation, op)));
@@ -24,17 +24,12 @@ t_vector normal_cylinder(t_cy *cy, t_vector point)
 	return (normal);
 }
 
-//dot_1(t1) > 0 && dot_2(t1) < 0 punto en el cuerpo
-//dot_1(t1) < 0 && dot_2(t1) < 0 && dot_1(t2) > 0 punto interior visto por la base
-//dot_1(t1) > 0 && dot_2(t1) > 0 && dot_2(t2) < 0 punto interior visto por el techo
-//dot_1(t1) < 0 || dot_2(t1) > 0 no hay colision
-
-float cylinder_height(t_cy *cy, float t1, float t2, t_ray *ray)
+float		cylinder_height(t_cy *cy, float t1, float t2, t_ray *ray)
 {
-	t_vector p2;
-	t_vector point_1;
-	t_vector point_2;
-	t_vector axis;
+	t_vector	p2;
+	t_vector	point_1;
+	t_vector	point_2;
+	t_vector	axis;
 	float dot_11, dot_12;
 	float dot_21, dot_22;
 
@@ -43,22 +38,22 @@ float cylinder_height(t_cy *cy, float t1, float t2, t_ray *ray)
 	point_1 = v_add(ray->origin, v_scalar(ray->dir, t1));
 	dot_11 = v_dot(v_sub(point_1, cy->coord), axis);
 	dot_12 = v_dot(v_sub(point_1, p2), axis);
-	if (dot_11 > 0 && dot_12 < 0)
-		return (t1 < 1e-3 ? -1 : t1);
 	point_2 = v_add(ray->origin, v_scalar(ray->dir, t2));
+	if (t1 > 1e-2 && dot_11 > 0.0 && dot_12 < 0.0)
+		return (t1);
 	dot_21 = v_dot(v_sub(point_2, cy->coord), axis);
 	dot_22 = v_dot(v_sub(point_2, p2), axis);
-	if (dot_21 > 0 && dot_22 < 0)
-		return (t2 < 1e-3 ? -1 : t2);
+	if (t2 > 1e-2 && dot_21 > 0.0 && dot_22 < 0.0)
+		return (t2);
 	return (-1);
 }
 
-float collision_cylinder(t_cy *cy, t_ray *ray)
+float		collision_cylinder(t_cy *cy, t_ray *ray)
 {
-	float t1;
-	float t2;
-	float sqrt_ec;
-	t_cyaux aux;
+	float	t1;
+	float	t2;
+	float	sqrt_ec;
+	t_cyaux	aux;
 
 	ft_bzero(&aux, sizeof(t_cyaux));
 	aux.oc = v_sub(ray->origin, cy->coord);

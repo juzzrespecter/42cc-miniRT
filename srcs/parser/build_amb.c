@@ -6,17 +6,17 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:00:52 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/18 20:01:00 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:07:44 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-bool build_amb(char **scene_line, t_objects *olst)
+bool	build_amb(char **scene_line, t_objects *olst)
 {
-	char *light;
-	char *color;
-	t_amb *amb;
+	char	*light;
+	char	*color;
+	t_amb	*amb;
 
 	if (!check_scene_array(scene_line, 3) || olst->amb)
 		return (false);

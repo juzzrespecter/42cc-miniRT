@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/22 20:05:06 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/24 19:44:33 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -25,7 +25,6 @@ PARSER_SRCS	= build_amb.c \
 			build_triangle.c \
 			scene_parser.c \
 			check_scene_array.c \
-			greater_length.c \
 			array_to_color.c \
 			array_to_vector.c \
 			array_to_float.c \

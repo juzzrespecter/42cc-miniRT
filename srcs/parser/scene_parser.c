@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/18 20:01:15 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/24 19:27:35 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool check_elem_list(char *id, char **line, t_rtindex *index, t_objects *o_lst)
+static bool	obj_lst(char *id, char **line, t_rtindex *index, t_objects *o_lst)
 {
 	int	id_len;
 
@@ -38,34 +38,32 @@ static bool check_elem_list(char *id, char **line, t_rtindex *index, t_objects *
 	return (false);
 }
 
-t_objects *scene_parser(char *scene_file, t_rtindex *index)
+t_objects	*scene_parser(char *scene_file, t_rtindex *index)
 {
-	int fd;
-	char *line;
-	char **scene_line;
-	t_objects *o_lst;
+	int			fd;
+	char		*line;
+	char		**scene_line;
+	t_objects	*o_lst;
 
 	if ((fd = open(scene_file, O_RDONLY)) < 0)
 		rt_failure(index, "Error en la apertura del archivo.");
 	if (!(o_lst = ft_calloc(1, sizeof(t_objects))))
-		rt_failure(index, "malloc etc...");
-	index->res_x = -1;
-	index->res_y = -1;
+		rt_failure(index, strerror(errno));
 	while ((get_next_line(fd, &line)) == 1)
 	{
 		if (*line)
 		{
 			if (!(scene_line = ft_split(line, ' ')))
-				rt_failure(index, "malloc etc...");
-			if (!check_elem_list(scene_line[0], scene_line, index, o_lst))
-				rt_failure(index, "Error al leer la escena (escena no válida).");
+				rt_failure(index, strerror(errno));
+			if (!obj_lst(scene_line[0], scene_line, index, o_lst))
+				rt_failure(index, "Error: wrong format scene.");
 			free(scene_line);
 		}
 		free(line);
 	}
 	if (index->res_x == -1 || index->res_y == -1)
-		rt_failure(index, "Error al leer la resolucion!");
+		rt_failure(index, "Error: resolution not given.");
 	if (!index->cam_lst)
-		rt_failure(index, "Error: no hay cámara en la escena."); 
+		rt_failure(index, "Error: no camera on given scene.");
 	return (o_lst);
 }
