@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:27:35 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/25 17:07:06 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_objects	*scene_parser(char *scene_file, t_rtindex *index)
 			if (!(scene_line = ft_split(line, ' ')))
 				rt_failure(index, strerror(errno));
 			if (!obj_lst(scene_line[0], scene_line, index, o_lst))
-				rt_failure(index, "Error: wrong format scene.");
+				rt_failure(index, "Error: wrong scene format.");
 			free(scene_line);
 		}
 		free(line);
