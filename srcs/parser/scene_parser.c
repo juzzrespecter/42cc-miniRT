@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/25 17:07:06 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 21:31:12 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ t_objects	*scene_parser(char *scene_file, t_rtindex *index)
 	int			fd;
 	char		*line;
 	char		**scene_line;
+	int 		out;
 	t_objects	*o_lst;
 
 	if ((fd = open(scene_file, O_RDONLY)) < 0)
 		rt_failure(index, "Error en la apertura del archivo.");
 	if (!(o_lst = ft_calloc(1, sizeof(t_objects))))
 		rt_failure(index, strerror(errno));
-	while ((get_next_line(fd, &line)) == 1)
+	while ((out = get_next_line(fd, &line)) == 1)
 	{
 		if (*line)
 		{
@@ -61,9 +62,7 @@ t_objects	*scene_parser(char *scene_file, t_rtindex *index)
 		}
 		free(line);
 	}
-	if (index->res_x == -1 || index->res_y == -1)
-		rt_failure(index, "Error: resolution not given.");
-	if (!index->cam_lst)
-		rt_failure(index, "Error: no camera on given scene.");
+	if (out == -1)
+		rt_failure(index, "Error: failed to read the scene file.");
 	return (o_lst);
 }

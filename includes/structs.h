@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/23 20:39:24 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:08:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,16 @@ typedef struct s_cyaux
 	float a;
 	float b;
 	float c;
+	float t1;
+	float t2;
+	t_vector coord_2;
+	t_vector point_1;
+	t_vector point_2;
+	t_vector axis;
+	float d_c1p1a;
+	float d_c2p1a;
+	float d_c1p2a;
+	float d_c2p2a;
 }				t_cyaux;
 
 typedef struct	s_tr

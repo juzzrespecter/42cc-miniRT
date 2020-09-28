@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:28 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 18:22:04 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 21:31:31 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
 
 static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
 {
-	t_cy 	*cy_aux;
+	t_cy	*cy_aux;
 	float	t;
 
 	cy_aux = o_lst->cy;
@@ -86,7 +86,7 @@ bool		lightning_loops(t_ray *ray, t_objects *o_lst, float len)
 	{
 		t = collision_sphere(sp_aux, ray);
 		if (t > ERROR && t < len)
-				return (true);
+			return (true);
 		sp_aux = sp_aux->next;
 	}
 	return (lightning_loops_2(ray, o_lst, len));

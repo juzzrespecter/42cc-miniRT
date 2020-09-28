@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:47 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:30:30 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:47:34 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,46 @@
 
 static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_tr	*tr_aux;
+	t_tr	*aux;
 	float	t;
 
-	tr_aux = o_lst->tr;
-	while (tr_aux)
+	aux = o_lst->tr;
+	while (aux)
 	{
-		t = collision_triangle(tr_aux, ray);
+		t = collision_triangle(aux, ray);
 		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = normal_triangle(tr_aux->f_p, tr_aux->s_p, tr_aux->t_p);
+			point->normal = normal_triangle(aux->f_p, aux->s_p, aux->t_p);
 			if (v_dot(point->normal, ray->dir) > 0)
 				point->normal = v_scalar(point->normal, -1);
-			point->color = tr_aux->color;
+			point->color = aux->color;
 		}
-		tr_aux = tr_aux->next;
+		aux = aux->next;
 	}
 	return (point);
 }
 
 static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_cy	*cy_aux;
-	float 	t;
+	t_cy	*aux;
+	float	t;
 
-	cy_aux = o_lst->cy;
-	while (cy_aux)
+	aux = o_lst->cy;
+	while (aux)
 	{
-		t = collision_cylinder(cy_aux, ray);
+		t = collision_cylinder(aux, ray);
 		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = normal_cylinder(cy_aux, point->coord);
+			point->normal = normal_cylinder(aux, point->coord);
 			if (v_dot(point->normal, ray->dir) > 0)
 				point->normal = v_scalar(point->normal, -1);
-			point->color = cy_aux->color;
+			point->color = aux->color;
 		}
-		cy_aux = cy_aux->next;
+		aux = aux->next;
 	}
 	point = collision_loops_5(o_lst, ray, point);
 	return (point);
@@ -61,23 +61,23 @@ static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 
 static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_sq	*sq_aux;
+	t_sq	*aux;
 	float	t;
 
-	sq_aux = o_lst->sq;
-	while (sq_aux)
+	aux = o_lst->sq;
+	while (aux)
 	{
-		t = collision_square(sq_aux, ray);
+		t = collision_square(aux, ray);
 		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = sq_aux->orientation;
+			point->normal = aux->orientation;
 			if (v_dot(point->normal, ray->dir) > 0)
 				point->normal = v_scalar(point->normal, -1);
-			point->color = sq_aux->color;
+			point->color = aux->color;
 		}
-		sq_aux = sq_aux->next;
+		aux = aux->next;
 	}
 	point = collision_loops_4(o_lst, ray, point);
 	return (point);
@@ -85,23 +85,23 @@ static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 
 static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 {
-	t_pl	*pl_aux;
+	t_pl	*aux;
 	float	t;
 
-	pl_aux = o_lst->pl;
-	while (pl_aux)
+	aux = o_lst->pl;
+	while (aux)
 	{
-		t = collision_plane(pl_aux->orientation, pl_aux->coord, ray);
+		t = collision_plane(aux->orientation, aux->coord, ray);
 		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = pl_aux->orientation;
+			point->normal = aux->orientation;
 			if (v_dot(point->normal, ray->dir) > 0)
 				point->normal = v_scalar(point->normal, -1);
-			point->color = pl_aux->color;
+			point->color = aux->color;
 		}
-		pl_aux = pl_aux->next;
+		aux = aux->next;
 	}
 	point = collision_loops_3(o_lst, ray, point);
 	return (point);
@@ -109,25 +109,25 @@ static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 
 t_point			*collision_loops(t_objects *o_lst, t_ray *ray)
 {
-	t_sp *sp_aux;
-	float t;
-	t_point *point;
+	t_sp	*aux;
+	float	t;
+	t_point	*point;
 
 	if (!(point = calloc(sizeof(t_point), 1)))
 		return (NULL);
-	sp_aux = o_lst->sp;
+	aux = o_lst->sp;
 	point->t = -1;
-	while (sp_aux)
+	while (aux)
 	{
-		t = collision_sphere(sp_aux, ray);
+		t = collision_sphere(aux, ray);
 		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = v_normalize(v_sub(point->coord, sp_aux->center));
-			point->color = sp_aux->color;
+			point->normal = v_normalize(v_sub(point->coord, aux->center));
+			point->color = aux->color;
 		}
-		sp_aux = sp_aux->next;
+		aux = aux->next;
 	}
 	point = collision_loops_2(o_lst, ray, point);
 	return (point);

@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/24 19:44:33 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/28 22:10:29 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -58,7 +58,7 @@ UTILS_SRCS	= delete_olst.c \
 			utils.c
 
 RT_SRCS		= ray_tracer.c \
-			  get_pixel_color.c \
+			  pixel_color.c \
 			  lightning_loops.c
 
 NAME		= miniRT
@@ -81,9 +81,9 @@ OBJSDIR		= objs/
 
 LIB			= -lft -Llibft
 
-MLXLIB_MAC	= -lmlx -framework OpenGL -framework AppKit -lz
+MLXLIB_MAC	= -lmlx -L./minilibx -framework OpenGL -framework AppKit -lz
 
-MLXLIB_LIN	= minilibx-linux/libmlx.a -lm -lXext -lX11
+MLXLIB_LIN	= -lmlx -L./minilibx -lm -lXext -lX11
 
 INCDIR		= includes/
 
@@ -110,11 +110,12 @@ GCC			= gcc -Wall -Werror -Wextra
 all:		$(NAME)
 
 $(NAME):	$(ALL_OBJS)
-			make -C libft
+			@make -C libft
+			@make -C minilibx
 ifeq ($(OS), Linux)
-			@make -C minilibx-linux
 			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
 else
+			export DYLD_LIBRARY_PATH=./minilibx
 			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
 endif
 

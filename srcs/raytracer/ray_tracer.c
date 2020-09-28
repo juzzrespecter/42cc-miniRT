@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 20:21:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/22 20:05:13 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:41:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char			*ray_tracer(t_rtindex *index, t_cam *cam)
 			ray = build_ray(x_pixel(index, x, cam->fov), y_pixel(index, y, cam->fov), cam);
 			if(!(point = collision_loops(index->o_lst, ray)))
 				rt_failure(index, "Vaya por dios!");
-			*(unsigned int *)(cam->img + i) = get_pixel_color(index->o_lst, point);
+			*(unsigned int *)(cam->img + i) = pixel_color(index->o_lst, point);
 			free(ray);
 			x++;
 		}

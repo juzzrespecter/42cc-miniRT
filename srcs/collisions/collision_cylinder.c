@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 18:44:01 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:29:42 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 22:10:24 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,35 @@ t_vector	normal_cylinder(t_cy *cy, t_vector point)
 {
 	t_vector	normal;
 	t_vector	op;
+	t_vector	axis;
 	t_vector	axis_point;
 
 	op = v_sub(point, cy->coord);
-	axis_point = v_add(cy->coord, v_scalar(cy->orientation, v_dot(cy->orientation, op)));
+	axis = v_scalar(cy->orientation, v_dot(cy->orientation, op));
+	axis_point = v_add(cy->coord, axis);
 	normal = v_normalize(v_sub(point, axis_point));
 	return (normal);
 }
 
-float		cylinder_height(t_cy *cy, float t1, float t2, t_ray *ray)
+float		cylinder_height(t_cy *cy, t_ray *ray, t_cyaux *aux)
 {
-	t_vector	p2;
-	t_vector	point_1;
-	t_vector	point_2;
-	t_vector	axis;
-	float dot_11, dot_12;
-	float dot_21, dot_22;
-
-	p2 = v_add(cy->coord, v_scalar(cy->orientation, cy->h));
-	axis = v_sub(p2, cy->coord);
-	point_1 = v_add(ray->origin, v_scalar(ray->dir, t1));
-	dot_11 = v_dot(v_sub(point_1, cy->coord), axis);
-	dot_12 = v_dot(v_sub(point_1, p2), axis);
-	point_2 = v_add(ray->origin, v_scalar(ray->dir, t2));
-	if (t1 > 0.0 && dot_11 > 0.0 && dot_12 < 0.0)
-		return (t1);
-	dot_21 = v_dot(v_sub(point_2, cy->coord), axis);
-	dot_22 = v_dot(v_sub(point_2, p2), axis);
-	if (t2 > 0.0 && dot_21 > 0.0 && dot_22 < 0.0)
-		return (t2);
+	aux->coord_2 = v_add(cy->coord, v_scalar(cy->orientation, cy->h));
+	aux->axis = v_sub(aux->coord_2, cy->coord);
+	aux->point_1 = v_add(ray->origin, v_scalar(ray->dir, aux->t1));
+	aux->d_c1p1a = v_dot(v_sub(aux->point_1, cy->coord), aux->axis);
+	aux->d_c2p1a = v_dot(v_sub(aux->point_1, aux->coord_2), aux->axis);
+	if (aux->t1 > 0.0 && aux->d_c1p1a > 0.0 && aux->d_c2p1a < 0.0)
+		return (aux->t1);
+	aux->point_2 = v_add(ray->origin, v_scalar(ray->dir, aux->t2));
+	aux->d_c1p2a = v_dot(v_sub(aux->point_2, cy->coord), aux->axis);
+	aux->d_c2p2a = v_dot(v_sub(aux->point_2, aux->coord_2), aux->axis);
+	if (aux->t2 > 0.0 && aux->d_c1p2a > 0.0 && aux->d_c2p2a < 0.0)
+		return (aux->t2);
 	return (-1);
 }
 
 float		collision_cylinder(t_cy *cy, t_ray *ray)
 {
-	float	t1;
-	float	t2;
 	float	sqrt_ec;
 	t_cyaux	aux;
 
@@ -69,7 +62,7 @@ float		collision_cylinder(t_cy *cy, t_ray *ray)
 	sqrt_ec = (aux.b * aux.b) - (4 * aux.a * aux.c);
 	if (sqrt_ec < 0)
 		return (-1);
-	t1 = ((-1 * aux.b) - sqrt(sqrt_ec)) / (2 * aux.a);
-	t2 = ((-1 * aux.b) + sqrt(sqrt_ec)) / (2 * aux.a);
-	return (cylinder_height(cy, t1, t2, ray));
+	aux.t1 = ((-1 * aux.b) - sqrt(sqrt_ec)) / (2 * aux.a);
+	aux.t2 = ((-1 * aux.b) + sqrt(sqrt_ec)) / (2 * aux.a);
+	return (cylinder_height(cy, ray, &aux));
 }

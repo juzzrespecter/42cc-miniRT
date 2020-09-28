@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:20:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:30:57 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:48:05 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ static float	choose_t(float t, float r, float d)
 	return ((near_t) > 0 ? near_t : far_t);
 }
 
-float		collision_sphere(t_sp *sp, t_ray *ray)
+float			collision_sphere(t_sp *sp, t_ray *ray)
 {
 	t_vector	oc_vector;
 	float		t;
 	float		d;
 
 	oc_vector = v_sub(sp->center, ray->origin);
-	if ((t = v_dot(oc_vector, ray->dir)) < 0 )
+	if ((t = v_dot(oc_vector, ray->dir)) < 0)
 		return (-1);
 	if ((d = sqrt(v_dot(oc_vector, oc_vector) - pow(t, 2))) > sp->d / 2)
 		return (-1);

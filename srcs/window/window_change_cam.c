@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:44:12 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/17 18:15:24 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 19:19:36 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static int get_cam_pos(t_cam *alst, t_cam *current_cam)
+static int		get_cam_pos(t_cam *alst, t_cam *current_cam)
 {
 	int pos;
 
@@ -25,7 +25,7 @@ static int get_cam_pos(t_cam *alst, t_cam *current_cam)
 	return (pos);
 }
 
-static int get_number_of_cams(t_cam *cam_lst)
+static int		get_number_of_cams(t_cam *cam_lst)
 {
 	int n;
 
@@ -38,14 +38,14 @@ static int get_number_of_cams(t_cam *cam_lst)
 	return (n);
 }
 
-static t_cam *get_last_cam(t_cam *cam)
+static t_cam	*get_last_cam(t_cam *cam)
 {
 	while (cam->next)
 		cam = cam->next;
 	return (cam);
 }
 
-static t_cam *get_prev_cam(t_cam *cam, int pos)
+static t_cam	*get_prev_cam(t_cam *cam, int pos)
 {
 	int count;
 
@@ -58,7 +58,7 @@ static t_cam *get_prev_cam(t_cam *cam, int pos)
 	return (cam);
 }
 
-int window_change_cam(int key, t_rtindex *index)
+int				window_change_cam(int key, t_rtindex *index)
 {
 	int cam_pos;
 	int n_cams;
@@ -68,12 +68,12 @@ int window_change_cam(int key, t_rtindex *index)
 	if (n_cams == 1)
 		return (1);
 	if (key == NEXT_CAM)
-		{
-			if (cam_pos == n_cams)
-				index->current_cam = index->cam_lst;
-			else
-				index->current_cam = index->current_cam->next;
-		}
+	{
+		if (cam_pos == n_cams)
+			index->current_cam = index->cam_lst;
+		else
+			index->current_cam = index->current_cam->next;
+	}
 	if (key == PREV_CAM)
 	{
 		if (cam_pos == 1)

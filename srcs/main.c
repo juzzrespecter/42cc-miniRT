@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:27:47 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 21:31:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ static bool	check_valid_args(int argc, char **argv)
 	return (false);
 }
 
+static bool	res_verification(t_rtindex *index)
+{
+	int	res_x;
+	int	res_y;
+
+	if (index->res_x == -1 || index->res_y == -1)
+		return (false);
+	mlx_get_screen_size(index->mlx_ptr, &res_x, &res_y);
+	index->res_x = (index->res_x > res_x) ? res_x : index->res_x;
+	index->res_y = (index->res_y > res_y) ? res_y : index->res_y;
+	return (true);
+}
+
 int			main(int argc, char **argv)
 {
 	t_rtindex	*index;
@@ -43,8 +56,11 @@ int			main(int argc, char **argv)
 	index->res_x = -1;
 	index->res_y = -1;
 	index->o_lst = scene_parser(argv[1], index);
-	index->current_cam = index->cam_lst;
+	if (!(index->current_cam = index->cam_lst))
+		rt_failure(index, "Error: no camera defined in the scene.");
 	index->mlx_ptr = mlx_init();
+	if (!(res_verification(index)))
+		rt_failure(index, "Error: no resolution defined.");
 	index->current_cam->img = ray_tracer(index, index->current_cam);
 	if (argc == 3)
 		export_to_bmp(index);

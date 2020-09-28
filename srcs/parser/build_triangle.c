@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:06:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:21:28 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/28 21:30:17 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ bool		build_triangle(char **scene_line, t_objects *olst)
 	s_p = scene_line[2];
 	t_p = scene_line[3];
 	color = scene_line[4];
-	if (!(coord_check(f_p) && coord_check(s_p) \
-				&& coord_check(t_p)  && color_check(color)))
+	if (!(coord_check(f_p) && coord_check(s_p) &&\
+coord_check(t_p)  && color_check(color)))
 		return (false);
 	if (!(tr = malloc(sizeof(t_tr))))
 		return (false);
