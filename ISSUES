@@ -1,3 +1,5 @@
-every object // far enough, lightning stops working properly (tmax ??)
+every object // lightning doesnt fully work -> move the SHADOW ray slightly ahead of the collision point
+merge collision & rt
+check makefile
+obj2world??
 clean exits // check segfaults when rt stops with an error
-manage ft_isspace in scene_parser (fails when there are tabs in the scene)

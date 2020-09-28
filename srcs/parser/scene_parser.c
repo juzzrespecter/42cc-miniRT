@@ -53,7 +53,7 @@ t_objects	*scene_parser(char *scene_file, t_rtindex *index)
 	{
 		if (*line)
 		{
-			if (!(scene_line = ft_split(line, ' ')))
+			if (!(scene_line = ft_split(line, " \n\t\r\f\v")))
 				rt_failure(index, strerror(errno));
 			if (!obj_lst(scene_line[0], scene_line, index, o_lst))
 				rt_failure(index, "Error: wrong scene format.");

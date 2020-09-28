@@ -21,7 +21,7 @@ static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 	while (tr_aux)
 	{
 		t = collision_triangle(tr_aux, ray);
-		if (t > 0 && (point->t > t || point->t == -1))
+		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
@@ -44,7 +44,7 @@ static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 	while (cy_aux)
 	{
 		t = collision_cylinder(cy_aux, ray);
-		if (t > 0 && (point->t > t || point->t == -1))
+		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
@@ -68,7 +68,7 @@ static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 	while (sq_aux)
 	{
 		t = collision_square(sq_aux, ray);
-		if (t > 0 && (point->t > t || point->t == -1))
+		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
@@ -92,7 +92,7 @@ static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 	while (pl_aux)
 	{
 		t = collision_plane(pl_aux->orientation, pl_aux->coord, ray);
-		if (t > 0 && (point->t > t || point->t == -1))
+		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
@@ -120,7 +120,7 @@ t_point			*collision_loops(t_objects *o_lst, t_ray *ray)
 	while (sp_aux)
 	{
 		t = collision_sphere(sp_aux, ray);
-		if (t > 0 && (point->t > t || point->t == -1))
+		if (t > ERROR && (point->t > t || point->t == -1))
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));

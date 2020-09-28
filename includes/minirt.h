@@ -24,8 +24,11 @@
 #include "window.h"
 #include "structs.h"
 
+#ifndef ERROR
+# define ERROR 1e-6
+#endif
+
 void			delete_olst(t_objects *olst);
-int				greater_length(char *s1, char *s2);
 char			*ray_tracer(t_rtindex *index, t_cam *cam);
 t_point			*collision_loops(t_objects *obj_lst, t_ray *ray);
 double			ft_max(double a, double b);

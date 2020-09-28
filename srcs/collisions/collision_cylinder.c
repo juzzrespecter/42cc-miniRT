@@ -39,11 +39,11 @@ float		cylinder_height(t_cy *cy, float t1, float t2, t_ray *ray)
 	dot_11 = v_dot(v_sub(point_1, cy->coord), axis);
 	dot_12 = v_dot(v_sub(point_1, p2), axis);
 	point_2 = v_add(ray->origin, v_scalar(ray->dir, t2));
-	if (t1 > 1e-2 && dot_11 > 0.0 && dot_12 < 0.0)
+	if (t1 > 0.0 && dot_11 > 0.0 && dot_12 < 0.0)
 		return (t1);
 	dot_21 = v_dot(v_sub(point_2, cy->coord), axis);
 	dot_22 = v_dot(v_sub(point_2, p2), axis);
-	if (t2 > 1e-2 && dot_21 > 0.0 && dot_22 < 0.0)
+	if (t2 > 0.0 && dot_21 > 0.0 && dot_22 < 0.0)
 		return (t2);
 	return (-1);
 }

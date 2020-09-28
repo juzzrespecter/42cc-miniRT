@@ -21,7 +21,7 @@ static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
 	while (tr_aux)
 	{
 		t = collision_triangle(tr_aux, ray);
-		if (t > 0 && t < len)
+		if (t > ERROR && t < len)
 			return (true);
 		tr_aux = tr_aux->next;
 	}
@@ -37,7 +37,7 @@ static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
 	while (cy_aux)
 	{
 		t = collision_cylinder(cy_aux, ray);
-		if (t > 0 && t < len)
+		if (t > ERROR && t < len)
 			return (true);
 		cy_aux = cy_aux->next;
 	}
@@ -53,7 +53,7 @@ static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, float len)
 	while (sq_aux)
 	{
 		t = collision_square(sq_aux, ray);
-		if (t > 0 && t < len)
+		if (t > ERROR && t < len)
 			return (true);
 		sq_aux = sq_aux->next;
 	}
@@ -69,7 +69,7 @@ static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, float len)
 	while (pl_aux)
 	{
 		t = collision_plane(pl_aux->orientation, pl_aux->coord, ray);
-		if (t > 0 && t < len)
+		if (t > ERROR && t < len)
 			return (true);
 		pl_aux = pl_aux->next;
 	}
@@ -85,7 +85,7 @@ bool		lightning_loops(t_ray *ray, t_objects *o_lst, float len)
 	while (sp_aux)
 	{
 		t = collision_sphere(sp_aux, ray);
-		if (t > 0 && t < len)
+		if (t > ERROR && t < len)
 				return (true);
 		sp_aux = sp_aux->next;
 	}
