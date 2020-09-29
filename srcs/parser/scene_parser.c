@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 21:31:12 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 19:44:26 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ t_objects	*scene_parser(char *scene_file, t_rtindex *index)
 	t_objects	*o_lst;
 
 	if ((fd = open(scene_file, O_RDONLY)) < 0)
-		rt_failure(index, "Error en la apertura del archivo.");
+		rt_failure(index, "Error: failed to open scene file.");
 	if (!(o_lst = ft_calloc(1, sizeof(t_objects))))
-		rt_failure(index, strerror(errno));
+		rt_failure(index, "Error: malloc failed to assign dynamic memory.");
 	while ((out = get_next_line(fd, &line)) == 1)
 	{
 		if (*line)
 		{
 			if (!(scene_line = ft_split(line, " \n\t\r\f\v")))
-				rt_failure(index, strerror(errno));
+				rt_failure(index, "Error: malloc failed to assign dynamic memory.");
 			if (!obj_lst(scene_line[0], scene_line, index, o_lst))
 				rt_failure(index, "Error: wrong scene format.");
 			free(scene_line);

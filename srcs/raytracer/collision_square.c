@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:21:30 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 19:49:47 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:08:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static void	transform_vectors(t_vector *h, t_vector *w, t_vector world_or)
 	*w = v_normalize(*w);
 }
 
-float		collision_square(t_sq *sq, t_ray *ray)
+double		collision_square(t_sq *sq, t_ray *ray)
 {
 	t_vector	point;
-	float		t;
+	double		t;
 	t_vector	pc_vector;
 	t_vector	w_vector;
 	t_vector	h_vector;

@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 21:31:41 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 22:28:00 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int			main(int argc, char **argv)
 	t_rtindex	*index;
 
 	if (!check_valid_args(argc, argv))
-		rt_failure(NULL, "Error al introducir los argumentos.");
+		rt_failure(NULL, "Error: invalid arguments.");
 	if (!(index = ft_calloc(1, sizeof(t_rtindex))))
-		rt_failure(NULL, "malloc error etc...");
+		rt_failure(NULL, "Error: malloc couldn't assign dynamic memory.");
 	index->cam_lst = NULL;
 	index->res_x = -1;
 	index->res_y = -1;
@@ -62,12 +62,10 @@ int			main(int argc, char **argv)
 	if (!(res_verification(index)))
 		rt_failure(index, "Error: no resolution defined.");
 	index->current_cam->img = ray_tracer(index, index->current_cam);
+	printf("bpp: (%d) sl (%d) e (%d)\n", index->current_cam->bpp, index->current_cam->sl, index->current_cam->endian);
 	if (argc == 3)
 		export_to_bmp(index);
-	else
-	{
-		window_generate_images(index);
+	/*else*/
 		img_to_window(index);
-	}
 	return (1);
 }

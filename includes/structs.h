@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 19:08:29 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:06:52 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 typedef struct	s_vector
 {
-	float x;
-	float y;
-	float z;
+	double x;
+	double y;
+	double z;
 }				t_vector;
 
 typedef struct	s_matrix
@@ -44,7 +44,7 @@ typedef struct			s_ray
 typedef struct		s_point
 {
 	t_vector	coord;
-	float		t;
+	double		t;
 	t_vector	normal;
 	t_color		color;
 
@@ -120,13 +120,13 @@ typedef struct s_cyaux
 	t_vector v_ocoo;
 	t_vector v1;
 	t_vector v2;
-	float d_do;
-	float d_oco;
-	float a;
-	float b;
-	float c;
-	float t1;
-	float t2;
+	double d_do;
+	double d_oco;
+	double a;
+	double b;
+	double c;
+	double t1;
+	double t2;
 	t_vector coord_2;
 	t_vector point_1;
 	t_vector point_2;

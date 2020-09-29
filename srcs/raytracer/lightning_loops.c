@@ -6,16 +6,16 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:28 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 21:31:31 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:07:11 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, double len)
 {
 	t_tr	*tr_aux;
-	float	t;
+	double	t;
 
 	tr_aux = o_lst->tr;
 	while (tr_aux)
@@ -28,10 +28,10 @@ static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, float len)
 	return (false);
 }
 
-static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, double len)
 {
 	t_cy	*cy_aux;
-	float	t;
+	double	t;
 
 	cy_aux = o_lst->cy;
 	while (cy_aux)
@@ -44,10 +44,10 @@ static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, float len)
 	return (lightning_loops_5(ray, o_lst, len));
 }
 
-static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, double len)
 {
 	t_sq	*sq_aux;
-	float	t;
+	double	t;
 
 	sq_aux = o_lst->sq;
 	while (sq_aux)
@@ -60,10 +60,10 @@ static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, float len)
 	return (lightning_loops_4(ray, o_lst, len));
 }
 
-static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, float len)
+static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, double len)
 {
 	t_pl	*pl_aux;
-	float	t;
+	double	t;
 
 	pl_aux = o_lst->pl;
 	while (pl_aux)
@@ -76,10 +76,10 @@ static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, float len)
 	return (lightning_loops_3(ray, o_lst, len));
 }
 
-bool		lightning_loops(t_ray *ray, t_objects *o_lst, float len)
+bool		lightning_loops(t_ray *ray, t_objects *o_lst, double len)
 {
 	t_sp	*sp_aux;
-	float	t;
+	double	t;
 
 	sp_aux = o_lst->sp;
 	while (sp_aux)

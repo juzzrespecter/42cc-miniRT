@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:22:22 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:31:53 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:09:11 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ t_vector	normal_triangle(t_vector f_p, t_vector s_p, t_vector t_p)
 	return (v_normalize(v_cross(v_sub(s_p, f_p), v_sub(t_p, s_p))));
 }
 
-float		collision_triangle(t_tr *tr, t_ray *ray)
+double		collision_triangle(t_tr *tr, t_ray *ray)
 {
-	float		t;
+	double		t;
 	t_vector	normal;
 	t_vector	point;
 

@@ -6,17 +6,17 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:20:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 19:48:05 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:09:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static float	choose_t(float t, float r, float d)
+static double	choose_t(double t, double r, double d)
 {
-	float	near_t;
-	float	far_t;
-	float	hc_t;
+	double	near_t;
+	double	far_t;
+	double	hc_t;
 
 	hc_t = sqrt(pow(r, 2) - pow(d, 2));
 	near_t = t - hc_t;
@@ -24,11 +24,11 @@ static float	choose_t(float t, float r, float d)
 	return ((near_t) > 0 ? near_t : far_t);
 }
 
-float			collision_sphere(t_sp *sp, t_ray *ray)
+double			collision_sphere(t_sp *sp, t_ray *ray)
 {
 	t_vector	oc_vector;
-	float		t;
-	float		d;
+	double		t;
+	double		d;
 
 	oc_vector = v_sub(sp->center, ray->origin);
 	if ((t = v_dot(oc_vector, ray->dir)) < 0)

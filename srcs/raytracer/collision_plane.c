@@ -6,17 +6,17 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 16:18:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 19:30:40 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:09:42 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-float	collision_plane(t_vector normal, t_vector pl_point, t_ray *ray)
+double	collision_plane(t_vector normal, t_vector pl_point, t_ray *ray)
 {
-	float		t;
+	double		t;
 	t_vector	points_vector;
-	float		eq_denom;
+	double		eq_denom;
 
 	if (fabs((eq_denom = v_dot(normal, ray->dir))) < 1e-4)
 		return (-1);

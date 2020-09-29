@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/16 15:54:47 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 19:47:34 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:06:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 {
 	t_tr	*aux;
-	float	t;
+	double	t;
 
 	aux = o_lst->tr;
 	while (aux)
@@ -38,7 +38,7 @@ static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 {
 	t_cy	*aux;
-	float	t;
+	double	t;
 
 	aux = o_lst->cy;
 	while (aux)
@@ -62,7 +62,7 @@ static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 {
 	t_sq	*aux;
-	float	t;
+	double	t;
 
 	aux = o_lst->sq;
 	while (aux)
@@ -86,7 +86,7 @@ static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 {
 	t_pl	*aux;
-	float	t;
+	double	t;
 
 	aux = o_lst->pl;
 	while (aux)
@@ -110,7 +110,7 @@ static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 t_point			*collision_loops(t_objects *o_lst, t_ray *ray)
 {
 	t_sp	*aux;
-	float	t;
+	double	t;
 	t_point	*point;
 
 	if (!(point = calloc(sizeof(t_point), 1)))

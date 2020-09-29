@@ -6,7 +6,7 @@
 #    By: danrodri <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/07/02 16:20:58 by danrodri          #+#    #+#              #
-#    Updated: 2020/09/28 22:10:29 by danrodri         ###   ########.fr        #
+#    Updated: 2020/09/29 19:07:51 by danrodri         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -34,13 +34,6 @@ PARSER_SRCS	= build_amb.c \
 			light_check.c \
 			vector_check.c
 
-COL_SRCS	= collision_cylinder.c \
-			collision_plane.c \
-			collision_sphere.c \
-			collision_square.c \
-			collision_triangle.c \
-			collision_loops.c
-
 VECTOR_SRCS	= vector_operations.c \
 			more_vector_operations.c \
 			matrix_operations.c \
@@ -48,7 +41,6 @@ VECTOR_SRCS	= vector_operations.c \
 
 WINDOW_SRCS	= img_to_window.c \
 		  	window_change_cam.c \
-			window_click_exit.c \
 			window_key_options.c \
 			window_generate_images.c
 
@@ -58,8 +50,14 @@ UTILS_SRCS	= delete_olst.c \
 			utils.c
 
 RT_SRCS		= ray_tracer.c \
-			  pixel_color.c \
-			  lightning_loops.c
+			pixel_color.c \
+			lightning_loops.c \
+			collision_cylinder.c \
+			collision_plane.c \
+			collision_sphere.c \
+			collision_square.c \
+			collision_triangle.c \
+			collision_loops.c
 
 NAME		= miniRT
 
@@ -81,9 +79,11 @@ OBJSDIR		= objs/
 
 LIB			= -lft -Llibft
 
-MLXLIB_MAC	= -lmlx -L./minilibx -framework OpenGL -framework AppKit -lz
+MLXLIB_MAC	= -lmlx -L. -framework OpenGL -framework AppKit -lz
 
 MLXLIB_LIN	= -lmlx -L./minilibx -lm -lXext -lX11
+
+MLX			= libmlx.dylib
 
 INCDIR		= includes/
 
@@ -92,8 +92,6 @@ OS		:= $(shell uname)
 OBJS		= $(patsubst %.c, $(OBJSDIR)%.o, $(SRCS))
 
 PARSER_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(PARSER_SRCS))
-
-COL_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(COL_SRCS))
 
 VECTOR_OBJS	= $(patsubst %.c, $(OBJSDIR)%.o, $(VECTOR_SRCS))
 
@@ -112,10 +110,10 @@ all:		$(NAME)
 $(NAME):	$(ALL_OBJS)
 			@make -C libft
 			@make -C minilibx
+			@mv ./minilibx/$(MLX) .
 ifeq ($(OS), Linux)
 			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_LIN)
 else
-			export DYLD_LIBRARY_PATH=./minilibx
 			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
 endif
 
@@ -125,11 +123,6 @@ $(OBJSDIR)%.o:	$(SRCSDIR)%.c
 			@mv $(@F) $(OBJSDIR)
 
 $(OBJSDIR)%.o:  $(PARSERDIR)%.c
-			@$(GCC) -c $< -I $(INCDIR)
-			@mkdir -p objs
-			@mv $(@F) $(OBJSDIR)
-
-$(OBJSDIR)%.o:  $(COLDIR)%.c
 			@$(GCC) -c $< -I $(INCDIR)
 			@mkdir -p objs
 			@mv $(@F) $(OBJSDIR)
@@ -158,10 +151,12 @@ $(OBJSDIR)%.o:  $(RTDIR)%.c
 clean:
 			@rm -rf $(OBJSDIR)
 			@make clean -C libft
+			@make clean -C minilibx
 
 fclean:		clean
 			@rm -f $(NAME)
 			@make fclean -C libft
+			@rm -f $(MLX)
 
 re:			fclean all
 

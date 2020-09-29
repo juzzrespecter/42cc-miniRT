@@ -1,5 +1,3 @@
-every object // lightning doesnt fully work -> move the SHADOW ray slightly ahead of the collision point
-merge collision & rt
 check makefile
 obj2world??
-clean exits // check segfaults when rt stops with an error
+bmp export -> bmp lines must be of length divisible by 4

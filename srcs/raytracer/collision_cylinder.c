@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/11 18:44:01 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 22:10:24 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/29 18:08:43 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vector	normal_cylinder(t_cy *cy, t_vector point)
 	return (normal);
 }
 
-float		cylinder_height(t_cy *cy, t_ray *ray, t_cyaux *aux)
+double		cylinder_height(t_cy *cy, t_ray *ray, t_cyaux *aux)
 {
 	aux->coord_2 = v_add(cy->coord, v_scalar(cy->orientation, cy->h));
 	aux->axis = v_sub(aux->coord_2, cy->coord);
@@ -43,9 +43,9 @@ float		cylinder_height(t_cy *cy, t_ray *ray, t_cyaux *aux)
 	return (-1);
 }
 
-float		collision_cylinder(t_cy *cy, t_ray *ray)
+double		collision_cylinder(t_cy *cy, t_ray *ray)
 {
-	float	sqrt_ec;
+	double	sqrt_ec;
 	t_cyaux	aux;
 
 	ft_bzero(&aux, sizeof(t_cyaux));
