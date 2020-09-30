@@ -58,6 +58,7 @@ char			*ray_tracer(t_rtindex *index, t_cam *cam)
 	int		y;
 	int		i;
 
+	//hay que destruir imagenes en exit_failure
 	x = 0;
 	y = 0;
 	cam->img_ptr = mlx_new_image(index->mlx_ptr, index->res_x, index->res_y);

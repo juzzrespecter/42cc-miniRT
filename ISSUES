@@ -1,3 +1,2 @@
-check makefile
-obj2world??
+finish makefile
 bmp export -> bmp lines must be of length divisible by 4
