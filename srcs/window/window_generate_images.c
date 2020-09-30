@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 20:22:54 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/29 19:18:02 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/30 18:56:30 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void window_generate_images(t_rtindex *index)
 	while (cam)
 	{
 		if (!(cam->img = ray_tracer(index, cam)))
-		   rt_failure(index, "Error: failed to create the scene.");
+		   exit_failure(index, "Error: failed to create the scene.");
 		cam = cam->next;
 	}
 }

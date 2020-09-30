@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/29 22:28:00 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/30 22:17:22 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,22 @@ int			main(int argc, char **argv)
 	t_rtindex	*index;
 
 	if (!check_valid_args(argc, argv))
-		rt_failure(NULL, "Error: invalid arguments.");
+		exit_failure(NULL, "Error: invalid arguments.");
 	if (!(index = ft_calloc(1, sizeof(t_rtindex))))
-		rt_failure(NULL, "Error: malloc couldn't assign dynamic memory.");
+		exit_failure(NULL, "Error: malloc couldn't assign dynamic memory.");
+	index->win_ptr = NULL;
 	index->cam_lst = NULL;
 	index->res_x = -1;
 	index->res_y = -1;
 	index->o_lst = scene_parser(argv[1], index);
 	if (!(index->current_cam = index->cam_lst))
-		rt_failure(index, "Error: no camera defined in the scene.");
+		exit_failure(index, "Error: no camera defined in the scene.");
 	index->mlx_ptr = mlx_init();
 	if (!(res_verification(index)))
-		rt_failure(index, "Error: no resolution defined.");
+		exit_failure(index, "Error: no resolution defined.");
 	index->current_cam->img = ray_tracer(index, index->current_cam);
-	printf("bpp: (%d) sl (%d) e (%d)\n", index->current_cam->bpp, index->current_cam->sl, index->current_cam->endian);
 	if (argc == 3)
-		export_to_bmp(index);
-	/*else*/
-		img_to_window(index);
+		export_to_bmp(index, argv[1]);
+	img_to_window(index);
 	return (1);
 }

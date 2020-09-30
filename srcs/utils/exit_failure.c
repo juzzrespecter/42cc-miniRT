@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_failure.c                                       :+:      :+:    :+:   */
+/*   exit_failure.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/08 19:03:03 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 18:37:38 by danrodri         ###   ########.fr       */
+/*   Created: 2020/09/30 17:00:38 by danrodri          #+#    #+#             */
+/*   Updated: 2020/09/30 19:00:39 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void rt_failure(t_rtindex *index, char *err_msg)
+void exit_failure(t_rtindex *index, char *err_msg)
 {
 	t_cam *aux;
 

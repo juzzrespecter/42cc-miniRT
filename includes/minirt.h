@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/29 20:09:31 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/30 20:32:39 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_vector		normal_cylinder(t_cy *cy, t_vector point);
 t_vector		normal_triangle(t_vector f_p, t_vector s_p, t_vector t_p);
 unsigned int	pixel_color(t_objects *obj_lst, t_point *point);
 bool			lightning_loops(t_ray *light_ray, t_objects *o_lst, double len);
-void			*export_to_bmp(t_rtindex *index);
-void			rt_failure(t_rtindex *index, char *err_msg);
+void			export_to_bmp(t_rtindex *index, char *rtname);
+void			exit_failure(t_rtindex *index, char *err_msg);
+int				exit_success(t_rtindex *index);
 
 #endif

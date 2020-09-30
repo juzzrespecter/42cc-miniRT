@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 16:46:48 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/29 18:06:52 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/09/30 22:17:20 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct	s_cam
 	int fov;
 	int bpp;
 	int sl;
-	int endian;
+	int e;
 	void *img_ptr;
 	char *img;
 	struct s_cam *next;
@@ -167,5 +167,19 @@ typedef struct	s_rtindex
 	t_cam		*cam_lst;
 	t_cam		*current_cam;
 }				t_rtindex;
+
+typedef struct	s_bmp
+{
+	char *filename;
+	char *fileheader;
+	char *infoheader;
+	int width;
+	int width_bytes;
+	int height;
+	int bits_per_pixel;
+	int imgsize;
+	int padding;
+	char *img;
+}				t_bmp;
 
 #endif
