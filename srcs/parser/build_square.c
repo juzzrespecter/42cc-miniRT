@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void	add_sq_to_back(t_objects *olst, t_sq *sq)
+static void	add_sq_to_back(t_objs *olst, t_sq *sq)
 {
 	t_sq *sq_aux;
 
@@ -27,7 +27,7 @@ static void	add_sq_to_back(t_objects *olst, t_sq *sq)
 	}
 }
 
-bool		build_square(char **scene_line, t_objects *olst)
+bool		build_square(char **scene_line, t_objs *olst)
 {
 	char *coord;
 	char *vector;

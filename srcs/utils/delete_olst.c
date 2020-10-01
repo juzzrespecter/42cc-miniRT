@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:29:53 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/24 18:59:10 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 21:07:49 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void delete_olst_last(t_objects *o_lst)
+static void	delete_olst_last(t_objs *o_lst)
 {
 	t_tr *tr;
 
@@ -24,7 +24,7 @@ static void delete_olst_last(t_objects *o_lst)
 	}
 }
 
-static void delete_olst_more(t_objects *o_lst)
+static void	delete_olst_more(t_objs *o_lst)
 {
 	t_pl *pl;
 	t_sq *sq;
@@ -51,10 +51,10 @@ static void delete_olst_more(t_objects *o_lst)
 	delete_olst_last(o_lst);
 }
 
-void	delete_olst(t_objects *o_lst)
+void		delete_olst(t_objs *o_lst)
 {
-	t_light *light;
-	t_sp *sp;
+	t_light	*light;
+	t_sp	*sp;
 
 	if (o_lst->amb)
 		free(o_lst->amb);

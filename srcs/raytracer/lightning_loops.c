@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, double len)
+static bool	lightning_loops_5(t_ray *ray, t_objs *o_lst, double len)
 {
 	t_tr	*tr_aux;
 	double	t;
@@ -28,7 +28,7 @@ static bool	lightning_loops_5(t_ray *ray, t_objects *o_lst, double len)
 	return (false);
 }
 
-static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, double len)
+static bool	lightning_loops_4(t_ray *ray, t_objs *o_lst, double len)
 {
 	t_cy	*cy_aux;
 	double	t;
@@ -44,7 +44,7 @@ static bool	lightning_loops_4(t_ray *ray, t_objects *o_lst, double len)
 	return (lightning_loops_5(ray, o_lst, len));
 }
 
-static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, double len)
+static bool	lightning_loops_3(t_ray *ray, t_objs *o_lst, double len)
 {
 	t_sq	*sq_aux;
 	double	t;
@@ -60,7 +60,7 @@ static bool	lightning_loops_3(t_ray *ray, t_objects *o_lst, double len)
 	return (lightning_loops_4(ray, o_lst, len));
 }
 
-static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, double len)
+static bool	lightning_loops_2(t_ray *ray, t_objs *o_lst, double len)
 {
 	t_pl	*pl_aux;
 	double	t;
@@ -76,7 +76,7 @@ static bool	lightning_loops_2(t_ray *ray, t_objects *o_lst, double len)
 	return (lightning_loops_3(ray, o_lst, len));
 }
 
-bool		lightning_loops(t_ray *ray, t_objects *o_lst, double len)
+bool		lightning_loops(t_ray *ray, t_objs *o_lst, double len)
 {
 	t_sp	*sp_aux;
 	double	t;

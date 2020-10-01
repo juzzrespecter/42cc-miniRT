@@ -6,19 +6,17 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 19:11:04 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/30 22:17:18 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 20:22:15 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static unsigned char	*file_header(t_bmp *bmp)
+static void		file_header(t_bmp *bmp, int fd)
 {
 	int				file_size;
-	unsigned char	*file_header;
+	unsigned char	file_header[FILE_HEADER_SIZE];
 
-	if (!(file_header = malloc(FILE_HEADER_SIZE * sizeof(unsigned char))))
-		return (NULL);
 	ft_bzero(file_header, FILE_HEADER_SIZE);
 	file_size = FILE_HEADER_SIZE + INFO_HEADER_SIZE + bmp->imgsize;
 	*file_header = (unsigned char)0x42;
@@ -28,28 +26,26 @@ static unsigned char	*file_header(t_bmp *bmp)
 	*(file_header + 4) = (unsigned char)(file_size >> 16);
 	*(file_header + 5) = (unsigned char)(file_size >> 24);
 	*(file_header + 10) = (unsigned char)(FILE_HEADER_SIZE + INFO_HEADER_SIZE);
-	return (file_header);
+	write(fd, file_header, FILE_HEADER_SIZE);
 }
 
-static unsigned char	*info_header(t_bmp *bmp)
+static void		info_header(t_bmp *bmp, int fd)
 {
-	unsigned char *info_header;
+	unsigned char info_header[INFO_HEADER_SIZE];
 
-	if (!(info_header = malloc(INFO_HEADER_SIZE * sizeof(unsigned char))))
-		return (NULL);
 	ft_bzero(info_header, INFO_HEADER_SIZE);
 	*info_header = (unsigned char)INFO_HEADER_SIZE;
-	*(info_header + 4) = (unsigned char)(bmp->height);
-	*(info_header + 5) = (unsigned char)(bmp->height >> 8);
-	*(info_header + 6) = (unsigned char)(bmp->height >> 16);
-	*(info_header + 7) = (unsigned char)(bmp->height >> 24);
-	*(info_header + 8) = (unsigned char)(bmp->width);
-	*(info_header + 9) = (unsigned char)(bmp->width >> 8);
-	*(info_header + 10) = (unsigned char)(bmp->width >> 16);
-	*(info_header + 11) = (unsigned char)(bmp->width >> 24);
+	*(info_header + 4) = (unsigned char)(bmp->width);
+	*(info_header + 5) = (unsigned char)(bmp->width >> 8);
+	*(info_header + 6) = (unsigned char)(bmp->width >> 16);
+	*(info_header + 7) = (unsigned char)(bmp->width >> 24);
+	*(info_header + 8) = (unsigned char)(bmp->height);
+	*(info_header + 9) = (unsigned char)(bmp->height >> 8);
+	*(info_header + 10) = (unsigned char)(bmp->height >> 16);
+	*(info_header + 11) = (unsigned char)(bmp->height >> 24);
 	*(info_header + 12) = (unsigned char)(1);
-	*(info_header + 14) = (unsigned char)(bmp->bits_per_pixel);
-	return (info_header);
+	*(info_header + 14) = (unsigned char)(bmp->bpp);
+	write(fd, info_header, INFO_HEADER_SIZE);
 }
 
 static char		*filename(char *name)
@@ -69,60 +65,51 @@ static char		*filename(char *name)
 	return (bmpfilename);
 }
 
-
-void			*init_bmp_info(t_bmp *bmp, t_rtindex *index, int fd)
+static int		init_bmp_info(t_bmp *bmp, t_rt *index, char *rtname)
 {
-	bmp->width = index->res_x;
-	bmp->height = index->res_y;
-	bmp->bits_per_pixel = index->current_cam->bpp;
-	bmp->img = index->current_cam->img;
-	bmp->size_line = index->current_cam->sl;
-	bmp->padding = (bmp->width_bytes % 4) ? (4 - bmp->width_bytes % 4) : 0;
-	if (!(bmp->fileheader = file_header(bmp)))
-		return (NULL);
-	write(fd, bmp->fileheader, FILE_HEADER_SIZE);
-	free(bmp->fileheader);
-	if (!(bmp->infoheader = info_header(bmp)))
-		return (NULL);
-	write(fd, bmp->infoheader, INFO_HEADER_SIZE);
-	free(bmp->infoheader);
-	close(fd);
-	return (bmp);
-}
-
-void			export_to_bmp(t_rtindex *index, char *rtname)
-{
-	int	fd;
-	int	count;
 	char	*bmpname;
-	t_bmp	bmp;
+	int		fd;
 
-	ft_bzero(&bmp, sizeof(t_bmp));
 	if (!(bmpname = filename(rtname)))
 		exit_failure(index, "Error: malloc couldn't assign dynamic memory.");
 	fd = open(bmpname, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	free(bmpname);
 	if (fd < 0)
 		exit_failure(index, "Error: failed to create .bmp file.");
-	if (!(init_bmp_info(&bmp, index, fd)))
+	bmp->height = index->res_y;
+	bmp->width = index->res_x;
+	bmp->bpp = index->current_cam->bpp;
+	bmp->img = index->current_cam->img;
+	bmp->sl = index->current_cam->sl;
+	bmp->imgsize = bmp->width * bmp->sl;
+	file_header(bmp, fd);
+	info_header(bmp, fd);
+	return (fd);
+}
+
+void			export_to_bmp(t_rt *index, char *rtname)
+{
+	int		x;
+	int		y;
+	int		i;
+	int		fd;
+	t_bmp	bmp;
+
+	ft_bzero(&bmp, sizeof(t_bmp));
+	fd = init_bmp_info(&bmp, index, rtname);
+	x = 0;
+	y = 0;
+	while (y < bmp.height)
 	{
-		close(fd);
-		exit_failure(index, "Error: malloc couldn't assign dynamic memory.");
-	}
-	count = 0;
-	while (count < bmp.height)
-	{
-		write(fd, &bmp.img[bmp.imgsize - (count * bmp.width_bytes)], bmp.width_bytes);
-		write(fd, "\0\0\0\0", bmp.padding);
-		count++;
+		while (x < bmp.width)
+		{
+			i = (x * (bmp.bpp / 8) + ((bmp.height - y - 1) * bmp.sl));
+			write(fd, &bmp.img[i], 4);
+			x++;
+		}
+		y++;
+		x = 0;
 	}
 	close(fd);
 	exit_success(index);
-	//esto tal vez sea importante: BITMAPINFOHEADER ignores the 4th byte for 32-bit (este caso) bitmap
-	//images.
-	//
-	//
-	//meter una variable fd dentro de la estructura index (o no: close(fd) solo haria falta en 
-	//caso de salida por fallo en la funcion scene_parser(), ?hacer una funcion intermedia entre
-	//scparser y exit_failure donde se cierre el archivo?
 }

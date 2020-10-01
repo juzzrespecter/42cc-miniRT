@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:10:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/30 22:17:22 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 21:08:09 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	check_valid_args(int argc, char **argv)
 	return (false);
 }
 
-static bool	res_verification(t_rtindex *index)
+static bool	res_verification(t_rt *index)
 {
 	int	res_x;
 	int	res_y;
@@ -46,11 +46,11 @@ static bool	res_verification(t_rtindex *index)
 
 int			main(int argc, char **argv)
 {
-	t_rtindex	*index;
+	t_rt	*index;
 
 	if (!check_valid_args(argc, argv))
 		exit_failure(NULL, "Error: invalid arguments.");
-	if (!(index = ft_calloc(1, sizeof(t_rtindex))))
+	if (!(index = ft_calloc(1, sizeof(t_rt))))
 		exit_failure(NULL, "Error: malloc couldn't assign dynamic memory.");
 	index->win_ptr = NULL;
 	index->cam_lst = NULL;

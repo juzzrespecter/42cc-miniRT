@@ -6,14 +6,14 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 17:09:12 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/07 17:16:52 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 19:22:28 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.h"
 #include <stdio.h>
 
-t_vector v_add(t_vector v1, t_vector v2)
+t_vector	v_add(t_vector v1, t_vector v2)
 {
 	t_vector v;
 
@@ -23,7 +23,7 @@ t_vector v_add(t_vector v1, t_vector v2)
 	return (v);
 }
 
-t_vector v_sub(t_vector v1, t_vector v2)
+t_vector	v_sub(t_vector v1, t_vector v2)
 {
 	t_vector v;
 
@@ -33,7 +33,7 @@ t_vector v_sub(t_vector v1, t_vector v2)
 	return (v);
 }
 
-t_vector v_scalar(t_vector v, float n)
+t_vector	v_scalar(t_vector v, float n)
 {
 	v.x *= n;
 	v.y *= n;
@@ -41,12 +41,12 @@ t_vector v_scalar(t_vector v, float n)
 	return (v);
 }
 
-float v_mod(t_vector v)
+float		v_mod(t_vector v)
 {
 	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }
 
-t_vector v_normalize(t_vector v)
+t_vector	v_normalize(t_vector v)
 {
 	float mod;
 

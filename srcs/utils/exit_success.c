@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 16:59:44 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/30 19:46:37 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 21:07:34 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	exit_success(t_rtindex *index)
+int	exit_success(t_rt *index)
 {
 	t_cam	*aux;
 

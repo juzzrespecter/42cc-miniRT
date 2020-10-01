@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void	add_sp_to_back(t_objects *olst, t_sp *sp)
+static void	add_sp_to_back(t_objs *olst, t_sp *sp)
 {
 	t_sp *sp_aux;
 
@@ -27,7 +27,7 @@ static void	add_sp_to_back(t_objects *olst, t_sp *sp)
 	}
 }
 
-bool		build_sphere(char **scene_line, t_objects *olst)
+bool		build_sphere(char **scene_line, t_objs *olst)
 {
 	char *coord;
 	char *d;

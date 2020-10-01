@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_5(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_tr	*aux;
 	double	t;
@@ -35,7 +35,7 @@ static t_point	*collision_loops_5(t_objects *o_lst, t_ray *ray, t_point *point)
 	return (point);
 }
 
-static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_4(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_cy	*aux;
 	double	t;
@@ -59,7 +59,7 @@ static t_point	*collision_loops_4(t_objects *o_lst, t_ray *ray, t_point *point)
 	return (point);
 }
 
-static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_3(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_sq	*aux;
 	double	t;
@@ -83,7 +83,7 @@ static t_point	*collision_loops_3(t_objects *o_lst, t_ray *ray, t_point *point)
 	return (point);
 }
 
-static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
+static t_point	*collision_loops_2(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_pl	*aux;
 	double	t;
@@ -107,7 +107,7 @@ static t_point	*collision_loops_2(t_objects *o_lst, t_ray *ray, t_point *point)
 	return (point);
 }
 
-t_point			*collision_loops(t_objects *o_lst, t_ray *ray)
+t_point			*collision_loops(t_objs *o_lst, t_ray *ray)
 {
 	t_sp	*aux;
 	double	t;

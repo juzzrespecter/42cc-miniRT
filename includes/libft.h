@@ -6,17 +6,15 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 17:46:15 by danrodri          #+#    #+#             */
-/*   Updated: 2020/01/15 14:39:39 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 21:24:58 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
-
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 # include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -75,7 +73,7 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),\
 void			ft_putchar(char c);
 void			ft_putstr(char *str);
 char			*ft_lltoa_base(long long int i, char *base);
-int			get_next_line(int fd, char **line);
-int			ft_printf(char *fmt, ...);
+int				get_next_line(int fd, char **line);
+int				ft_printf(char *fmt, ...);
 
 #endif

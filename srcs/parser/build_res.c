@@ -22,7 +22,7 @@ static bool	check_res(char *res)
 	return ((count && !res[count]) ? true : false);
 }
 
-bool		build_res(char **scene_line, t_rtindex *index)
+bool		build_res(char **scene_line, t_rt *index)
 {
 	int			res_x;
 	int			res_y;

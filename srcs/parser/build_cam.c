@@ -28,7 +28,7 @@ static bool	fov_check(char *fov)
 	return (!fov[i] ? true : false);
 }
 
-static void	add_cam_to_back(t_rtindex *index, t_cam *cam)
+static void	add_cam_to_back(t_rt *index, t_cam *cam)
 {
 	t_cam	*aux;
 
@@ -43,7 +43,7 @@ static void	add_cam_to_back(t_rtindex *index, t_cam *cam)
 	}
 }
 
-bool		build_cam(char **scene_line, t_rtindex *index)
+bool		build_cam(char **scene_line, t_rt *index)
 {
 	char	*coord;
 	char	*vector;

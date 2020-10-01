@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:44:12 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 19:19:36 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 20:01:19 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int		get_cam_pos(t_cam *alst, t_cam *current_cam)
 {
 	int pos;
 
-	pos	= 1;
+	pos = 1;
 	while (!(alst == current_cam))
 	{
 		alst = alst->next;
@@ -58,7 +58,7 @@ static t_cam	*get_prev_cam(t_cam *cam, int pos)
 	return (cam);
 }
 
-int				window_change_cam(int key, t_rtindex *index)
+int				window_change_cam(int key, t_rt *index)
 {
 	int cam_pos;
 	int n_cams;
@@ -81,6 +81,7 @@ int				window_change_cam(int key, t_rtindex *index)
 		else
 			index->current_cam = get_prev_cam(index->cam_lst, cam_pos);
 	}
-	mlx_put_image_to_window(index->mlx_ptr, index->win_ptr, index->current_cam->img_ptr, 0, 0);
+	mlx_put_image_to_window(index->mlx_ptr, index->win_ptr, \
+			index->current_cam->img_ptr, 0, 0);
 	return (1);
 }

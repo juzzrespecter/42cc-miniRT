@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/09 18:43:43 by danrodri          #+#    #+#             */
-/*   Updated: 2020/01/15 14:38:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 21:31:03 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,38 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static int ft_get_isize(long int i, int bsize)
+static int	ft_get_isize(long int i, int bsize)
 {
 	int isize;
 
 	isize = 0;
 	while (i)
-		{
-			i /= bsize;
-			isize++;
-		}
+	{
+		i /= bsize;
+		isize++;
+	}
 	return (isize);
 }
 
-static char *ft_rev_a(char *a)
+static char	*ft_rev_a(char *a)
 {
-	int a_len;
-	int i;
-	char aux;
+	int		a_len;
+	int		i;
+	char	aux;
 
 	a_len = ft_strlen(a);
 	i = 0;
 	while (i < a_len / 2)
-		{
-			aux = a[i];
-			a[i] = a[a_len - (i + 1)];
-			a[a_len - (i + 1)] = aux;
-			i++;
-		}
+	{
+		aux = a[i];
+		a[i] = a[a_len - (i + 1)];
+		a[a_len - (i + 1)] = aux;
+		i++;
+	}
 	return (a);
 }
 
-static int ft_check_base(char *base)
+static int	ft_check_base(char *base)
 {
 	int count;
 
@@ -53,19 +53,19 @@ static int ft_check_base(char *base)
 	if (!base || ft_strlen(base) == 1)
 		return (0);
 	while (base[count])
-		{
-			if (ft_strchr(base + count + 1, base[count]))
-				return (0);
-			count++;
-		}
+	{
+		if (ft_strchr(base + count + 1, base[count]))
+			return (0);
+		count++;
+	}
 	return (1);
 }
 
-char	*ft_lltoa_base(long long int i, char *base)
+char		*ft_lltoa_base(long long int i, char *base)
 {
-	char *a;
-	int count;
-	int b_len;
+	char	*a;
+	int		count;
+	int		b_len;
 
 	if (!ft_check_base(base))
 		return (NULL);
@@ -74,11 +74,11 @@ char	*ft_lltoa_base(long long int i, char *base)
 		return (NULL);
 	count = 0;
 	while (i)
-		{
-			a[count] = base[i % b_len];
-			i /= b_len;
-			count++;
-		}
+	{
+		a[count] = base[i % b_len];
+		i /= b_len;
+		count++;
+	}
 	a[count] = 0;
 	ft_rev_a(a);
 	return (a);

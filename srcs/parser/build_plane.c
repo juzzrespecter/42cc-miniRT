@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void	add_pl_to_back(t_objects *olst, t_pl *pl)
+static void	add_pl_to_back(t_objs *olst, t_pl *pl)
 {
 	t_pl *pl_aux;
 
@@ -27,7 +27,7 @@ static void	add_pl_to_back(t_objects *olst, t_pl *pl)
 	}
 }
 
-bool		build_plane(char **scene_line, t_objects *olst)
+bool		build_plane(char **scene_line, t_objs *olst)
 {
 	char *coord;
 	char *vector;

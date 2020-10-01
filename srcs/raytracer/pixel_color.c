@@ -6,13 +6,13 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/28 19:40:10 by danrodri          #+#    #+#             */
-/*   Updated: 2020/09/28 21:47:09 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 20:42:23 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static bool		find_shadows(t_objects *o_lst, t_vector l, t_vector p)
+static bool		find_shadows(t_objs *o_lst, t_vector l, t_vector p)
 {
 	t_ray		ray;
 	t_vector	lp;
@@ -26,14 +26,14 @@ static bool		find_shadows(t_objects *o_lst, t_vector l, t_vector p)
 	return (lightning_loops(&ray, o_lst, t));
 }
 
-static t_color	diff_color_sum(t_light *l, t_point *p, t_objects *o_lst)
+static t_color	diff_sum(t_light *l, t_point *p, t_objs *o_lst)
 {
 	float		dot;
 	float		l_const;
-	t_color		diff_color;
+	t_color		diff;
 	t_vector	l_dir;
 
-	ft_bzero(&diff_color, sizeof(t_color));
+	ft_bzero(&diff, sizeof(t_color));
 	while (l)
 	{
 		if (find_shadows(o_lst, l->coord, p->coord) == false)
@@ -41,16 +41,16 @@ static t_color	diff_color_sum(t_light *l, t_point *p, t_objects *o_lst)
 			l_dir = v_normalize(v_sub(l->coord, p->coord));
 			dot = ft_max(0, v_dot(l_dir, p->normal));
 			l_const = l->bright * dot * 255;
-			diff_color.r = ft_min((diff_color.r * 255) + (l->color.r * l_const), 255) / 255;
-			diff_color.g = ft_min((diff_color.g * 255) + (l->color.g * l_const), 255) / 255;
-			diff_color.b = ft_min((diff_color.b * 255) + (l->color.b * l_const), 255) / 255;
+			diff.r = ft_min((diff.r * 255) + (l->color.r * l_const), 255) / 255;
+			diff.g = ft_min((diff.g * 255) + (l->color.g * l_const), 255) / 255;
+			diff.b = ft_min((diff.b * 255) + (l->color.b * l_const), 255) / 255;
 		}
 		l = l->next;
 	}
-	return (diff_color);
+	return (diff);
 }
 
-static t_color	amb_color_sum(t_amb *amb)
+static t_color	amb_sum(t_amb *amb)
 {
 	t_color amb_color;
 
@@ -64,23 +64,23 @@ static t_color	amb_color_sum(t_amb *amb)
 	return (amb_color);
 }
 
-unsigned int	pixel_color(t_objects *o_lst, t_point *p)
+unsigned int	pixel_color(t_objs *o_lst, t_point *p)
 {
-	t_color			amb_color;
-	t_color			diff_color;
-	t_color			object_color;
+	t_color			amb;
+	t_color			diff;
+	t_color			obj;
 	unsigned int	color;
 
 	if (p->t == -1)
 		return (0);
 	color = 0;
-	amb_color = amb_color_sum(o_lst->amb);
-	diff_color = diff_color_sum(o_lst->light, p, o_lst);
-	object_color = p->color;
-	object_color.r *= ft_min(255, ((amb_color.r * 255) + (diff_color.r * 255))) / 255; 
-	object_color.g *= ft_min(255, ((amb_color.g * 255) + (diff_color.g * 255))) / 255; 
-	object_color.b *= ft_min(255, ((amb_color.b * 255) + (diff_color.b * 255))) / 255; 
-	color = ((((int)(object_color.b * 255) | ((int)(object_color.g * 255) << 8)) |\
-			   	((int)(object_color.r * 255) << 16)) & 0xffffff);
+	amb = amb_sum(o_lst->amb);
+	diff = diff_sum(o_lst->light, p, o_lst);
+	obj = p->color;
+	obj.r *= ft_min(255, ((amb.r * 255) + (diff.r * 255))) / 255;
+	obj.g *= ft_min(255, ((amb.g * 255) + (diff.g * 255))) / 255;
+	obj.b *= ft_min(255, ((amb.b * 255) + (diff.b * 255))) / 255;
+	color = ((((int)(obj.b * 255) | ((int)(obj.g * 255) << 8)) |\
+				((int)(obj.r * 255) << 16)) & 0xffffff);
 	return (color);
 }
