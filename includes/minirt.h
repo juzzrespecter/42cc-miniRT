@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:26:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 21:23:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/01 22:08:06 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <mlx.h>
 # include "window.h"
 # include "structs.h"
+# include "../minilibx/mlx.h"
 # ifndef ERROR
 #  define ERROR 1e-6
 # endif
