@@ -170,9 +170,8 @@ typedef struct	s_rtindex
 
 typedef struct	s_bmp
 {
-	char *filename;
-	char *fileheader;
-	char *infoheader;
+	unsigned char *fileheader;
+	unsigned char *infoheader;
 	int width;
 	int width_bytes;
 	int height;

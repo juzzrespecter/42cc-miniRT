@@ -52,7 +52,7 @@ static unsigned char	*info_header(t_bmp *bmp)
 	return (info_header);
 }
 
-static char				*filename(char *name)
+static char		*filename(char *name)
 {
 	char *bmpfilename;
 	char *aux;
@@ -69,48 +69,60 @@ static char				*filename(char *name)
 	return (bmpfilename);
 }
 
-static void				img_to_bmp(int fd, t_bmp *index)
-{
-	int i;
 
-	i = 0;
-	while (i < bmp->height)
-	{
-		write(fd, bmp->img[imgsize - (i * bmp->width_bytes)], bmp->width_bytes);
-		write(fd, "\0\0\0\0", bmp->padding);
-		i++;
-	}
+void			*init_bmp_info(t_bmp *bmp, t_rtindex *index, int fd)
+{
+	bmp->width = index->res_x;
+	bmp->height = index->res_y;
+	bmp->bits_per_pixel = index->current_cam->bpp;
+	bmp->img = index->current_cam->img;
+	bmp->size_line = index->current_cam->sl;
+	bmp->padding = (bmp->width_bytes % 4) ? (4 - bmp->width_bytes % 4) : 0;
+	if (!(bmp->fileheader = file_header(bmp)))
+		return (NULL);
+	write(fd, bmp->fileheader, FILE_HEADER_SIZE);
+	free(bmp->fileheader);
+	if (!(bmp->infoheader = info_header(bmp)))
+		return (NULL);
+	write(fd, bmp->infoheader, INFO_HEADER_SIZE);
+	free(bmp->infoheader);
+	close(fd);
+	return (bmp);
 }
 
-void					export_to_bmp(t_rtindex *index, char *rtname)
+void			export_to_bmp(t_rtindex *index, char *rtname)
 {
-	int				fd;
-	t_bmp			bmp;
+	int	fd;
+	int	count;
+	char	*bmpname;
+	t_bmp	bmp;
 
 	ft_bzero(&bmp, sizeof(t_bmp));
-	if (!(bmp.filename = filename(rtname)))
+	if (!(bmpname = filename(rtname)))
 		exit_failure(index, "Error: malloc couldn't assign dynamic memory.");
-	fd = open(bmp.filename, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-	free(bmp.filename);
-	bmp.width = index->res_x;
-	bmp.height = index->res_y;
-	bmp.bits_per_pixel = index->current_cam->bpp;
-	bmp.img = index->current_cam->img;
-	bmp.width_bytes = bmp.width * bmp.bits_per_pixel;
-	//bmp.padding = (bmp.width_bytes % 4) ? (4 - bmp.width_bytes % 4) : 0;
-	bmp.padding = 3;
+	fd = open(bmpname, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	free(bmpname);
 	if (fd < 0)
 		exit_failure(index, "Error: failed to create .bmp file.");
-	if (!(bmp.fileheader = file_header(&bmp)))
+	if (!(init_bmp_info(&bmp, index, fd)))
+	{
+		close(fd);
 		exit_failure(index, "Error: malloc couldn't assign dynamic memory.");
-	write(fd, bmp.fileheader, FILE_HEADER_SIZE);
-	free(bmp.fileheader);
-	if (!(bmp.infoheader = info_header(&bmp)))
-		exit_failure(index, "Error: malloc couldn't assign dynamic memory.");
-	write(fd, bmp.infoheader, INFO_HEADER_SIZE);
-	free(bmp.infoheader);
-	img_to_bmp(fd, &bmp);
+	}
+	count = 0;
+	while (count < bmp.height)
+	{
+		write(fd, &bmp.img[bmp.imgsize - (count * bmp.width_bytes)], bmp.width_bytes);
+		write(fd, "\0\0\0\0", bmp.padding);
+		count++;
+	}
 	close(fd);
-	//exit_success(index);
-	//meter una variable fd dentro de la estructura index
+	exit_success(index);
+	//esto tal vez sea importante: BITMAPINFOHEADER ignores the 4th byte for 32-bit (este caso) bitmap
+	//images.
+	//
+	//
+	//meter una variable fd dentro de la estructura index (o no: close(fd) solo haria falta en 
+	//caso de salida por fallo en la funcion scene_parser(), ?hacer una funcion intermedia entre
+	//scparser y exit_failure donde se cierre el archivo?
 }
