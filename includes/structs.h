@@ -139,9 +139,9 @@ typedef struct			s_cyaux
 
 typedef struct			s_tr
 {
-	t_vector	f_p;
-	t_vector	s_p;
-	t_vector	t_p;
+	t_vector	p1;
+	t_vector	p2;
+	t_vector	p3;
 	t_color		color;
 	struct s_tr	*next;
 }						t_tr;

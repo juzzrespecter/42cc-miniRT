@@ -59,7 +59,8 @@ int			main(int argc, char **argv)
 	index->o_lst = scene_parser(argv[1], index);
 	if (!(index->current_cam = index->cam_lst))
 		exit_failure(index, "Error: no camera defined in the scene.");
-	index->mlx_ptr = mlx_init();
+	if (!(index->mlx_ptr = mlx_init()))
+		exit_failure(index, "Error: failed to set up connection.");
 	if (!(res_verification(index)))
 		exit_failure(index, "Error: no resolution defined.");
 	index->current_cam->img = ray_tracer(index, index->current_cam);

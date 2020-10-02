@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static t_point	*collision_loops_5(t_objs *o_lst, t_ray *ray, t_point *point)
+static void	collision_loops_5(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_tr	*aux;
 	double	t;
@@ -25,17 +25,16 @@ static t_point	*collision_loops_5(t_objs *o_lst, t_ray *ray, t_point *point)
 		{
 			point->t = t;
 			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = normal_triangle(aux->f_p, aux->s_p, aux->t_p);
+			point->normal = normal_triangle(aux->p1, aux->p2, aux->p3);
 			if (v_dot(point->normal, ray->dir) > 0)
 				point->normal = v_scalar(point->normal, -1);
 			point->color = aux->color;
 		}
 		aux = aux->next;
 	}
-	return (point);
 }
 
-static t_point	*collision_loops_4(t_objs *o_lst, t_ray *ray, t_point *point)
+static void	collision_loops_4(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_cy	*aux;
 	double	t;
@@ -55,11 +54,10 @@ static t_point	*collision_loops_4(t_objs *o_lst, t_ray *ray, t_point *point)
 		}
 		aux = aux->next;
 	}
-	point = collision_loops_5(o_lst, ray, point);
-	return (point);
+	collision_loops_5(o_lst, ray, point);
 }
 
-static t_point	*collision_loops_3(t_objs *o_lst, t_ray *ray, t_point *point)
+static void	collision_loops_3(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_sq	*aux;
 	double	t;
@@ -79,11 +77,10 @@ static t_point	*collision_loops_3(t_objs *o_lst, t_ray *ray, t_point *point)
 		}
 		aux = aux->next;
 	}
-	point = collision_loops_4(o_lst, ray, point);
-	return (point);
+	collision_loops_4(o_lst, ray, point);
 }
 
-static t_point	*collision_loops_2(t_objs *o_lst, t_ray *ray, t_point *point)
+static void	collision_loops_2(t_objs *o_lst, t_ray *ray, t_point *point)
 {
 	t_pl	*aux;
 	double	t;
@@ -103,32 +100,30 @@ static t_point	*collision_loops_2(t_objs *o_lst, t_ray *ray, t_point *point)
 		}
 		aux = aux->next;
 	}
-	point = collision_loops_3(o_lst, ray, point);
-	return (point);
+	collision_loops_3(o_lst, ray, point);
 }
 
-t_point			*collision_loops(t_objs *o_lst, t_ray *ray)
+t_point		collision_loops(t_objs *o_lst, t_ray *ray)
 {
 	t_sp	*aux;
 	double	t;
-	t_point	*point;
+	t_point	point;
 
-	if (!(point = calloc(sizeof(t_point), 1)))
-		return (NULL);
+	ft_bzero(&point, sizeof(t_point));
 	aux = o_lst->sp;
-	point->t = -1;
+	point.t = -1;
 	while (aux)
 	{
 		t = collision_sphere(aux, ray);
-		if (t > ERROR && (point->t > t || point->t == -1))
+		if (t > ERROR && (point.t > t || point.t == -1))
 		{
-			point->t = t;
-			point->coord = v_add(ray->origin, v_scalar(ray->dir, t));
-			point->normal = v_normalize(v_sub(point->coord, aux->center));
-			point->color = aux->color;
+			point.t = t;
+			point.coord = v_add(ray->origin, v_scalar(ray->dir, t));
+			point.normal = v_normalize(v_sub(point.coord, aux->center));
+			point.color = aux->color;
 		}
 		aux = aux->next;
 	}
-	point = collision_loops_2(o_lst, ray, point);
+	collision_loops_2(o_lst, ray, &point);
 	return (point);
 }

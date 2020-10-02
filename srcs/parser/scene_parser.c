@@ -76,8 +76,10 @@ t_objs			*scene_parser(char *scene_file, t_rt *index)
 		close(fd);
 		exit_failure(index, "Error: malloc error.");
 	}
+	index->o_lst = o_lst;
 	while ((out = get_next_line(fd, &line)) == 1)
 		process_line(line, fd, o_lst, index);
+	free(line);
 	close(fd);
 	if (out == -1)
 		exit_failure(index, "Error: couldn't read scene file.");

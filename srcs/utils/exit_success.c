@@ -27,6 +27,7 @@ int	exit_success(t_rt *index)
 		free(aux);
 	}
 	delete_olst(index->o_lst);
+	free(index->mlx_ptr);
 	free(index);
 	ft_printf("Exited successfully.\n");
 	exit(EXIT_SUCCESS);

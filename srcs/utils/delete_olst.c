@@ -71,4 +71,5 @@ void		delete_olst(t_objs *o_lst)
 		o_lst->sp = sp;
 	}
 	delete_olst_more(o_lst);
+	free(o_lst);
 }

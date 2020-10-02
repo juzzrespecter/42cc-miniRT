@@ -60,10 +60,10 @@ static void		init_cam(t_cam *cam, t_rt *index)
 char			*ray_tracer(t_rt *index, t_cam *cam)
 {
 	t_ray	ray;
-	t_point	*point;
-	int		x;
-	int		y;
-	int		i;
+	t_point	point;
+	int	x;
+	int	y;
+	int	i;
 
 	x = 0;
 	y = 0;
@@ -74,9 +74,8 @@ char			*ray_tracer(t_rt *index, t_cam *cam)
 		{
 			i = (x * (cam->bpp / 8) + (y * cam->sl));
 			ray = new_ray(x_pixel(index, x, cam), y_pixel(index, y, cam), cam);
-			if (!(point = collision_loops(index->o_lst, &ray)))
-				exit_failure(index, "Error: malloc error.");
-			*(unsigned int *)(cam->img + i) = pixel_color(index->o_lst, point);
+			point = collision_loops(index->o_lst, &ray);
+			*(unsigned int *)(cam->img + i) = pixel_color(index->o_lst, &point);
 			x++;
 		}
 		x = 0;

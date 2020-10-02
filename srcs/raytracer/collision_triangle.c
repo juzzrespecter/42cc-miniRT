@@ -18,9 +18,9 @@ static bool	collision_true(t_tr *tr, t_vector point, t_vector normal)
 	t_vector	cross_2;
 	t_vector	cross_3;
 
-	cross_1 = v_cross(v_sub(tr->s_p, tr->f_p), v_sub(point, tr->f_p));
-	cross_2 = v_cross(v_sub(tr->t_p, tr->s_p), v_sub(point, tr->s_p));
-	cross_3 = v_cross(v_sub(tr->f_p, tr->t_p), v_sub(point, tr->t_p));
+	cross_1 = v_cross(v_sub(tr->p2, tr->p1), v_sub(point, tr->p1));
+	cross_2 = v_cross(v_sub(tr->p3, tr->p2), v_sub(point, tr->p2));
+	cross_3 = v_cross(v_sub(tr->p1, tr->p3), v_sub(point, tr->p3));
 	cross_1 = v_normalize(cross_1);
 	cross_2 = v_normalize(cross_2);
 	cross_3 = v_normalize(cross_3);
@@ -33,9 +33,9 @@ static bool	collision_true(t_tr *tr, t_vector point, t_vector normal)
 	return (true);
 }
 
-t_vector	normal_triangle(t_vector f_p, t_vector s_p, t_vector t_p)
+t_vector	normal_triangle(t_vector p1, t_vector p2, t_vector p3)
 {
-	return (v_normalize(v_cross(v_sub(s_p, f_p), v_sub(t_p, s_p))));
+	return (v_normalize(v_cross(v_sub(p2, p1), v_sub(p3, p2))));
 }
 
 double		collision_triangle(t_tr *tr, t_ray *ray)
@@ -44,8 +44,8 @@ double		collision_triangle(t_tr *tr, t_ray *ray)
 	t_vector	normal;
 	t_vector	point;
 
-	normal = normal_triangle(tr->f_p, tr->s_p, tr->t_p);
-	t = collision_plane(normal, tr->f_p, ray);
+	normal = normal_triangle(tr->p1, tr->p2, tr->p3);
+	t = collision_plane(normal, tr->p1, ray);
 	if (t == -1)
 		return (-1);
 	point = v_add(ray->origin, v_scalar(ray->dir, t));

@@ -5,108 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/25 18:14:54 by danrodri          #+#    #+#             */
-/*   Updated: 2019/12/02 15:52:39 by danrodri         ###   ########.fr       */
+/*   Created: 2019/11/24 20:06:17 by danrodri          #+#    #+#             */
+/*   Updated: 2019/12/02 13:37:10 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	find_newline(char *str)
+static int		check_nl(char *buff)
 {
 	int	nl_pos;
 
 	nl_pos = 0;
-	while (str[nl_pos])
-	{
-		if (str[nl_pos] == '\n')
-			return (nl_pos);
+	while (buff[nl_pos] && buff[nl_pos] != '\n')
 		nl_pos++;
-	}
+	if (buff[nl_pos] == '\n')
+		return (nl_pos);
 	return (-1);
 }
 
-static void	remove_lines(char *lines[FD_SETSIZE], int fd)
+static void		get_buffer(char *lost_buff, char *buff, int nl_pos)
 {
-	ft_bzero(lines[fd], BUFFER_SIZE + 1);
-	free(lines[fd]);
-	lines[fd] = NULL;
+	ft_strlcpy(lost_buff, buff, nl_pos);
+	ft_strlcpy(buff, buff + nl_pos + 1, BUFFER_SIZE - nl_pos);
 }
 
-static int	save_line(int fd, char **line, char *lines[FD_SETSIZE], char *buff)
+static void		save_line(char **line, char *lost_buff, char *buff)
 {
 	int		nl_pos;
 	char	buff_aux[BUFFER_SIZE + 1];
-	char	*mem_free;
 
-	mem_free = *line;
-	if ((nl_pos = find_newline(buff)) != -1)
-	{
-		if (!lines[fd])
-			if (!(lines[fd] = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-				return (0);
-		ft_strlcpy(lines[fd], buff + nl_pos + 1, BUFFER_SIZE - nl_pos);
-		ft_strlcpy(buff_aux, buff, nl_pos + 1);
-		*line = ft_strjoin(*line, buff_aux);
-		if (!*lines[fd])
-			remove_lines(lines, fd);
-	}
+	if ((nl_pos = check_nl(buff)) == -1)
+		*line = ft_strjoin(*line, buff);
 	else
 	{
-		*line = ft_strjoin(*line, buff);
-		if (lines[fd])
-			remove_lines(lines, fd);
+		ft_strlcpy(lost_buff, buff, BUFFER_SIZE + 1);
+		get_buffer(buff_aux, lost_buff, nl_pos);
+		*line = ft_strjoin(*line, buff_aux);
 	}
-	free(mem_free);
-	return (*line ? 1 : 0);
 }
 
-static int	read_line(int fd, char **line, char *lines[FD_SETSIZE])
+static size_t	read_line(char **line, char *lost_buff, int fd)
 {
+	char	buff[BUFFER_SIZE + 1];
+	char	*line_aux;
 	int		nl_pos;
-	char	buffer[BUFFER_SIZE + 1];
 	int		r_out;
 
-	ft_bzero(buffer, BUFFER_SIZE + 1);
-	while ((nl_pos = find_newline(buffer)) == -1)
+	ft_memset(buff, 0, BUFFER_SIZE + 1);
+	while ((nl_pos = check_nl(buff)) == -1)
 	{
-		ft_bzero(buffer, BUFFER_SIZE + 1);
-		r_out = read(fd, buffer, BUFFER_SIZE);
+		ft_memset(buff, 0, BUFFER_SIZE + 1);
+		r_out = read(fd, buff, BUFFER_SIZE);
 		if (!r_out)
 			return (0);
 		if (r_out < 0)
 			return (-1);
-		if (!save_line(fd, line, lines, buffer))
+		line_aux = *line;
+		save_line(line, lost_buff, buff);
+		free(line_aux);
+		if (!*line)
 			return (-1);
 	}
 	return (1);
 }
 
-int			get_next_line(int fd, char **line)
+int				get_next_line(int fd, char **line)
 {
-	static char	*lines[FD_SETSIZE] = {0};
+	static char	lost_buff[BUFFER_SIZE + 1] = {0};
 	char		buff_aux[BUFFER_SIZE + 1];
 	int			nl_pos;
 
-	if (fd < 0 || !line || !BUFFER_SIZE)
+	if (!line || fd < 0 || !BUFFER_SIZE)
 		return (-1);
 	if (!(*line = ft_strdup("")))
 		return (-1);
-	if (lines[fd])
+	if (*lost_buff)
 	{
 		free(*line);
-		if ((nl_pos = find_newline(lines[fd])) >= 0)
+		if ((nl_pos = check_nl(lost_buff)) >= 0)
 		{
-			ft_strlcpy(buff_aux, lines[fd], nl_pos + 1);
-			ft_strlcpy(lines[fd], lines[fd] + nl_pos + 1, BUFFER_SIZE - nl_pos);
+			get_buffer(buff_aux, lost_buff, nl_pos);
 			*line = ft_strdup(buff_aux);
-			if (!*lines[fd])
-				remove_lines(lines, fd);
 			return (*line ? 1 : -1);
 		}
-		if (!(*line = ft_strdup(lines[fd])))
-			return (-1);
-		remove_lines(lines, fd);
+		else
+		{
+			if (!(*line = ft_strdup(lost_buff)))
+				return (-1);
+			ft_memset(lost_buff, 0, BUFFER_SIZE + 1);
+		}
 	}
-	return (read_line(fd, line, lines));
+	return (read_line(line, lost_buff, fd));
 }

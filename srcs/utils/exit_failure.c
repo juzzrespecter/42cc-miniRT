@@ -28,6 +28,7 @@ void	exit_failure(t_rt *index, char *err_msg)
 			free(index->cam_lst);
 			index->cam_lst = aux;
 		}
+		free(index->mlx_ptr);
 		free(index);
 	}
 	exit(EXIT_FAILURE);

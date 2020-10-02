@@ -34,7 +34,7 @@
 
 void			delete_olst(t_objs *olst);
 char			*ray_tracer(t_rt *index, t_cam *cam);
-t_point			*collision_loops(t_objs *obj_lst, t_ray *ray);
+t_point			collision_loops(t_objs *obj_lst, t_ray *ray);
 double			ft_max(double a, double b);
 double			ft_min(double a, double b);
 void			ft_split_free(char **table);
