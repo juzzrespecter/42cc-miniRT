@@ -4,7 +4,7 @@
   <img src="scenes/spheres.bmp" width="600" height="450"/>
 </div>
 </br></br></br></br></br>
-Part of 42 common core cursus, the aim of this project is to create a little ray tracer in C lang capable of rendering simple geometric figures. For this purpose, a graphics library is needed; here, [MiniLibX](https://github.com/42Paris/minilibx-linux) will be used (MacOS and Linux versions are provided in this repo).  
+Part of 42 common core cursus, the aim of this project is to create a little ray tracer in C lang capable of rendering simple geometric figures. For this purpose, a graphics library is needed; here, <a href='https://github.com/42Paris/minilibx-linux'>MiniLibX</a> will be used (MacOS and Linux versions are provided in this repo).  
   
 MiniRT implements the raytracer protocol; reads from a configuration file (must be format .rt) the necessary values to define a series of simple geometric figures in a 3D space, and from there renders an image calculating ray collisions from an (also defined in the configuration file) camera located in this space.  
   
