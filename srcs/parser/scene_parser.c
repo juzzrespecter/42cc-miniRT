@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:02:35 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 21:08:58 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:15:29 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ static void		process_line(char *line, int fd, t_objs *o_lst, t_rt *index)
 		{
 			free(line);
 			close(fd);
-			exit_failure(index, "Error: malloc error.");
+			exit_failure(index, "Malloc error.");
 		}
 		if (!obj_lst(scene_line[0], scene_line, index, o_lst))
 		{
 			ft_split_free(scene_line);
 			free(line);
 			close(fd);
-			exit_failure(index, "Error: wrong format.");
+			exit_failure(index, "Wrong format.");
 		}
 		ft_split_free(scene_line);
 	}
@@ -70,11 +70,11 @@ t_objs			*scene_parser(char *scene_file, t_rt *index)
 	t_objs	*o_lst;
 
 	if ((fd = open(scene_file, O_RDONLY)) < 0)
-		exit_failure(index, "Error: failed to open scene file.");
+		exit_failure(index, "Failed to open scene file.");
 	if (!(o_lst = ft_calloc(1, sizeof(t_objs))))
 	{
 		close(fd);
-		exit_failure(index, "Error: malloc error.");
+		exit_failure(index, "Malloc error.");
 	}
 	index->o_lst = o_lst;
 	while ((out = get_next_line(fd, &line)) == 1)
@@ -82,6 +82,6 @@ t_objs			*scene_parser(char *scene_file, t_rt *index)
 	free(line);
 	close(fd);
 	if (out == -1)
-		exit_failure(index, "Error: couldn't read scene file.");
+		exit_failure(index, "Couldn't read scene file.");
 	return (o_lst);
 }

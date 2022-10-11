@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 20:21:26 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 21:09:10 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:14:16 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ static void		init_cam(t_cam *cam, t_rt *index)
 	cam->img_ptr = mlx_new_image(index->mlx_ptr, index->res_x, index->res_y);
 	cam->img = mlx_get_data_addr(cam->img_ptr, &cam->bpp, &cam->sl, &cam->e);
 	if (!cam->img)
-		exit_failure(index, "Error: mlx couldn't create img.");
+		exit_failure(index, "mlx couldn't create img.");
 }
 
 char			*ray_tracer(t_rt *index, t_cam *cam)
 {
 	t_ray	ray;
 	t_point	point;
-	int	x;
-	int	y;
-	int	i;
+	int		x;
+	int		y;
+	int		i;
 
 	x = 0;
 	y = 0;

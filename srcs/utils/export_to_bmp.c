@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/08 19:11:04 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 20:22:15 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:09:24 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int		init_bmp_info(t_bmp *bmp, t_rt *index, char *rtname)
 	int		fd;
 
 	if (!(bmpname = filename(rtname)))
-		exit_failure(index, "Error: malloc couldn't assign dynamic memory.");
+		exit_failure(index, "Malloc couldn't assign dynamic memory.");
 	fd = open(bmpname, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
 	free(bmpname);
 	if (fd < 0)
-		exit_failure(index, "Error: failed to create .bmp file.");
+		exit_failure(index, "Failed to create .bmp file.");
 	bmp->height = index->res_y;
 	bmp->width = index->res_x;
 	bmp->bpp = index->current_cam->bpp;

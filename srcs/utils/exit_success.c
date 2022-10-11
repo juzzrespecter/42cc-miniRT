@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/30 16:59:44 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 21:07:34 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:07:18 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	exit_success(t_rt *index)
 	delete_olst(index->o_lst);
 	free(index->mlx_ptr);
 	free(index);
-	ft_printf("Exited successfully.\n");
+	ft_printf("miniRT exited successfully.\n");
 	exit(EXIT_SUCCESS);
 	return (1);
 }

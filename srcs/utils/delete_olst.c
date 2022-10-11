@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:29:53 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 21:07:49 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:06:33 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	delete_olst_more(t_objs *o_lst)
 	while (o_lst->pl)
 	{
 		pl = o_lst->pl->next;
-		free(pl);
+		free(o_lst->pl);
 		o_lst->pl = pl;
 	}
 	while (o_lst->sq)

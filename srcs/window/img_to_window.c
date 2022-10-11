@@ -6,7 +6,7 @@
 /*   By: danrodri <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:21:38 by danrodri          #+#    #+#             */
-/*   Updated: 2020/10/01 21:10:36 by danrodri         ###   ########.fr       */
+/*   Updated: 2020/10/03 17:09:41 by danrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	img_to_window(t_rt *index)
 	win_ptr = mlx_new_window(index->mlx_ptr, \
 			index->res_x, index->res_y, "miniRayTracer scene");
 	if (!win_ptr)
-		exit_failure(index, "Error: mlx couldn't create window.");
+		exit_failure(index, "mlx couldn't create window.");
 	window_generate_images(index);
 	index->win_ptr = win_ptr;
 	mlx_key_hook(win_ptr, &window_key_options, index);
