@@ -88,15 +88,31 @@ RT_OBJS		= $(patsubst %.c, $(OBJS_DIR)%.o, $(RT_SRCS))
 
 NAME		= miniRT
 
-LIB			= -lft -Llibft
+LFLAGS		= -lft -Llibft
 
-MLXLIB_MAC	= -lmlx -L. -framework OpenGL -framework AppKit -lz
+CC		= gcc -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS		= -Wall -Werror -Wextra
 
-MLX			= libmlx.dylib
+OS       = $(shell uname -s)
+MLXDIR   =
+MLX      =
+ifeq ($(OS), Darwin)
+	LFLAGS   += -lmlx -L. -framework OpenGL -framework AppKit -lz
+	CFLAGS   += -D MLX_MAC=true
+	MLXDIR   = mlx_mac
+	MLX	 = libmlx.dylib
+else
+ifeq ($(OS), Linux)
+	LFLAGS   += -lmlx -L. -lXext -lX11 -lm
+	CFLAGS   += -D MLX_LIN=true
+	MLXDIR   = mlx_lin
+	MLX	 = libmlx.a
+else
+	$(error No MLX available for this architecture)
+endif
+endif
 
 INC_DIR		= includes/
-
-GCC			= gcc -Wall -Werror -Wextra
 
 ALL_OBJS	= $(OBJS) $(PARSER_OBJS) $(VECTOR_OBJS) $(WINDOW_OBJS) $(UTILS_OBJS) $(RT_OBJS)
 
@@ -104,44 +120,44 @@ all:		$(NAME)
 
 $(NAME):	$(ALL_OBJS)
 			@make -C libft
-			@make -C minilibx
-			@mv ./minilibx/$(MLX) .
-			@$(GCC) -o $(NAME) $(ALL_OBJS) $(LIB) $(MLXLIB_MAC)
+			@make -C $(MLXDIR)
+			mv ./$(MLXDIR)/$(MLX) .
+			$(CC) $(CFLAGS) -o $(NAME) $(ALL_OBJS) $(LFLAGS) $(MLX)
 
 $(OBJS_DIR)%.o:	$(SRCS_DIR)%.c	
-				@$(GCC) -c $< -I$(INC_DIR)
+				@$(CC) $(CFLAGS) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
 $(OBJS_DIR)%.o:	$(PARSER_DIR)%.c	
-				@$(GCC) -c $< -I$(INC_DIR)
+				@$(CC) $(CFLAGS) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
 $(OBJS_DIR)%.o:	$(VECTOR_DIR)%.c	
-				@$(GCC) -c $< -I$(INC_DIR)
+				@$(CC) $(CFLAGS) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
 $(OBJS_DIR)%.o:	$(UTILS_DIR)%.c	
-				@$(GCC) -c $< -I$(INC_DIR)
+				@$(CC) $(CFLAGS) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
 $(OBJS_DIR)%.o:	srcs/window/%.c	
-				@$(GCC) -c $< -I$(INC_DIR)
+				@$(CC) $(CFLAGS) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
 $(OBJS_DIR)%.o:	$(RT_DIR)%.c	
-				@$(GCC) -c $< -I$(INC_DIR)
+				@$(CC) $(CFLAGS) -c $< -I$(INC_DIR)
 				@mkdir -p $(OBJS_DIR)
 				@mv $(@F) $(OBJS_DIR)
 
 clean:
 			@rm -rf $(OBJS_DIR)
 			@make clean -C libft
-			@make clean -C minilibx
+			@make clean -C $(MLXDIR)
 
 fclean:		clean
 			@rm -f $(NAME)
